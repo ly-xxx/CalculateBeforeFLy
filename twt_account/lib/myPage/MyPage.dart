@@ -77,7 +77,7 @@ class _MyPageState extends State<MyPage> {
                 // Navigator.push(context,
                 //   MaterialPageRoute(builder: (context)=>Tally(data: data))
                 // );
-              Navigator.pushNamed(context, "/tally",arguments: )
+              Navigator.pushNamed(context, "/tally");
             },
           ),
           Container(
