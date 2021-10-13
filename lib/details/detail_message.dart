@@ -183,6 +183,25 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                 return Container();
               }else return Dismissible(
                   key: UniqueKey(),
+                  confirmDismiss: (_)async{
+                    return showDialog(
+                        context: context,
+                        builder: (_){
+                          return AlertDialog(
+                            title: Text('你确定？'),
+                            content: Text('你确定要删除这条记录吗？'),
+                            actions: [
+                              TextButton(onPressed: (){
+                                Navigator.of(context).pop(false);
+                              }, child: Text('取消')),
+                              TextButton(onPressed: (){
+                                Navigator.of(context).pop(true);
+                              }, child: Text('确定')),
+                            ],
+                          );
+                        }
+                    );
+                  },
                   onDismissed: (_) {
                     int a=prefs.getInt('todayExpenditure')??0;
                     int b=prefs.getInt('monthExpenditure')??0;
