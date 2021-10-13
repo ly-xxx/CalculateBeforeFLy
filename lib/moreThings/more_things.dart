@@ -81,8 +81,8 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                       height: 50,
                       decoration: BoxDecoration(
                           color: Provider.of<ThemeProvider>(context).color1,
-                          borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0))
-                      ),
+                          borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(10.0))),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -99,7 +99,8 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                             "统计",
                             style: TextStyle(
                                 fontSize: 20,
-                                color: Provider.of<ThemeProvider>(context).color2,
+                                color:
+                                    Provider.of<ThemeProvider>(context).color2,
                                 fontWeight: FontWeight.w900),
                           ),
                         ],
@@ -359,8 +360,14 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                                       height: 50,
                                       child: IconButton(
                                           onPressed: () {
-                                            int x = int.parse(
-                                                textFieldController.text);
+                                            int x;
+                                            if (textFieldController
+                                                .text.isEmpty)
+                                              x = 0;
+                                            else
+                                              x = int.parse(
+                                                  textFieldController.text);
+                                            print('x is $x');
                                             prefs.setInt('gdsz', x);
                                             print(_gdsz);
                                             if (_typeOfGdsz) {
@@ -401,7 +408,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                         ),
                       )
                     ],
-                  ),
+                  )
                 ],
               ),
             ),
@@ -410,38 +417,6 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
       ],
     );
   }
-
-  // Widget gridViewPage() {
-  //   return Padding(
-  //     padding: EdgeInsets.all(30.0),
-  //     child: GridView.count(
-  //       physics: const NeverScrollableScrollPhysics(),
-  //       crossAxisSpacing: 50,
-  //       mainAxisSpacing: 50,
-  //       crossAxisCount: 2,
-  //       children: <Widget>[
-  //         Container(
-  //           child: daysPage(),
-  //         ),
-  //         Container(
-  //           child: cntPage(),
-  //         ),
-  //         Container(
-  //           child: skinPage(),
-  //         ),
-  //         Container(
-  //           child: fixedPage(),
-  //         ),
-  //         Container(
-  //           child: Text(" "),
-  //         ),
-  //         Container(
-  //           child: logOutPage(),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   Widget daysPage() {
     return Container(
@@ -569,7 +544,6 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                 Container(
                   width: 50,
                   child: InkWell(
-
                     onTap: () {
                       Navigator.popAndPushNamed(context, "/detailMessagePage");
                     },
@@ -577,8 +551,8 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                       width: 50,
                       decoration: BoxDecoration(
                           color: Provider.of<ThemeProvider>(context).color1,
-                          borderRadius: BorderRadius.only(bottomRight: Radius.circular(10.0))
-                      ),
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(10.0))),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -600,7 +574,8 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                             "明\n细",
                             style: TextStyle(
                                 fontSize: 20,
-                                color: Provider.of<ThemeProvider>(context).color2,
+                                color:
+                                    Provider.of<ThemeProvider>(context).color2,
                                 fontWeight: FontWeight.w900),
                           ),
                         ],
