@@ -45,8 +45,8 @@ class MyApp extends StatelessWidget {
         "/staticsExpendPage":(context)=>StatisExpendPage(),
       },
       //initialRoute: "/myPage",
-     // home: StartPage(),
-      home:StatisPage(),
+     home: StartPage(),
+      //home:StatisPage(),
     );
   }
 }

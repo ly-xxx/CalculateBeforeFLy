@@ -106,10 +106,6 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
 
   @override
   Widget build(BuildContext context) {
-    //final _global = Provider.of<Global>(context);
-    //_itemCount =_itemCount - 1;
-    //_get().then((value) => _list=value);
-    //print(_list??[1][1]);
     final size = MediaQuery.of(context).size;
     width = size.width;
     height = size.height;

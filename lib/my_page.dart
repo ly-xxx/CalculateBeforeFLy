@@ -247,7 +247,7 @@ class _MyPageState extends State<MyPage> {
                               height: 15,
                             ),
                             Text(
-                              "问\n价",
+                              "统\n计",
                               style: TextStyle(
                                   fontSize: 20,
                                   color: theme.color2,
