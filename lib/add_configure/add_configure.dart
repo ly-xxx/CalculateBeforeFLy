@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'dart:ui';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:date_format/date_format.dart';
 import 'package:twt_account/add_configure/adding_what_list.dart';
 import 'package:twt_account/data/global_data.dart';
+import 'package:twt_account/moreThings/theme/theme_config.dart';
 
 class AddConfigure extends StatefulWidget {
   const AddConfigure({Key? key}) : super(key: key);
@@ -41,10 +43,15 @@ class _AddConfigureState extends State<AddConfigure> {
 
   @override
   Widget build(BuildContext context) {
-    dynamic obj = ModalRoute.of(context)!.settings.arguments;
+    dynamic obj = ModalRoute
+        .of(context)!
+        .settings
+        .arguments;
     tallyMoneyStable = int.parse(obj['tallyMoney']);
     addingWhatStable = int.parse(obj['addingFuckInWhat']);
-    final size = MediaQuery.of(context).size;
+    final size = MediaQuery
+        .of(context)
+        .size;
     width = size.width;
     height = size.height;
     if (!flag) {
@@ -61,223 +68,372 @@ class _AddConfigureState extends State<AddConfigure> {
     dateElse = DateTime.now().toString().substring(5, 19);
     return Scaffold(
       body: Column(
-        children: [
+        children: <Widget>[
           Container(
-            height: 40,
+            //height: 80,
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/detailMessagePage");
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                            color: Provider
+                                .of<ThemeProvider>(context)
+                                .color1,
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(10.0))
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Container(
+                                child: Icon(
+                                  Icons.list,
+                                  size: 40,
+                                  color: Provider
+                                      .of<ThemeProvider>(context)
+                                      .color2,
+                                )),
+                            SizedBox(
+                              width: 30,
+                            ),
+                            Text(
+                              "明细",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Provider
+                                      .of<ThemeProvider>(context)
+                                      .color2,
+                                  fontWeight: FontWeight.w900),
+                            ),
+                          ],
+                        ),
+                      )),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.pushNamed(context, "/moreThingsPage");
+                  },
+                  child: Container(
+                    height: 50,
+                    width: 50,
+                    color: Provider
+                        .of<ThemeProvider>(context)
+                        .color3,
+                    child: Icon(
+                      Icons.settings,
+                      size: 25,
+                      color: Provider
+                          .of<ThemeProvider>(context)
+                          .color2,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
+          Expanded(
+            child: Row(
+                children: <Widget>[
+                  Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(),
+                        child: mainPage(),
+                      )),
+                  Container(
+                      width: 50,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, "/statisPage");
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Provider
+                                  .of<ThemeProvider>(context)
+                                  .color1,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10.0))
+                          ),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.attach_money,
+                                  size: 30,
+                                  color: Provider
+                                      .of<ThemeProvider>(context)
+                                      .color2,
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  "统\n计",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: Provider
+                                          .of<ThemeProvider>(context)
+
+
+                                          .color2,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                  ),
+                ]
+            ),),
+        ],
+      ),
+    );
+  }
+
+
+  Widget mainPage() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          SizedBox(height: 20,),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
               '  将要记下：',
-              textScaleFactor: 3.0,
+              textScaleFactor: 2.0,
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w900,
                 shadows: <Shadow>[
-                  Shadow(
-                    offset: Offset(2.0, 2.0),
-                    blurRadius: 1.0,
-                    color: Color.fromARGB(100, 0, 0, 0),
-                  ),
+
                 ],
+              ),
+            ),
+          ),
+
+          InkWell(
+            // style: ElevatedButton.styleFrom(
+            //   primary: Colors.white,
+            //   elevation: 5.0,
+            // ),
+            onTap: () {
+              setState(() {
+                _1isShow = !_1isShow;
+              });
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Colors.black12,
+                        offset: Offset(0.0, 1.0), //阴影xy轴偏移量
+                        blurRadius: 2.0, //阴影模糊程度
+                        spreadRadius: 3.0 //阴影扩散程度
+                    )
+                  ],
+                  color: Colors.grey,
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))
+              ),
+              width: width - 80,
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                child: Column(children: [
+                  Container(
+                    height: 20,
+                  ),
+                  Text(
+                    '记账金额',
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w600),
+                    textScaleFactor: 1.5,
+                  ),
+                  Container(
+                    height: 10,
+                  ),
+                  Stack(
+                    children: [
+                      Offstage(
+                        offstage: !_1isShow,
+                        child: Text(
+                          '$tallyMoney',
+                          textScaleFactor: 5.0,
+                          style: TextStyle(color: Colors.black),
+                        ),
+                      ),
+                      Offstage(
+                        offstage: _1isShow,
+                        child: Container(
+                          width: width - 50,
+                          child: Row(
+                            children: [
+                              Container(
+                                width: width - 170,
+                                child: TextField(
+                                  cursorColor: Colors.orange,
+                                  cursorWidth: 15,
+                                  cursorRadius: Radius.circular(15),
+                                  decoration: InputDecoration(
+                                    hintText: "修改记账金额：当前 $tallyMoney",
+                                    border: OutlineInputBorder(
+                                      borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                    ),
+                                  ),
+                                  keyboardType: TextInputType.number,
+                                  onChanged: (text) {
+                                    print(text);
+                                    tallyMoneyTemplate = int.parse(text);
+                                    flag = true;
+                                  },
+                                ),
+                              ),
+                              Container(
+                                width: 20,
+                              ),
+                              Expanded(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Colors.white70,
+                                    elevation: 5.0,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _1isShow = !_1isShow;
+                                      tallyMoney = tallyMoneyTemplate;
+                                    });
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    child: Icon(
+                                      Icons.check_outlined,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            elevation: 5.0,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              flag = true;
+                              tallyMoney = tallyMoney - 10;
+                            });
+                          },
+                          child: Icon(
+                            Icons.arrow_downward_sharp,
+                            color: Colors.black,
+                          ),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            elevation: 5.0,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              flag = true;
+                              tallyMoney = tallyMoney - 1;
+                            });
+                          },
+                          child: Icon(
+                            Icons.arrow_drop_down,
+                            color: Colors.black,
+                          ),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            elevation: 5.0,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              flag = true;
+                              tallyMoney = tallyMoney + 1;
+                            });
+                          },
+                          child: Icon(
+                            Icons.arrow_drop_up,
+                            color: Colors.black,
+                          ),
+                        ),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: Colors.white,
+                            elevation: 5.0,
+                          ),
+                          onPressed: () {
+                            flag = true;
+                            tallyMoney = tallyMoney + 10;
+                            setState(() {});
+                          },
+                          child: Icon(
+                            Icons.arrow_upward_sharp,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ]),
+                  Container(
+                    height: 20,
+                  ),
+                ]),
               ),
             ),
           ),
           Container(
             height: 20,
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: Colors.white,
-              elevation: 5.0,
-            ),
-            onPressed: () {
-              setState(() {
-                _1isShow = !_1isShow;
-              });
-            },
-            child: Container(
-              width: width - 80,
-              child: Column(children: [
-                Container(
-                  height: 20,
-                ),
-                Text(
-                  '记账金额',
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w600),
-                  textScaleFactor: 1.5,
-                ),
-                Container(
-                  height: 10,
-                ),
-                Stack(
-                  children: [
-                    Offstage(
-                      offstage: !_1isShow,
-                      child: Text(
-                        '$tallyMoney',
-                        textScaleFactor: 5.0,
-                        style: TextStyle(color: Colors.black),
-                      ),
-                    ),
-                    Offstage(
-                      offstage: _1isShow,
-                      child: Container(
-                        width: width - 50,
-                        child: Row(
-                          children: [
-                            Container(
-                              width: width - 170,
-                              child: TextField(
-                                cursorColor: Colors.orange,
-                                cursorWidth: 15,
-                                cursorRadius: Radius.circular(15),
-                                decoration: InputDecoration(
-                                  hintText: "修改记账金额：当前 $tallyMoney",
-                                  border: OutlineInputBorder(
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                ),
-                                keyboardType: TextInputType.number,
-                                onChanged: (text) {
-                                  print(text);
-                                  tallyMoneyTemplate = int.parse(text);
-                                  flag = true;
-                                },
-                              ),
-                            ),
-                            Container(
-                              width: 20,
-                            ),
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.white70,
-                                elevation: 5.0,
-                              ),
-                              onPressed: () {
-                                setState(() {
-                                  _1isShow = !_1isShow;
-                                  tallyMoney = tallyMoneyTemplate;
-                                });
-                              },
-                              child: Container(
-                                width: 35,
-                                height: 40,
-                                child: Icon(
-                                  Icons.check_outlined,
-                                  color: Colors.black,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          elevation: 5.0,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            flag = true;
-                            tallyMoney = tallyMoney - 10;
-                          });
-                        },
-                        child: Icon(
-                          Icons.arrow_downward_sharp,
-                          color: Colors.black,
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          elevation: 5.0,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            flag = true;
-                            tallyMoney = tallyMoney - 1;
-                          });
-                        },
-                        child: Icon(
-                          Icons.arrow_drop_down,
-                          color: Colors.black,
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          elevation: 5.0,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            flag = true;
-                            tallyMoney = tallyMoney + 1;
-                          });
-                        },
-                        child: Icon(
-                          Icons.arrow_drop_up,
-                          color: Colors.black,
-                        ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.white,
-                          elevation: 5.0,
-                        ),
-                        onPressed: () {
-                          flag = true;
-                          tallyMoney = tallyMoney + 10;
-                          setState(() {});
-                        },
-                        child: Icon(
-                          Icons.arrow_upward_sharp,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ]),
-                Container(
-                  height: 20,
-                ),
-              ]),
-            ),
-          ),
-          Container(
-            height: 20,
-          ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: Colors.white,
-              elevation: 5.0,
-            ),
-            onPressed: () {
+          InkWell(
+
+            onTap: () {
               setState(() {
                 _2isShow = !_2isShow;
               });
             },
             child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey,
+                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+
+              ),
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
               width: width - 80,
               child: Column(children: [
                 Container(
                   height: 10,
                 ),
-                Text(
-                  '$addingWhatShow',
-                  textScaleFactor: 2.0,
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w900),
+                Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(8.0))
+                  ),
+                  child: Text(
+                    '$addingWhatShow',
+                    textScaleFactor: 2.0,
+                    style: TextStyle(
+                        color: Colors.black, fontWeight: FontWeight.w900),
+                  ),
                 ),
                 Offstage(
                   offstage: _2isShow,
@@ -360,47 +516,48 @@ class _AddConfigureState extends State<AddConfigure> {
                     ),
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 20,
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.greenAccent,
-                    elevation: 5.0,
-                  ),
-                  onPressed: () {
-                    if (tallyMoney == 0) {
-                      Fluttertoast.showToast(msg: "数据不合理");
-                    } else {
-                      int a=prefs.getInt('todayExpenditure')??0;
-                      int b=prefs.getInt('monthExpenditure')??0;
-                      if (addingWhat > 0 && addingWhat <= 4) {
-                        prefs.setInt('todayExpenditure', a-tallyMoney);
-                        prefs.setInt('monthExpenditure', b-tallyMoney);
+                Expanded(
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: Colors.greenAccent,
+                      elevation: 5.0,
+                    ),
+                    onPressed: () {
+                      if (tallyMoney == 0) {
+                        Fluttertoast.showToast(msg: "数据不合理");
                       } else {
-                        prefs.setInt('todayExpenditure', a+tallyMoney);
-                        prefs.setInt('monthExpenditure', b+tallyMoney);
+                        int a = prefs.getInt('todayExpenditure') ?? 0;
+                        int b = prefs.getInt('monthExpenditure') ?? 0;
+                        if (addingWhat > 0 && addingWhat <= 4) {
+                          prefs.setInt('todayExpenditure', a - tallyMoney);
+                          prefs.setInt('monthExpenditure', b - tallyMoney);
+                        } else {
+                          prefs.setInt('todayExpenditure', a + tallyMoney);
+                          prefs.setInt('monthExpenditure', b + tallyMoney);
+                        }
+                        String dateTime = formatDate(
+                            DateTime.now(), ['yyyy', '年', 'mm', '月', 'dd', '日']);
+                        List<String> item = [
+                          tallyMoney.toString(),
+                          addingWhat.toString(),
+                          dateTime
+                        ];
+                        print('itemCount ${_itemCount + 1} is saved');
+                        print('item $item is saved');
+                        prefs.setInt('itemCount', _itemCount + 1);
+                        prefs.setStringList(_itemCount.toString(), item);
+                        Navigator.popAndPushNamed(context, "/detailMessagePage");
                       }
-                      String dateTime = formatDate(
-                          DateTime.now(), ['yyyy', '年', 'mm', '月', 'dd', '日']);
-                      List<String> item = [
-                        tallyMoney.toString(),
-                        addingWhat.toString(),
-                        dateTime
-                      ];
-                      print('itemCount ${_itemCount + 1} is saved');
-                      print('item $item is saved');
-                      prefs.setInt('itemCount', _itemCount+1);
-                      prefs.setStringList(_itemCount.toString(), item);
-                      Navigator.popAndPushNamed(context, "/detailMessagePage");
-                    }
-                  },
-                  child: Container(
-                    width: width / 2 + 15,
-                    height: 100,
-                    child: Icon(
-                      Icons.check_outlined,
-                      color: Colors.black,
+                    },
+                    child: Container(
+                      height: 100,
+                      child: Icon(
+                        Icons.check_outlined,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
@@ -423,7 +580,7 @@ class _AddConfigureState extends State<AddConfigure> {
                   decoration: new BoxDecoration(
                     color: Colors.white,
                     borderRadius:
-                        new BorderRadius.all(new Radius.circular(30.0)),
+                    new BorderRadius.all(new Radius.circular(30.0)),
                     image: new DecorationImage(
                       alignment: Alignment.centerRight,
                       image: new AssetImage('assets/images/logo.png'),

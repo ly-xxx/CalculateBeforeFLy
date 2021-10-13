@@ -11,6 +11,7 @@ import 'my_page.dart';
 import 'details/detail_message.dart';
 import 'moreThings/more_things.dart';
 import 'data/test.dart';
+import 'package:flutter/services.dart';
 
 void main() async{
   //runApp(MyApp());
@@ -26,6 +27,8 @@ void main() async{
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -45,8 +48,8 @@ class MyApp extends StatelessWidget {
         "/staticsExpendPage":(context)=>StatisExpendPage(),
       },
       //initialRoute: "/myPage",
-     home: StartPage(),
-      //home:StatisPage(),
+
+      home:StartPage(),
     );
   }
 }
@@ -70,7 +73,7 @@ class _StartPageState extends State<StartPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Image.asset("assets/images/third.png",fit: BoxFit.cover)
+        child: Image.asset("assets/images/fourth.png",fit: BoxFit.cover)
     );
   }
 }

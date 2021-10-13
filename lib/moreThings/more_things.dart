@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twt_account/data/global_data.dart';
 import 'package:twt_account/data/toast_provider.dart';
-
-import 'theme/theme_config.dart';
+import 'package:twt_account/moreThings/theme/theme_config.dart';
 
 class MoreThingsPage extends StatefulWidget {
   const MoreThingsPage({Key? key, int? data}) : super(key: key);
@@ -18,9 +18,40 @@ SharedPreferences prefs = GlobalData.getPref()!;
 int _keepCounts = prefs.getInt('itemCount') ?? 0;
 
 class _MoreThingsPageState extends State<MoreThingsPage> {
+
   int _keepDays = 1;
+  int _todayExpenditure = 0;
+  int _monthExpenditure = 0;
+  int _gdsz = 0; //固定收支
+  bool _typeOfGdsz = true; //收入还是支出，true为收入，false为支出
+  int _value1 = 1; //收入还是支出，下拉选项框参数
+  int _value2 = 1; //具体来源或者用途，下拉选项框参数
+  bool _offstage = false;
+  var textFieldMoney;
   double width = 0.0;
   double height = 0.0;
+  TextEditingController textFieldController = new TextEditingController();
+
+  @override
+  void initState() {
+    _todayExpenditure = prefs.getInt('todayExpenditure') ?? 0;
+    _monthExpenditure = prefs.getInt('monthExpenditure') ?? 0;
+    _gdsz = prefs.getInt('gdsz') ?? 0;
+    _typeOfGdsz = prefs.getBool('typeOfGdsz') ?? true;
+    super.initState();
+  }
+
+  bool isNumber(String str) {
+    //检查一个金额输入的是否全部是数字
+    final reg = RegExp(r'^-?[0-9]+');
+    return reg.hasMatch(str);
+  }
+
+  @override
+  void dispose() {
+    textFieldController.dispose();
+    super.dispose();
+  }
 
   Widget bottom(context) {
     return Column(
@@ -29,12 +60,13 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
           height: 50,
           child: Row(
             children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.popAndPushNamed(context, "/myPage");
-                  },
+              InkWell(
+                onTap: () {
+                  Navigator.popAndPushNamed(context, "/myPage");
+                },
+                child: Container(
+                  width: 50,
+                  height: 50,
                   child: Icon(
                     Icons.home,
                     size: 25,
@@ -42,38 +74,41 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                   ),
                 ),
               ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Provider.of<ThemeProvider>(context).color1,
-                    elevation: 5.0,
-                  ),
-                  onPressed: () {
-                    Navigator.popAndPushNamed(context, "/askingPricePage");
-                  },
-                  child: Container(
-                    width: width - 84,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                            child: Icon(
-                          Icons.leaderboard,
-                          size: 25,
-                          color: Provider.of<ThemeProvider>(context).color2,
-                        )),
-                        SizedBox(
-                          width: 30,
-                        ),
-                        Text(
-                          "统计",
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Provider.of<ThemeProvider>(context).color2,
-                              fontWeight: FontWeight.w900),
-                        ),
-                      ],
-                    ),
-                  )),
+
+              Expanded(
+                child: InkWell(
+                    onTap: () {
+                      Navigator.popAndPushNamed(context, "/askingPricePage");
+                    },
+                    child: Container(
+                      height: 50,
+                      decoration: BoxDecoration(
+                          color: Provider.of<ThemeProvider>(context).color1,
+                          borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0))
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                              child: Icon(
+                            Icons.attach_money,
+                            size: 25,
+                            color: Provider.of<ThemeProvider>(context).color2,
+                          )),
+                          SizedBox(
+                            width: 30,
+                          ),
+                          Text(
+                            "问价",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Provider.of<ThemeProvider>(context).color2,
+                                fontWeight: FontWeight.w900),
+                          ),
+                        ],
+                      ),
+                    )),
+              ),
             ],
           ),
         ),
@@ -85,7 +120,9 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     return Column(
       children: <Widget>[
         SizedBox(
+
           height: 100,
+
         ),
         Card(
           color: Colors.white,
@@ -324,7 +361,10 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
             color: Provider.of<ThemeProvider>(context).color6),
       ),
     ]));
+
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -335,32 +375,36 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
       backgroundColor: Provider.of<ThemeProvider>(context).color3,
       body: Column(
         children: [
-          SizedBox(
-            height: 30,
-          ),
           Expanded(
             child: Row(
               children: <Widget>[
                 Container(
                   width: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                      primary: Provider.of<ThemeProvider>(context).color1,
-                      elevation: 5.0,
-                    ),
-                    onPressed: () {
+
+                  child: InkWell(
+
+                    onTap: () {
                       Navigator.popAndPushNamed(context, "/detailMessagePage");
                     },
-                    child: Align(
-                      alignment: Alignment.center,
+                    child: Container(
+                      width: 50,
+                      decoration: BoxDecoration(
+                          color: Provider.of<ThemeProvider>(context).color1,
+                          borderRadius: BorderRadius.only(bottomRight: Radius.circular(10.0))
+                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Icon(
-                            Icons.list,
-                            size: 30,
-                            color: Provider.of<ThemeProvider>(context).color2,
+                          SizedBox(
+                            height: 20,
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Icon(
+                              Icons.menu_open,
+                              size: 30,
+                              color: Provider.of<ThemeProvider>(context).color2,
+                            ),
                           ),
                           SizedBox(
                             height: 15,
@@ -369,8 +413,8 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                             "明\n细",
                             style: TextStyle(
                                 fontSize: 20,
-                                color:
-                                    Provider.of<ThemeProvider>(context).color2,
+
+                                color: Provider.of<ThemeProvider>(context).color2,
                                 fontWeight: FontWeight.w900),
                           ),
                         ],
@@ -380,7 +424,6 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                 ),
                 Expanded(
                   child: mainPage(),
-                  flex: 9,
                 ),
               ],
             ),

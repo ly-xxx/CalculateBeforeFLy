@@ -85,6 +85,10 @@ class _MyPageState extends State<MyPage> {
 
   Color indicatorColor = Colors.black12;
 
+  _remove() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+  }
 
   void setBudget() {
     int _value = 0;
@@ -119,8 +123,8 @@ class _MyPageState extends State<MyPage> {
                       children: List.generate(31, (index) => Text(
                         '${index*100}',
                         style: TextStyle(
-                          fontWeight: FontWeight.w400,
-                          fontSize: 30
+                            fontWeight: FontWeight.w400,
+                            fontSize: 30
                         ),
                       ))
                   ),
@@ -153,59 +157,60 @@ class _MyPageState extends State<MyPage> {
     if(_monthExpenditure > _budget) indicatorColor = Provider.of<ThemeProvider>(context).color5 ;
     else indicatorColor = Provider.of<ThemeProvider>(context).color4;
     return Scaffold(
-        backgroundColor: Provider.of<ThemeProvider>(context).color3,
+      backgroundColor: Provider.of<ThemeProvider>(context).color3,
       body: Consumer<ThemeProvider>(
         builder:(_,theme,__) =>  Stack(children: <Widget>[
           Column(
             children: <Widget>[
-              SizedBox(
-                height: 30,
-              ),
               Container(
-                height: 50,
+                //height: 80,
                 child: Row(
                   children: <Widget>[
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: theme.color1,
-                          elevation: 5.0,
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/detailMessagePage");
-                        },
-                        child: Container(
-                          width: width - 84,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                  child: Icon(
-                                Icons.list,
-                                size: 40,
-                                color: theme.color2,
-                              )),
-                              SizedBox(
-                                width: 30,
-                              ),
-                              Text(
-                                "明细",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: theme.color2,
-                                    fontWeight: FontWeight.w900),
-                              ),
-                            ],
-                          ),
-                        )),
                     Expanded(
-                      flex: 1,
                       child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, "/moreThingsPage");
-                        },
+                          onTap: () {
+                            Navigator.pushNamed(context, "/detailMessagePage");
+                          },
+                          child: Container(
+                            height: 50,
+                            decoration: BoxDecoration(
+                                color: theme.color1,
+                                borderRadius: BorderRadius.only(bottomRight: Radius.circular(10.0))
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                    child: Icon(
+                                      Icons.list,
+                                      size: 40,
+                                      color: theme.color2,
+                                    )),
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                Text(
+                                  "明细",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: theme.color2,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                              ],
+                            ),
+                          )),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/moreThingsPage");
+                      },
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        color:Provider.of<ThemeProvider>(context).color3,
                         child: Icon(
                           Icons.settings,
-                          size: 20,
+                          size: 25,
                           color: Provider.of<ThemeProvider>(context).color2,
                         ),
                       ),
@@ -215,51 +220,51 @@ class _MyPageState extends State<MyPage> {
               ),
               Expanded(
                 child: Row(
-                  children: <Widget>[
-                    Expanded(
-                        flex: 9,
-                        child: Container(
-                          decoration: BoxDecoration(),
-                          child: mainPage(theme),
-                        )),
-                    Container(
-                      width: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          primary: theme.color1,
-                          elevation: 5.0,
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, "/statisPage");
-                        },
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.attach_money,
-                                size: 30,
-                                color: theme.color2,
+                    children: <Widget>[
+                      Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(),
+                            child: mainPage(theme),
+                          )),
+                      Container(
+                          width: 50,
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.pushNamed(context, "/statisPage");
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: theme.color1,
+                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0))
                               ),
-                            SizedBox(
-                              height: 15,
+                              child: Align(
+                                alignment: Alignment.center,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Icon(
+                                      Icons.attach_money,
+                                      size: 30,
+                                      color: theme.color2,
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
+                                    Text(
+                                      "统\n计",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: theme.color2,
+                                          fontWeight: FontWeight.w900),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            Text(
-                              "统\n计",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: theme.color2,
-                                  fontWeight: FontWeight.w900),
-                            ),
-                          ],
-                        ),
+                          )
                       ),
-                    )
-                ),
-                ]
-              ),),
+                    ]
+                ),),
             ],
           ),
         ]),
@@ -284,7 +289,7 @@ class _MyPageState extends State<MyPage> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 40),
+          SizedBox(height: 30),
           Row(children: [
             SizedBox(
               width: 30,
@@ -293,21 +298,21 @@ class _MyPageState extends State<MyPage> {
               onTap: setBudget,
               child: _budget == 0
                   ? Text(
-                      "请输入预算",
-                      // "$_monthExpenditure / $_budget",..
-                      style: TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.w900,
-                          color: theme.color2),
-                    )
+                "请输入预算",
+                // "$_monthExpenditure / $_budget",..
+                style: TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.w900,
+                    color: theme.color2),
+              )
                   : Text(
-                      "${_monthExpenditure.abs()} / $_budget",
-                      // "$_monthExpenditure / $_budget",..
-                      style: TextStyle(
-                          fontSize: 55,
-                          fontWeight: FontWeight.w900,
-                          color: theme.color2),
-                    ),
+                "${_monthExpenditure.abs()} / $_budget",
+                // "$_monthExpenditure / $_budget",..
+                style: TextStyle(
+                    fontSize: 55,
+                    fontWeight: FontWeight.w900,
+                    color: theme.color2),
+              ),
             ),
           ]),
           Row(children: [
@@ -333,7 +338,7 @@ class _MyPageState extends State<MyPage> {
           SizedBox(height: 100),
           Expanded(
             child: tools(),
-            ),
+          ),
         ],
       ),
       Offstage(
@@ -671,25 +676,27 @@ class _MyPageState extends State<MyPage> {
                 width: (width - 50) / 2,
                 child: Column(
                   children: [
-                    Container(
-                      height: 6,
-                    ),
                     InkWell(
-                      onTap: () {
-                        setState(() {
-                          _isNotShow = !_isNotShow;
-                        });
-                      },
-                      child: Icon(Icons.add_circle,
-                          color: Provider.of<ThemeProvider>(context).color2, size: 60.0),
-                    ),
-                    Text("记一笔",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color: Provider.of<ThemeProvider>(context).color6,
-                            fontWeight: FontWeight.w900)),
-                    Container(
-                      height: 4,
+                        onTap: () {
+                          setState(() {
+                            _isNotShow = !_isNotShow;
+                          });
+                        },
+                        child: Container(
+                          width: 110,
+                          height: 110,
+                          decoration: BoxDecoration(
+                              color: Provider.of<ThemeProvider>(context).color6,
+                              borderRadius: BorderRadius.all(Radius.circular(150.0))
+                          ),
+                          child: Center(
+                            child: Text("记一笔",
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w900)),
+                          ),
+                        )
                     ),
                   ],
                 )),
@@ -708,7 +715,7 @@ class _MyPageState extends State<MyPage> {
                   InkWell(
                     onTap: (){
                       setState(() {
-                        prefs.clear();
+                        _remove();
                       });
 
                     },
