@@ -6,7 +6,6 @@ import 'package:twt_account/moreThings/theme/theme_config.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:twt_account/data/global_data.dart';
 import 'package:twt_account/statistics/pie.dart';
-import 'package:twt_account/statistics/sales.dart';
 
 import 'line.dart';
 
@@ -16,20 +15,16 @@ class StatisPage extends StatefulWidget {
   @override
   _StatisPageState createState() => _StatisPageState();
 }
+SharedPreferences prefs = GlobalData.getPref()!;
+DateTime now = new DateTime.now();
+double _monthIncome=(getMonth(now.month.toString(), 1)+getMonth(now.month.toString(), 2)
+    +getMonth(now.month.toString(), 3)+getMonth(now.month.toString(), 4))??0;
 
 class _StatisPageState extends State<StatisPage> {
-  int _todayExpenditure = 0;
-  int _monthExpenditure = 0;
-  int _averageDailyConsumption = 0;
-  int _budget = 0; //
-  int valueTransfer = 0;
-  int tallyMoney = 0; //金额
-  double _monthExpenditureBudgetPercentage = 0;
-  SharedPreferences prefs = GlobalData.getPref()!;
 
   double width = 0.0;
   double height = 0.0;
-  int addingFuckInWhat = 0;
+
 
   Widget top(context) {
     return Column(
@@ -66,7 +61,7 @@ class _StatisPageState extends State<StatisPage> {
                       children: <Widget>[
                         Container(
                             child: Icon(
-                          Icons.account_tree_outlined,
+                          Icons.person,
                           size: 25,
                           color: Provider.of<ThemeProvider>(context).color2,
                         )),
@@ -74,7 +69,7 @@ class _StatisPageState extends State<StatisPage> {
                           width: 30,
                         ),
                         Text(
-                          "更多",
+                          "我的",
                           style: TextStyle(
                               fontSize: 20,
                               color: Provider.of<ThemeProvider>(context).color2,
@@ -102,7 +97,6 @@ class _StatisPageState extends State<StatisPage> {
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: Provider.of<ThemeProvider>(context).color1,
-                      padding: EdgeInsets.zero,
                       elevation: 5.0,
                     ),
                     onPressed: () {
@@ -116,7 +110,7 @@ class _StatisPageState extends State<StatisPage> {
                         Align(
                           alignment: Alignment.center,
                           child: Icon(
-                            Icons.contacts,
+                            Icons.home,
                             size: 30,
                             color: Provider.of<ThemeProvider>(context).color2,
                           ),
@@ -125,7 +119,7 @@ class _StatisPageState extends State<StatisPage> {
                           height: 15,
                         ),
                         Text(
-                          "我",
+                          "首\n页",
                           style: TextStyle(
                               fontSize: 20,
                               color: Provider.of<ThemeProvider>(context).color2,
@@ -262,7 +256,7 @@ Card card() {
       child: Container(
           margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
           alignment: Alignment(-1, -1),
-          child: Column(children: const <Widget>[
+          child: Column(children:  <Widget>[
             
             Text(
               '本月收入合计',
@@ -276,7 +270,7 @@ Card card() {
               height: 10,
             ),
             Text(
-              '¥344',
+             "$_monthIncome",
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 30.0,

@@ -66,12 +66,13 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                   width: 50,
                   height: 50,
                   child: Icon(
-                    Icons.contacts,
+                    Icons.home,
                     size: 25,
                     color: Provider.of<ThemeProvider>(context).color2,
                   ),
                 ),
               ),
+
               Expanded(
                 child: InkWell(
                     onTap: () {
@@ -99,8 +100,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                             "统计",
                             style: TextStyle(
                                 fontSize: 20,
-                                color:
-                                    Provider.of<ThemeProvider>(context).color2,
+                                color: Provider.of<ThemeProvider>(context).color2,
                                 fontWeight: FontWeight.w900),
                           ),
                         ],
@@ -118,303 +118,145 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     return Column(
       children: <Widget>[
         SizedBox(
-          height: 30,
+
+          height: 100,
+
         ),
-        Row(
-          children: [
-            SizedBox(
-              width: 20,
+        Card(
+          color: Colors.white,
+          shadowColor: Colors.grey.shade800, // 阴影颜色
+          //elevation: 10, // 阴影高度
+          borderOnForeground: false, // 是否在 child 前绘制 border，默认为 true
+          margin: EdgeInsets.fromLTRB(10, 10, 10, 10), // 外边距
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+            side: const BorderSide(
+              color: Colors.white,
+              width: 3,
             ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(35.0)),
-                border: new Border.all(
-                  width: 1,
-                  color: Colors.white70,
-                ),
-                image: new DecorationImage(
-                  alignment: Alignment.centerRight,
-                  image: new AssetImage('assets/images/furry.png'),
-                ),
-              ),
-              height: 70,
-              width: 70,
-            ),
-            SizedBox(
-              width: 20,
-            ),
-            Text(
-              '付瑞',
-              style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 30,
-                  color: Provider.of<ThemeProvider>(context).color2),
-            ),
-          ],
+          ),
+          child: getCardTop(),
         ),
-        Expanded(
+        SizedBox(
+          height: 50,
+        ),
+        Container(
+          padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
           child: Container(
-            padding: EdgeInsets.fromLTRB(10, 20, 10, 15),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                border: new Border.all(
-                  width: 1,
-                  color: Colors.white24,
-                ),
-                color: Provider.of<ThemeProvider>(context).color1,
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black12,
-                      offset: Offset(0.0, 0.0), //阴影x轴偏移量
-                      blurRadius: 2, //阴影模糊程度
-                      spreadRadius: 2 //阴影扩散程度
-                      )
-                ],
-              ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 40,
-                  ),
-                  Row(
-                    children: [
-                      SizedBox(
-                        width: 60,
-                      ),
-                      daysPage(),
-                      Expanded(child: SizedBox()),
-                      cntPage(),
-                      SizedBox(
-                        width: 60,
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 60,
-                  ),
-                  Stack(
-                    children: [
-                      Offstage(
-                        offstage: _offstage,
-                        child: Container(
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 60,
-                                  ),
-                                  skinPage(),
-                                  Expanded(child: SizedBox()),
-                                  fixedPage(),
-                                  SizedBox(
-                                    width: 60,
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 60,
-                              ),
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 60,
-                                  ),
-                                  Text(" "),
-                                  Expanded(child: SizedBox()),
-                                  logOutPage(),
-                                  SizedBox(
-                                    width: 60,
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      Offstage(
-                        offstage: !_offstage,
-                        child: Container(
-                          child: Padding(
-                            padding: EdgeInsets.all(4.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  children: <Widget>[
-                                    SizedBox(width: 10),
-                                    DropdownButton(
-                                      value: _value1,
-                                      items: [
-                                        DropdownMenuItem(
-                                          child: Text("收入"),
-                                          value: 1,
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text("支出"),
-                                          value: 2,
-                                        ),
-                                      ],
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _value1 = value as int;
-                                        });
-                                      },
-                                    ),
-                                    SizedBox(width: 20),
-                                    DropdownButton(
-                                      value: _value2,
-                                      items: [
-                                        DropdownMenuItem(
-                                          child: Text("学习"),
-                                          value: 1,
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text("娱乐"),
-                                          value: 2,
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text("生活"),
-                                          value: 3,
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text("餐饮"),
-                                          value: 4,
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text("理财"),
-                                          value: 5,
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text("工资"),
-                                          value: 6,
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text("生活费"),
-                                          value: 7,
-                                        ),
-                                        DropdownMenuItem(
-                                          child: Text("其他"),
-                                          value: 8,
-                                        ),
-                                      ],
-                                      onChanged: (v) {
-                                        setState(() {
-                                          //print(v);
-                                          _value2 = v as int;
-                                          print(_value2);
-                                        });
-                                      },
-                                    ),
-                                    SizedBox(
-                                      width: 20,
-                                    ),
-                                    Expanded(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(20.0)),
-                                            border: Border.all(
-                                                color: Colors.black12,
-                                                width: 2)),
-                                        child: TextField(
-                                          controller: textFieldController,
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: "金额",
-                                              hintStyle:
-                                                  TextStyle(fontSize: 18)),
-                                          style: TextStyle(fontSize: 18),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 30,
-                                ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(20.0)),
-                                            border: Border.all(
-                                                color: Colors.black12,
-                                                width: 2)),
-                                        child: TextField(
-                                          keyboardType: TextInputType.number,
-                                          decoration: InputDecoration(
-                                              border: InputBorder.none,
-                                              hintText: "备注",
-                                              hintStyle:
-                                                  TextStyle(fontSize: 18)),
-                                          style: TextStyle(fontSize: 18),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: 50,
-                                      height: 50,
-                                      child: IconButton(
-                                          onPressed: () {
-                                            int x;
-                                            if (textFieldController
-                                                .text.isEmpty)
-                                              x = 0;
-                                            else
-                                              x = int.parse(
-                                                  textFieldController.text);
-                                            print('x is $x');
-                                            prefs.setInt('gdsz', x);
-                                            print(_gdsz);
-                                            if (_typeOfGdsz) {
-                                              //_todayExpenditure+=_gdsz;
-                                              _monthExpenditure += _gdsz;
-                                            } else {
-                                              //_todayExpenditure-=_gdsz;
-                                              _monthExpenditure -= _gdsz;
-                                            }
-
-                                            if (_value1 == 2) {
-                                              prefs.setBool(
-                                                  'typeOfGdsz', false);
-                                              //_todayExpenditure+=x;
-                                              _monthExpenditure += x;
-                                            } else {
-                                              prefs.setBool('typeOfGdsz', true);
-                                              //_todayExpenditure-=x;
-                                              _monthExpenditure -= x;
-                                            }
-                                            //prefs.setInt('todayExpenditure', _todayExpenditure);
-                                            prefs.setInt('monthExpenditure',
-                                                _monthExpenditure);
-
-                                            print(
-                                                '固定收支设置为${prefs.getInt('gdsz')}');
-                                            setState(() {
-                                              _offstage = !_offstage;
-                                            });
-                                          },
-                                          icon: Icon(Icons.check, size: 30)),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
+            child: gridViewPage(),
           ),
         ),
       ],
+    );
+  }
+
+  Widget getCardTop() {
+    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Container(
+        height: 100,
+        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+          ///圆形头像框
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.grey,
+              shape: BoxShape.circle,
+            ),
+            height: 200,
+            width: 70,
+          ),
+
+          ///用户名
+          Text(
+            '用户名',
+            style: TextStyle(
+                fontWeight: FontWeight.w500,
+                fontSize: 25,
+                color: Provider.of<ThemeProvider>(context).color2),
+          ),
+          SizedBox(
+            width: 60,
+          ),
+
+          ///退出登录
+          IconButton(
+            onPressed: () {
+              ToastProvider.success("退出登录成功");
+              Navigator.pushNamed(context, "/loginInPage");
+            },
+            icon: Icon(Icons.logout),
+            iconSize: 40,
+            color: Provider.of<ThemeProvider>(context).color2,
+          ),
+        ]),
+      ),
+      Row(
+        children: [
+          SizedBox(
+            width: 50,
+          ),
+          Container(
+            child: daysPage(),
+          ),
+          SizedBox(
+            width: 50,
+          ),
+          cntPage(),
+        ],
+      ),
+    ]);
+  }
+
+  Widget gridViewPage() {
+    return Padding(
+      padding: EdgeInsets.all(5.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[
+          Container(
+            width: 135,
+            height: 135,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(15.0)),
+              border: new Border.all(
+                width: 1,
+                color: Colors.white24,
+              ),
+              color: Provider.of<ThemeProvider>(context).color1,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  offset: Offset(0.0, 0.0), //阴影x轴偏移量
+                  blurRadius: 4, //阴影模糊程度
+                )
+              ],
+            ),
+            child: skinPage(),
+          ),
+          SizedBox(
+            width: 15,
+          ),
+          Container(
+            width: 135,
+            height: 135,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(15.0)),
+              border: new Border.all(
+                width: 1,
+                color: Colors.white24,
+              ),
+              color: Provider.of<ThemeProvider>(context).color1,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black12,
+                  offset: Offset(0.0, 0.0), //阴影x轴偏移量
+                  blurRadius: 4, //阴影模糊程度
+                )
+              ],
+            ),
+            child: fixedPage(),
+          ),
+        ],
+      ),
     );
   }
 
@@ -449,15 +291,15 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
         Text(
           "$_keepCounts",
           style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 55,
+              fontWeight: FontWeight.w500,
+              fontSize: 60,
               color: Provider.of<ThemeProvider>(context).color2),
         ),
         Text(
           "记账笔数",
           style: TextStyle(
-            fontWeight: FontWeight.w900,
-            fontSize: 15,
+            fontWeight: FontWeight.w800,
+            fontSize: 20,
             color: Provider.of<ThemeProvider>(context).color6,
           ),
         )
@@ -466,67 +308,60 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
   }
 
   Widget skinPage() {
-    return Column(children: <Widget>[
-      IconButton(
-        onPressed: () {
-          Navigator.pushNamed(context, "/skinPage");
-        },
-        icon: Icon(Icons.style_outlined),
-        iconSize: 30,
-        color: Provider.of<ThemeProvider>(context).color2,
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Provider.of<ThemeProvider>(context).color1,
       ),
-      Text(
-        '皮肤',
-        style: TextStyle(
-            fontWeight: FontWeight.w900,
-            fontSize: 15,
-            color: Provider.of<ThemeProvider>(context).color6),
-      ),
-    ]);
+      onPressed: () {
+        Navigator.pushNamed(context, "/skinPage");
+      },
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+        Icon(
+          Icons.style_outlined,
+          size: 40,
+          color: Provider.of<ThemeProvider>(context).color2,
+        ),
+        SizedBox(height: 10,),
+        Text(
+          '个性装扮',
+          style: TextStyle(
+              fontWeight: FontWeight.w900,
+              fontSize: 20,
+              color: Provider.of<ThemeProvider>(context).color6),
+        ),
+      ]),
+    );
   }
 
   Widget fixedPage() {
-    return Column(children: <Widget>[
-      IconButton(
-          onPressed: () {
-            setState(() {
-              _offstage = !_offstage;
-            });
-          },
-          icon: Icon(
-            Icons.pan_tool_sharp,
-            size: 25,
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Provider.of<ThemeProvider>(context).color1,
+        ),
+        onPressed: () {
+
+        },
+    child:
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(
+            Icons.library_books,
+            size: 40,
             color: Provider.of<ThemeProvider>(context).color2,
-          )),
+          ),
+          SizedBox(height: 10,),
       Text(
         '固定收支',
         style: TextStyle(
-            fontSize: 15,
             fontWeight: FontWeight.w900,
+            fontSize: 20,
             color: Provider.of<ThemeProvider>(context).color6),
-      )
-    ]);
-  }
-
-  Widget logOutPage() {
-    return Column(children: [
-      IconButton(
-        onPressed: () {
-          ToastProvider.success("退出登录成功");
-          Navigator.pushNamed(context, "/loginInPage");
-        },
-        icon: Icon(Icons.person),
-        iconSize: 35,
-        color: Provider.of<ThemeProvider>(context).color2,
       ),
-      Text(
-        '退出登录',
-        style: TextStyle(
-            fontWeight: FontWeight.w900,
-            fontSize: 15,
-            color: Provider.of<ThemeProvider>(context).color6),
-      )
-    ]);
+    ]));
+
   }
 
   @override
@@ -543,6 +378,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
               children: <Widget>[
                 Container(
                   width: 50,
+
                   child: InkWell(
                     onTap: () {
                       Navigator.popAndPushNamed(context, "/detailMessagePage");
@@ -576,6 +412,8 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                                 fontSize: 20,
                                 color:
                                     Provider.of<ThemeProvider>(context).color2,
+
+                                color: Provider.of<ThemeProvider>(context).color2,
                                 fontWeight: FontWeight.w900),
                           ),
                         ],

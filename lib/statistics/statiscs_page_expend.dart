@@ -15,7 +15,7 @@ class StatisExpendPage extends StatefulWidget {
 }
 
 SharedPreferences prefs = GlobalData.getPref()!;
-int _monthExpenditure = prefs.getInt('itemCount') ??0;
+int _monthExpenditure = prefs.getInt('_monthExpenditure') ??0;
 //int _monthExpenditure=0;
 class _StatisExpendPageState extends State<StatisExpendPage> {
   int _todayExpenditure = 0;
