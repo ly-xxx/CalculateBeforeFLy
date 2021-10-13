@@ -96,7 +96,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                             width: 30,
                           ),
                           Text(
-                            "问价",
+                            "统计",
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Provider.of<ThemeProvider>(context).color2,
