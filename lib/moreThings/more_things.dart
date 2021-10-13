@@ -72,7 +72,6 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                   ),
                 ),
               ),
-
               Expanded(
                 child: InkWell(
                     onTap: () {
@@ -100,7 +99,8 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                             "统计",
                             style: TextStyle(
                                 fontSize: 20,
-                                color: Provider.of<ThemeProvider>(context).color2,
+                                color:
+                                    Provider.of<ThemeProvider>(context).color2,
                                 fontWeight: FontWeight.w900),
                           ),
                         ],
@@ -118,16 +118,17 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     return Column(
       children: <Widget>[
         SizedBox(
-
           height: 100,
-
         ),
         Card(
           color: Colors.white,
-          shadowColor: Colors.grey.shade800, // 阴影颜色
+          shadowColor: Colors.grey.shade800,
+          // 阴影颜色
           //elevation: 10, // 阴影高度
-          borderOnForeground: false, // 是否在 child 前绘制 border，默认为 true
-          margin: EdgeInsets.fromLTRB(10, 10, 10, 10), // 外边距
+          borderOnForeground: false,
+          // 是否在 child 前绘制 border，默认为 true
+          margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+          // 外边距
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),
             side: const BorderSide(
@@ -143,8 +144,174 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
         Container(
           padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
           child: Container(
-            child: gridViewPage(),
-          ),
+              child: Stack(
+            children: [
+              Offstage(offstage: _offstage, child: gridViewPage()),
+              Offstage(
+                offstage: !_offstage,
+                child: Container(
+                  child: Padding(
+                    padding: EdgeInsets.all(4.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          children: <Widget>[
+                            SizedBox(width: 10),
+                            DropdownButton(
+                              value: _value1,
+                              items: [
+                                DropdownMenuItem(
+                                  child: Text("收入"),
+                                  value: 1,
+                                ),
+                                DropdownMenuItem(
+                                  child: Text("支出"),
+                                  value: 2,
+                                ),
+                              ],
+                              onChanged: (value) {
+                                setState(() {
+                                  _value1 = value as int;
+                                });
+                              },
+                            ),
+                            SizedBox(width: 20),
+                            DropdownButton(
+                              value: _value2,
+                              items: [
+                                DropdownMenuItem(
+                                  child: Text("学习"),
+                                  value: 1,
+                                ),
+                                DropdownMenuItem(
+                                  child: Text("娱乐"),
+                                  value: 2,
+                                ),
+                                DropdownMenuItem(
+                                  child: Text("生活"),
+                                  value: 3,
+                                ),
+                                DropdownMenuItem(
+                                  child: Text("餐饮"),
+                                  value: 4,
+                                ),
+                                DropdownMenuItem(
+                                  child: Text("理财"),
+                                  value: 5,
+                                ),
+                                DropdownMenuItem(
+                                  child: Text("工资"),
+                                  value: 6,
+                                ),
+                                DropdownMenuItem(
+                                  child: Text("生活费"),
+                                  value: 7,
+                                ),
+                                DropdownMenuItem(
+                                  child: Text("其他"),
+                                  value: 8,
+                                ),
+                              ],
+                              onChanged: (v) {
+                                setState(() {
+                                  //print(v);
+                                  _value2 = v as int;
+                                  print(_value2);
+                                });
+                              },
+                            ),
+                            SizedBox(
+                              width: 20,
+                            ),
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                    border: Border.all(
+                                        color: Colors.black12, width: 2)),
+                                child: TextField(
+                                  controller: textFieldController,
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "金额(默认为0)",
+                                      hintStyle: TextStyle(fontSize: 18)),
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20.0)),
+                                    border: Border.all(
+                                        color: Colors.black12, width: 2)),
+                                child: TextField(
+                                  keyboardType: TextInputType.number,
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      hintText: "备注",
+                                      hintStyle: TextStyle(fontSize: 18)),
+                                  style: TextStyle(fontSize: 18),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: 50,
+                              height: 50,
+                              child: IconButton(
+                                  onPressed: () {
+                                    int x;
+                                    if(textFieldController.text.isEmpty)x=0;
+                                    else x = int.parse(textFieldController.text);
+                                    prefs.setInt('gdsz', x);
+                                    print(_gdsz);
+                                    if (_typeOfGdsz) {
+                                      //_todayExpenditure+=_gdsz;
+                                      _monthExpenditure += _gdsz;
+                                    } else {
+                                      //_todayExpenditure-=_gdsz;
+                                      _monthExpenditure -= _gdsz;
+                                    }
+
+                                    if (_value1 == 2) {
+                                      prefs.setBool('typeOfGdsz', false);
+                                      //_todayExpenditure+=x;
+                                      _monthExpenditure += x;
+                                    } else {
+                                      prefs.setBool('typeOfGdsz', true);
+                                      //_todayExpenditure-=x;
+                                      _monthExpenditure -= x;
+                                    }
+                                    //prefs.setInt('todayExpenditure', _todayExpenditure);
+                                    prefs.setInt(
+                                        'monthExpenditure', _monthExpenditure);
+
+                                    print('固定收支设置为${prefs.getInt('gdsz')}');
+                                    setState(() {
+                                      _offstage = !_offstage;
+                                    });
+                                  },
+                                  icon: Icon(Icons.check, size: 30)),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          )),
         ),
       ],
     );
@@ -197,10 +364,11 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
           Container(
             child: daysPage(),
           ),
+          Expanded(child: SizedBox()),
+          cntPage(),
           SizedBox(
             width: 50,
-          ),
-          cntPage(),
+          )
         ],
       ),
     ]);
@@ -291,15 +459,15 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
         Text(
           "$_keepCounts",
           style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 60,
+              fontWeight: FontWeight.w300,
+              fontSize: 55,
               color: Provider.of<ThemeProvider>(context).color2),
         ),
         Text(
           "记账笔数",
           style: TextStyle(
-            fontWeight: FontWeight.w800,
-            fontSize: 20,
+            fontWeight: FontWeight.w900,
+            fontSize: 15,
             color: Provider.of<ThemeProvider>(context).color6,
           ),
         )
@@ -318,20 +486,22 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-        Icon(
-          Icons.style_outlined,
-          size: 40,
-          color: Provider.of<ThemeProvider>(context).color2,
-        ),
-        SizedBox(height: 10,),
-        Text(
-          '个性装扮',
-          style: TextStyle(
-              fontWeight: FontWeight.w900,
-              fontSize: 20,
-              color: Provider.of<ThemeProvider>(context).color6),
-        ),
-      ]),
+            Icon(
+              Icons.style_outlined,
+              size: 40,
+              color: Provider.of<ThemeProvider>(context).color2,
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Text(
+              '个性装扮',
+              style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 20,
+                  color: Provider.of<ThemeProvider>(context).color6),
+            ),
+          ]),
     );
   }
 
@@ -341,27 +511,29 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
           primary: Provider.of<ThemeProvider>(context).color1,
         ),
         onPressed: () {
-
+          setState(() {
+            _offstage=!_offstage;
+          });
         },
-    child:
-      Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(
-            Icons.library_books,
-            size: 40,
-            color: Provider.of<ThemeProvider>(context).color2,
-          ),
-          SizedBox(height: 10,),
-      Text(
-        '固定收支',
-        style: TextStyle(
-            fontWeight: FontWeight.w900,
-            fontSize: 20,
-            color: Provider.of<ThemeProvider>(context).color6),
-      ),
-    ]));
-
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.library_books,
+                size: 40,
+                color: Provider.of<ThemeProvider>(context).color2,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                '固定收支',
+                style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                    fontSize: 20,
+                    color: Provider.of<ThemeProvider>(context).color6),
+              ),
+            ]));
   }
 
   @override
@@ -378,7 +550,6 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
               children: <Widget>[
                 Container(
                   width: 50,
-
                   child: InkWell(
                     onTap: () {
                       Navigator.popAndPushNamed(context, "/detailMessagePage");
@@ -412,8 +583,6 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                                 fontSize: 20,
                                 color:
                                     Provider.of<ThemeProvider>(context).color2,
-
-                                color: Provider.of<ThemeProvider>(context).color2,
                                 fontWeight: FontWeight.w900),
                           ),
                         ],

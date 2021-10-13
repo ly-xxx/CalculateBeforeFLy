@@ -5,6 +5,7 @@ import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twt_account/moreThings/theme/theme_config.dart';
 import 'package:twt_account/data/global_data.dart';
+import 'package:twt_account/add_configure/adding_what_list.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({Key? key}) : super(key: key);
@@ -21,7 +22,7 @@ class _MyPageState extends State<MyPage> {
   int valueTransfer = 0;
   int tallyMoney = 0; //金额
   double _monthExpenditureBudgetPercentage = 0;
-  SharedPreferences prefs=GlobalData.getPref()!;
+  SharedPreferences prefs = GlobalData.getPref()!;
 
   double width = 0.0;
   double height = 0.0;
@@ -68,17 +69,17 @@ class _MyPageState extends State<MyPage> {
   bool get wantKeepAlive => true;
 
   //List<Widget> _list = [];
-  List addingWhatList = [
-    'xixi',
-    '收入了：生活费 工资',
-    '收入了：理财',
-    '收入了：学习',
-    '收入了：其他',
-    '支出了：餐饮 娱乐',
-    '支出了：生活',
-    '支出了：学习',
-    '支出了：其他'
-  ];
+  // List addingWhatList = [
+  //   'xixi',
+  //   '收入了：生活费 工资',
+  //   '收入了：理财',
+  //   '收入了：学习',
+  //   '收入了：其他',
+  //   '支出了：餐饮 娱乐',
+  //   '支出了：生活',
+  //   '支出了：学习',
+  //   '支出了：其他'
+  // ];
   String addingWhatListOutput = "";
 
   get async => null;
@@ -120,14 +121,13 @@ class _MyPageState extends State<MyPage> {
                       onSelectedItemChanged: (position) {
                         _value = position * 100;
                       },
-                      children: List.generate(31, (index) => Text(
-                        '${index*100}',
-                        style: TextStyle(
-                            fontWeight: FontWeight.w400,
-                            fontSize: 30
-                        ),
-                      ))
-                  ),
+                      children: List.generate(
+                          31,
+                          (index) => Text(
+                                '${index * 100}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400, fontSize: 30),
+                              ))),
                 ),
               ],
             ),
@@ -142,24 +142,26 @@ class _MyPageState extends State<MyPage> {
 
   @override
   Widget build(BuildContext context) {
-    _budget=prefs.getInt('budget')??0;
-    _todayExpenditure=prefs.getInt('todayExpenditure')??0;
-    _monthExpenditure=prefs.getInt('monthExpenditure')??0;
+    _budget = prefs.getInt('budget') ?? 0;
+    _todayExpenditure = prefs.getInt('todayExpenditure') ?? 0;
+    _monthExpenditure = prefs.getInt('monthExpenditure') ?? 0;
     final size = MediaQuery.of(context).size;
     width = size.width;
     height = size.height;
     smallTallyWidth = (width - 62) / 4;
-    addingWhatListOutput = addingWhatList[addingFuckInWhat];
+    addingWhatListOutput = AddingWhat().addingWhatList[addingFuckInWhat];
     if (_monthExpenditure == 0) {
       _monthExpenditureBudgetPercentage = 0;
     } else
       _monthExpenditureBudgetPercentage = _monthExpenditure / _budget * 0.9;
-    if(_monthExpenditure > _budget) indicatorColor = Provider.of<ThemeProvider>(context).color5 ;
-    else indicatorColor = Provider.of<ThemeProvider>(context).color4;
+    if (_monthExpenditure > _budget)
+      indicatorColor = Provider.of<ThemeProvider>(context).color5;
+    else
+      indicatorColor = Provider.of<ThemeProvider>(context).color4;
     return Scaffold(
       backgroundColor: Provider.of<ThemeProvider>(context).color3,
       body: Consumer<ThemeProvider>(
-        builder:(_,theme,__) =>  Stack(children: <Widget>[
+        builder: (_, theme, __) => Stack(children: <Widget>[
           Column(
             children: <Widget>[
               Container(
@@ -175,17 +177,17 @@ class _MyPageState extends State<MyPage> {
                             height: 50,
                             decoration: BoxDecoration(
                                 color: theme.color1,
-                                borderRadius: BorderRadius.only(bottomRight: Radius.circular(10.0))
-                            ),
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(10.0))),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
                                 Container(
                                     child: Icon(
-                                      Icons.list,
-                                      size: 40,
-                                      color: theme.color2,
-                                    )),
+                                  Icons.list,
+                                  size: 40,
+                                  color: theme.color2,
+                                )),
                                 SizedBox(
                                   width: 30,
                                 ),
@@ -207,7 +209,7 @@ class _MyPageState extends State<MyPage> {
                       child: Container(
                         height: 50,
                         width: 50,
-                        color:Provider.of<ThemeProvider>(context).color3,
+                        color: Provider.of<ThemeProvider>(context).color3,
                         child: Icon(
                           Icons.settings,
                           size: 25,
@@ -219,52 +221,50 @@ class _MyPageState extends State<MyPage> {
                 ),
               ),
               Expanded(
-                child: Row(
-                    children: <Widget>[
-                      Expanded(
-                          child: Container(
-                            decoration: BoxDecoration(),
-                            child: mainPage(theme),
-                          )),
-                      Container(
-                          width: 50,
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.pushNamed(context, "/statisPage");
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: theme.color1,
-                                  borderRadius: BorderRadius.only(topLeft: Radius.circular(10.0))
-                              ),
-                              child: Align(
-                                alignment: Alignment.center,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    Icon(
-                                      Icons.attach_money,
-                                      size: 30,
-                                      color: theme.color2,
-                                    ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    Text(
-                                      "统\n计",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          color: theme.color2,
-                                          fontWeight: FontWeight.w900),
-                                    ),
-                                  ],
+                child: Row(children: <Widget>[
+                  Expanded(
+                      child: Container(
+                    decoration: BoxDecoration(),
+                    child: mainPage(theme),
+                  )),
+                  Container(
+                      width: 50,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, "/statisPage");
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: theme.color1,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10.0))),
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.attach_money,
+                                  size: 30,
+                                  color: theme.color2,
                                 ),
-                              ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  "统\n计",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: theme.color2,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                              ],
                             ),
-                          )
-                      ),
-                    ]
-                ),),
+                          ),
+                        ),
+                      )),
+                ]),
+              ),
             ],
           ),
         ]),
@@ -298,42 +298,60 @@ class _MyPageState extends State<MyPage> {
               onTap: setBudget,
               child: _budget == 0
                   ? Text(
-                "请输入预算",
-                // "$_monthExpenditure / $_budget",..
-                style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.w900,
-                    color: theme.color2),
-              )
-                  : Text(
-                "${_monthExpenditure.abs()} / $_budget",
-                // "$_monthExpenditure / $_budget",..
-                style: TextStyle(
-                    fontSize: 55,
-                    fontWeight: FontWeight.w900,
-                    color: theme.color2),
-              ),
+                      "请输入预算",
+                      // "$_monthExpenditure / $_budget",..
+                      style: TextStyle(
+                          fontSize: 35,
+                          fontWeight: FontWeight.w900,
+                          color: theme.color2),
+                    )
+                  : _monthExpenditure < 0
+                      ? Text(
+                          '${_monthExpenditure.abs()}',
+                          //"${_monthExpenditure.abs()} / $_budget",
+                          // "$_monthExpenditure / $_budget",..
+                          style: TextStyle(
+                              fontSize: 55,
+                              fontWeight: FontWeight.w900,
+                              color: theme.color2),
+                        )
+                      : Text(
+                          "${_monthExpenditure.abs()} / $_budget",
+                          // "$_monthExpenditure / $_budget",..
+                          style: TextStyle(
+                              fontSize: 55,
+                              fontWeight: FontWeight.w900,
+                              color: theme.color2),
+                        ),
             ),
           ]),
           Row(children: [
             SizedBox(
               width: 30,
             ),
-            _monthExpenditure>0
+            _monthExpenditure > 0
                 ? Text(
-              "消费 / 预算",
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w900,
-                  color: theme.color6),
-            ):Text(
-              "收入 / 预算",
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w900,
-                  color: theme.color6),
-            )
-
+                    "消费 / 预算",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w900,
+                        color: theme.color6),
+                  )
+                : _monthExpenditure < 0
+                    ? Text(
+                        " 收入 ",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w900,
+                            color: theme.color6),
+                      )
+                    : Text(
+                        "收入 / 预算",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w900,
+                            color: theme.color6),
+                      )
           ]),
           SizedBox(height: 100),
           Expanded(
@@ -386,10 +404,10 @@ class _MyPageState extends State<MyPage> {
                   relativeX = currentX / (width - 52);
                   relativeY = currentY / height;
                   tallyMoney = (100000 *
-                      (0.5 - relativeY) *
-                      (0.5 - relativeY) *
-                      (0.5 - relativeY) *
-                      (0.5 - relativeY))
+                          (0.5 - relativeY) *
+                          (0.5 - relativeY) *
+                          (0.5 - relativeY) *
+                          (0.5 - relativeY))
                       .floor();
                   if (relativeY < 0.5) {
                     //收入
@@ -487,8 +505,8 @@ class _MyPageState extends State<MyPage> {
                   "tallyMoney": '$tallyMoney',
                   "addingFuckInWhat": '$addingFuckInWhat'
                 }).then((value) => setState(() {
-                  _isNotShow = !_isNotShow;
-                }));
+                      _isNotShow = !_isNotShow;
+                    }));
               },
 
               // 手势检测的作用组件 , 监听该组件上的各种手势
@@ -511,7 +529,7 @@ class _MyPageState extends State<MyPage> {
                                 offset: Offset(0.0, 0.0), //阴影x轴偏移量
                                 blurRadius: 3, //阴影模糊程度
                                 spreadRadius: 1 //阴影扩散程度
-                            )
+                                )
                           ],
                         ),
                         // 子组件居中
@@ -617,7 +635,6 @@ class _MyPageState extends State<MyPage> {
     );
   }
 
-
   ///主界面数据展示层
   Widget tools() {
     return Column(
@@ -687,8 +704,8 @@ class _MyPageState extends State<MyPage> {
                           height: 110,
                           decoration: BoxDecoration(
                               color: Provider.of<ThemeProvider>(context).color6,
-                              borderRadius: BorderRadius.all(Radius.circular(150.0))
-                          ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(150.0))),
                           child: Center(
                             child: Text("记一笔",
                                 style: TextStyle(
@@ -696,8 +713,7 @@ class _MyPageState extends State<MyPage> {
                                     color: Colors.white,
                                     fontWeight: FontWeight.w900)),
                           ),
-                        )
-                    ),
+                        )),
                   ],
                 )),
             Container(
@@ -713,11 +729,10 @@ class _MyPageState extends State<MyPage> {
                         fontWeight: FontWeight.w300),
                   ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       setState(() {
                         _remove();
                       });
-
                     },
                     child: Text("日均消费",
                         style: TextStyle(
