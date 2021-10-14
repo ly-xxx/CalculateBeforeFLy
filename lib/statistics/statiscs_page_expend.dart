@@ -89,59 +89,6 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
     );
   }
 
-  Widget left(context) {
-    return Expanded(
-      child: Column(
-        children: <Widget>[
-          Expanded(
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Provider.of<ThemeProvider>(context).color1,
-                      padding: EdgeInsets.zero,
-                      elevation: 5.0,
-                    ),
-                    onPressed: () {
-                      Navigator.popAndPushNamed(context, "/myPage");
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.contacts,
-                            size: 30,
-                            color: Provider.of<ThemeProvider>(context).color2,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          "我",
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Provider.of<ThemeProvider>(context).color2,
-                              fontWeight: FontWeight.w900),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   Widget right(context) {
     return Container(
       width: 300,
@@ -248,16 +195,61 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
     height = size.height;
     return Scaffold(
       backgroundColor: Provider.of<ThemeProvider>(context).color3,
-      body: Column(
-        children: [
-          SizedBox(
-            height: 30,
-          ),
-          top(context),
-          left(context),
-          right(context),
-        ],
-      ),
+      body:  Column(
+          children: [
+            top(context),
+            Expanded(
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 50,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.popAndPushNamed(context, "/myPage");
+                      },
+                      child: Container(
+                        width: 50,
+                        decoration: BoxDecoration(
+                            color: Provider.of<ThemeProvider>(context).color1,
+                            borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(10.0))),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Icon(
+                                Icons.home,
+                                size: 30,
+                                color: Provider.of<ThemeProvider>(context).color2,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              "首\n页",
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color:
+                                  Provider.of<ThemeProvider>(context).color2,
+                                  fontWeight: FontWeight.w900),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),Expanded(
+                    child:
+                    right(context),
+                  )
+                ],
+              ),
+            ),
+          ]),
     );
   }
 }

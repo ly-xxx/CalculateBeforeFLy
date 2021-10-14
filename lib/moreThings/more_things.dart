@@ -16,7 +16,7 @@ class MoreThingsPage extends StatefulWidget {
 
 class _MoreThingsPageState extends State<MoreThingsPage> {
   int _keepCounts = 0;
-  int _keepDays = 0;
+  int _keepDays = 1;
   int _todayExpenditure = 0;
   int _monthExpenditure = 0;
   int _gdsz = 0; //固定收支
@@ -36,6 +36,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     _monthExpenditure = prefs.getInt('monthExpenditure') ?? 0;
     _gdsz = prefs.getInt('gdsz') ?? 0;
     _typeOfGdsz = prefs.getBool('typeOfGdsz') ?? true;
+    _keepCounts=prefs.getInt("itemCount") ?? 0;
     super.initState();
   }
 
@@ -75,7 +76,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
               Expanded(
                 child: InkWell(
                     onTap: () {
-                      Navigator.popAndPushNamed(context, "/askingPricePage");
+                      Navigator.popAndPushNamed(context, "/statisPage");
                     },
                     child: Container(
                       height: 50,
