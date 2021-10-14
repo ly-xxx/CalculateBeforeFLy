@@ -81,6 +81,11 @@ class _MyPageState extends State<MyPage> {
 
   Color indicatorColor = Colors.white;
 
+  _remove() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+  }
+
   void setBudget() {
     int _value = 0;
     showModalBottomSheet(
@@ -113,11 +118,11 @@ class _MyPageState extends State<MyPage> {
                       },
                       children: List.generate(
                           31,
-                              (index) => Text(
-                            '${index * 100}',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w400, fontSize: 30),
-                          ))),
+                          (index) => Text(
+                                '${index * 100}',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w400, fontSize: 30),
+                              ))),
                 ),
               ],
             ),
@@ -151,115 +156,115 @@ class _MyPageState extends State<MyPage> {
       indicatorColor = Provider.of<ThemeProvider>(context).indicatorGood;
     return Scaffold(
       backgroundColor: Provider.of<ThemeProvider>(context).background,
-      body: Consumer<ThemeProvider>(
-        builder: (_, theme, __) => Stack(children: <Widget>[
-          Column(
-            children: <Widget>[
-              SizedBox(
-                height: 30,
-              ),
-              Container(
-                height: 50,
-                child: Row(
-                  children: <Widget>[
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: theme.outer,
-                          elevation: 5.0,
-                        ),
-                        onPressed: () {
-                          Navigator.popAndPushNamed(
-                              context, "/detailMessagePage");
-                        },
-                        child: Container(
-                          width: width - 84,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                  child: Icon(
-                                    Icons.list,
-                                    size: 40,
-                                    color: theme.mainFont,
-                                  )),
-                              SizedBox(
-                                width: 30,
-                              ),
-                              Text(
-                                "明细",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: theme.mainFont,
-                                    fontWeight: FontWeight.w900),
-                              ),
-                            ],
+      body: SafeArea(
+        child: Consumer<ThemeProvider>(
+          builder: (_, theme, __) => Stack(children: <Widget>[
+            Column(
+              children: <Widget>[
+                Container(
+                  height: 50,
+                  child: Row(
+                    children: <Widget>[
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: theme.outer,
+                            elevation: 5.0,
                           ),
-                        )),
-                    Expanded(
-                      flex: 1,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.popAndPushNamed(context, "/moreThingsPage");
-                        },
-                        child: Icon(
-                          Icons.settings,
-                          size: 20,
-                          color: Provider.of<ThemeProvider>(context).mainFont,
+                          onPressed: () {
+                            Navigator.popAndPushNamed(
+                                context, "/detailMessagePage");
+                          },
+                          child: Container(
+                            width: width - 84,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Container(
+                                    child: Icon(
+                                  Icons.list,
+                                  size: 40,
+                                  color: theme.mainFont,
+                                )),
+                                SizedBox(
+                                  width: 30,
+                                ),
+                                Text(
+                                  "明细",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: theme.mainFont,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                              ],
+                            ),
+                          )),
+                      Expanded(
+                        flex: 1,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.popAndPushNamed(
+                                context, "/moreThingsPage");
+                          },
+                          child: Icon(
+                            Icons.settings,
+                            size: 20,
+                            color: Provider.of<ThemeProvider>(context).mainFont,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Row(children: <Widget>[
-                  Expanded(
-                      flex: 9,
-                      child: Container(
-                        decoration: BoxDecoration(),
-                        child: mainPage(theme),
-                      )),
-                  Container(
-                      width: 50,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.zero,
-                          primary: theme.outer,
-                          elevation: 5.0,
-                        ),
-                        onPressed: () {
-                          Navigator.popAndPushNamed(
-                              context, "/askingPricePage");
-                        },
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Icon(
-                                Icons.attach_money,
-                                size: 30,
-                                color: theme.mainFont,
-                              ),
-                              SizedBox(
-                                height: 15,
-                              ),
-                              Text(
-                                "问\n价",
-                                style: TextStyle(
-                                    fontSize: 20,
-                                    color: theme.mainFont,
-                                    fontWeight: FontWeight.w900),
-                              ),
-                            ],
+                Expanded(
+                  child: Row(children: <Widget>[
+                    Expanded(
+                        flex: 9,
+                        child: Container(
+                          decoration: BoxDecoration(),
+                          child: mainPage(theme),
+                        )),
+                    Container(
+                        width: 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            primary: theme.outer,
+                            elevation: 5.0,
                           ),
-                        ),
-                      )),
-                ]),
-              ),
-            ],
-          ),
-        ]),
+                          onPressed: () {
+                            Navigator.popAndPushNamed(
+                                context, "/askingPricePage");
+                          },
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Icon(
+                                  Icons.attach_money,
+                                  size: 30,
+                                  color: theme.mainFont,
+                                ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                Text(
+                                  "问\n价",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: theme.mainFont,
+                                      fontWeight: FontWeight.w900),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )),
+                  ]),
+                ),
+              ],
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -290,21 +295,34 @@ class _MyPageState extends State<MyPage> {
               onTap: setBudget,
               child: _budget == 0
                   ? Text(
-                "请输入预算",
-                // "$_monthExpenditure / $_budget",..
-                style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.w900,
-                    color: theme.mainFont),
-              )
-                  : Text(
-                "${_monthExpenditure.abs()} / $_budget",
-                // "$_monthExpenditure / $_budget",..
-                style: TextStyle(
-                    fontSize: 55,
-                    fontWeight: FontWeight.w900,
-                    color: theme.mainFont),
-              ),
+                      "请输入预算",
+                      // "$_monthExpenditure / $_budget",..
+                      style: TextStyle(
+                        fontSize: 35,
+                        fontWeight: FontWeight.w900,
+                        color: theme.mainFont,
+                      ),
+                    )
+                  : _monthExpenditure < 0
+                      ? Text(
+                          '${_monthExpenditure.abs()}',
+                          //"${_monthExpenditure.abs()} / $_budget",
+                          // "$_monthExpenditure / $_budget",..
+                          style: TextStyle(
+                            fontSize: 55,
+                            fontWeight: FontWeight.w900,
+                            color: theme.mainFont,
+                          ),
+                        )
+                      : Text(
+                          "${_monthExpenditure.abs()} / $_budget",
+                          // "$_monthExpenditure / $_budget",..
+                          style: TextStyle(
+                            fontSize: 55,
+                            fontWeight: FontWeight.w900,
+                            color: theme.mainFont,
+                          ),
+                        ),
             ),
           ]),
           Row(children: [
@@ -313,19 +331,27 @@ class _MyPageState extends State<MyPage> {
             ),
             _monthExpenditure > 0
                 ? Text(
-              "消费 / 预算",
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w900,
-                  color: theme.assistFont),
-            )
-                : Text(
-              "收入 / 预算",
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.w900,
-                  color: theme.assistFont),
-            )
+                    "消费 / 预算",
+                    style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.w900,
+                        color: theme.assistFont),
+                  )
+                : _monthExpenditure < 0
+                    ? Text(
+                        " 收入 ",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w900,
+                            color: theme.assistFont),
+                      )
+                    : Text(
+                        "收入 / 预算",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.w900,
+                            color: theme.assistFont),
+                      )
           ]),
           SizedBox(height: 100),
           Expanded(
@@ -378,10 +404,10 @@ class _MyPageState extends State<MyPage> {
                   relativeX = currentX / (width - 52);
                   relativeY = currentY / height;
                   tallyMoney = (150000 *
-                      (0.45 - relativeY) *
-                      (0.45 - relativeY) *
-                      (0.45 - relativeY) *
-                      (0.45 - relativeY))
+                          (0.45 - relativeY) *
+                          (0.45 - relativeY) *
+                          (0.45 - relativeY) *
+                          (0.45 - relativeY))
                       .floor();
                   if (relativeY < 0.45) {
                     //收入
@@ -530,13 +556,12 @@ class _MyPageState extends State<MyPage> {
                 if (tallyMoney == 0) {
                   _isNotShow = !_isNotShow;
                 } else {
-                  Navigator.pushNamed(context, "/addConfigure",
-                      arguments: {
-                        "tallyMoney": '$tallyMoney',
-                        "addingFuckInWhat": '$addingFuckInWhat'
-                      }).then((value) => setState(() {
-                    _isNotShow = !_isNotShow;
-                  }));
+                  Navigator.pushNamed(context, "/addConfigure", arguments: {
+                    "tallyMoney": '$tallyMoney',
+                    "addingFuckInWhat": '$addingFuckInWhat'
+                  }).then((value) => setState(() {
+                        _isNotShow = !_isNotShow;
+                      }));
                 }
               },
 
@@ -559,7 +584,7 @@ class _MyPageState extends State<MyPage> {
                                 offset: Offset(0.0, 0.0), //阴影x轴偏移量
                                 blurRadius: 3, //阴影模糊程度
                                 spreadRadius: 1 //阴影扩散程度
-                            )
+                                )
                           ],
                         ),
                         // 子组件居中
@@ -571,7 +596,7 @@ class _MyPageState extends State<MyPage> {
                             decoration: BoxDecoration(
                               color: containerColor1,
                               borderRadius:
-                              BorderRadius.all(Radius.circular(5.0)),
+                                  BorderRadius.all(Radius.circular(5.0)),
                               boxShadow: [
                                 BoxShadow(
                                     color: Provider.of<ThemeProvider>(context)
@@ -579,7 +604,7 @@ class _MyPageState extends State<MyPage> {
                                     offset: Offset(1.0, 1.0), //阴影x轴偏移量
                                     blurRadius: 1, //阴影模糊程度
                                     spreadRadius: 0 //阴影扩散程度
-                                )
+                                    )
                               ],
                             ),
                             child: Text(
@@ -597,7 +622,7 @@ class _MyPageState extends State<MyPage> {
                             decoration: BoxDecoration(
                               color: containerColor2,
                               borderRadius:
-                              BorderRadius.all(Radius.circular(5.0)),
+                                  BorderRadius.all(Radius.circular(5.0)),
                               boxShadow: [
                                 BoxShadow(
                                     color: Provider.of<ThemeProvider>(context)
@@ -605,7 +630,7 @@ class _MyPageState extends State<MyPage> {
                                     offset: Offset(1.0, 1.0), //阴影x轴偏移量
                                     blurRadius: 1, //阴影模糊程度
                                     spreadRadius: 0 //阴影扩散程度
-                                )
+                                    )
                               ],
                             ),
                             child: Text(
@@ -623,7 +648,7 @@ class _MyPageState extends State<MyPage> {
                             decoration: BoxDecoration(
                               color: containerColor3,
                               borderRadius:
-                              BorderRadius.all(Radius.circular(5.0)),
+                                  BorderRadius.all(Radius.circular(5.0)),
                               boxShadow: [
                                 BoxShadow(
                                     color: Provider.of<ThemeProvider>(context)
@@ -631,7 +656,7 @@ class _MyPageState extends State<MyPage> {
                                     offset: Offset(1.0, 1.0), //阴影x轴偏移量
                                     blurRadius: 1, //阴影模糊程度
                                     spreadRadius: 0 //阴影扩散程度
-                                )
+                                    )
                               ],
                             ),
                             child: Text(
@@ -649,7 +674,7 @@ class _MyPageState extends State<MyPage> {
                             decoration: BoxDecoration(
                               color: containerColor4,
                               borderRadius:
-                              BorderRadius.all(Radius.circular(5.0)),
+                                  BorderRadius.all(Radius.circular(5.0)),
                               boxShadow: [
                                 BoxShadow(
                                     color: Provider.of<ThemeProvider>(context)
@@ -657,7 +682,7 @@ class _MyPageState extends State<MyPage> {
                                     offset: Offset(1.0, 1.0), //阴影x轴偏移量
                                     blurRadius: 1, //阴影模糊程度
                                     spreadRadius: 0 //阴影扩散程度
-                                )
+                                    )
                               ],
                             ),
                             child: Text(
@@ -783,28 +808,29 @@ class _MyPageState extends State<MyPage> {
                 width: (width - 50) / 2,
                 child: Column(
                   children: [
-                    Container(
-                      height: 6,
-                    ),
                     InkWell(
-                      onTap: () {
-                        setState(() {
-                          _isNotShow = !_isNotShow;
-                        });
-                      },
-                      child: Icon(Icons.add_circle,
-                          color: Provider.of<ThemeProvider>(context).mainFont,
-                          size: 60.0),
-                    ),
-                    Text("记一笔",
-                        style: TextStyle(
-                            fontSize: 15,
-                            color:
-                            Provider.of<ThemeProvider>(context).assistFont,
-                            fontWeight: FontWeight.w900)),
-                    SizedBox(
-                      height: 4,
-                    ),
+                        onTap: () {
+                          setState(() {
+                            _isNotShow = !_isNotShow;
+                          });
+                        },
+                        child: Container(
+                          width: 110,
+                          height: 110,
+                          decoration: BoxDecoration(
+                              color: Provider.of<ThemeProvider>(context)
+                                  .assistFont,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(150.0))),
+                          child: Center(
+                            child: Text("记一笔",
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Provider.of<ThemeProvider>(context)
+                                        .outer,
+                                    fontWeight: FontWeight.w900)),
+                          ),
+                        )),
                   ],
                 )),
             Container(
@@ -822,14 +848,14 @@ class _MyPageState extends State<MyPage> {
                   InkWell(
                     onTap: () {
                       setState(() {
-                        prefs.clear();
+                        _remove();
                       });
                     },
                     child: Text("日均消费",
                         style: TextStyle(
                             fontSize: 15,
                             color:
-                            Provider.of<ThemeProvider>(context).assistFont,
+                                Provider.of<ThemeProvider>(context).assistFont,
                             fontWeight: FontWeight.w900)),
                   ),
                 ],

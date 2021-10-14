@@ -15,6 +15,7 @@ class MoreThingsPage extends StatefulWidget {
 class _MoreThingsPageState extends State<MoreThingsPage> {
   int _keepCounts = 0;
   int _keepDays = 0;
+
   // double _todayExpenditure = 0;
   // double _monthExpenditure = 0;
   double width = 0.0;
@@ -66,7 +67,8 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                           "问价",
                           style: TextStyle(
                               fontSize: 20,
-                              color: Provider.of<ThemeProvider>(context).mainFont,
+                              color:
+                                  Provider.of<ThemeProvider>(context).mainFont,
                               fontWeight: FontWeight.w900),
                         ),
                       ],
@@ -291,60 +293,62 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     height = size.height;
     return Scaffold(
       backgroundColor: Provider.of<ThemeProvider>(context).background,
-      body: Column(
-        children: [
-          SizedBox(
-            height: 30,
-          ),
-          Expanded(
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 50,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      primary: Provider.of<ThemeProvider>(context).outer,
-                      elevation: 5.0,
-                    ),
-                    onPressed: () {
-                      Navigator.popAndPushNamed(context, "/detailMessagePage");
-                    },
-                    child: Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.menu_open,
-                            size: 30,
-                            color: Provider.of<ThemeProvider>(context).mainFont,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: Row(
+                children: <Widget>[
+                  Container(
+                    width: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Provider.of<ThemeProvider>(context).outer,
+                        elevation: 5.0,
+                      ),
+                      onPressed: () {
+                        Navigator.popAndPushNamed(
+                            context, "/detailMessagePage");
+                      },
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 20,
                           ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          "明\n细",
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Provider.of<ThemeProvider>(context).mainFont,
-                              fontWeight: FontWeight.w900),
-                        ),
-                      ],
+                          Align(
+                            alignment: Alignment.center,
+                            child: Icon(
+                              Icons.menu_open,
+                              size: 30,
+                              color:
+                                  Provider.of<ThemeProvider>(context).mainFont,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            "明\n细",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Provider.of<ThemeProvider>(context)
+                                    .mainFont,
+                                fontWeight: FontWeight.w900),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: mainPage(),
-                  flex: 9,
-                ),
-              ],
+                  Expanded(
+                    child: mainPage(),
+                    flex: 9,
+                  ),
+                ],
+              ),
             ),
-          ),
-          bottom(context),
-        ],
+            bottom(context),
+          ],
+        ),
       ),
     );
   }
