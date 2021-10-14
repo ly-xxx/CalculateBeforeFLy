@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-
-final List<AssetImage> themeList=[
-  AssetImage('assets/images/themelist01.png'),
-  AssetImage('assets/images/themelist02.png'),
-  AssetImage('assets/images/themelist03.png'),
-  AssetImage('assets/images/themelist04.png'),
+final List<Color> themeList = [
+  Color.fromARGB(255, 240, 240, 240),
+  Colors.black,
+  Colors.pinkAccent,
+  Colors.blueGrey,
+  Colors.cyanAccent,
 ];

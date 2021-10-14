@@ -28,25 +28,12 @@ class _SkinPageState extends State<SkinPage> {
     return GestureDetector(
       child: Container(
         width: double.infinity,
-        // padding: const EdgeInsets.all(40),
-        height: 70,
-        margin: EdgeInsets.only(top: 30, bottom: 30, left: 20, right: 20),
+        height: 50,
+        margin: EdgeInsets.only(top: 10, bottom: 10),
         decoration: BoxDecoration(
-          image:
-              new DecorationImage(image: themeList[index], fit: BoxFit.cover),
-          boxShadow: [
-            //一组阴影
-            BoxShadow(
-              color: Colors.grey, //阴影颜色
-              offset: Offset(0.0, 0.0), //偏移量
-              blurRadius: 30.0, //模糊范围
-              spreadRadius: -10.0, //传播范围
-            )
-          ],
-          //  color: themeList[index],
+          color: themeList[index],
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
-
         child: _index != index
             ? Text("") //如果没选中则无东西
             : Row(
@@ -54,7 +41,7 @@ class _SkinPageState extends State<SkinPage> {
                 children: [
                   Icon(
                     Icons.check,
-                    color: Colors.grey.shade800,
+                    color: Colors.white,
                   ),
                   SizedBox(width: 16),
                 ],
@@ -75,19 +62,16 @@ class _SkinPageState extends State<SkinPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //backgroundColor: Provider.of<ThemeProvider>(context).color3,
-      backgroundColor:Color(0xFFEBEBF2),
+      backgroundColor: Provider.of<ThemeProvider>(context).background,
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Provider.of<ThemeProvider>(context).color2,
-        ),
+        iconTheme: IconThemeData(color: Provider.of<ThemeProvider>(context).mainFont,),
         title: Text(
-          "个性装扮",
+          "设置主题",
           style: TextStyle(
-            color: Provider.of<ThemeProvider>(context).color2,
+            color: Provider.of<ThemeProvider>(context).mainFont,
           ),
         ),
-        backgroundColor: Provider.of<ThemeProvider>(context).color1,
+        backgroundColor: Provider.of<ThemeProvider>(context).outer,
         centerTitle: true,
         elevation: 10,
       ),

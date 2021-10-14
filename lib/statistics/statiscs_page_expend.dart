@@ -46,13 +46,13 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
                   child: Icon(
                     Icons.menu_open,
                     size: 20,
-                    color: Provider.of<ThemeProvider>(context).color2,
+                    color: Provider.of<ThemeProvider>(context).mainFont,
                   ),
                 ),
               ),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Provider.of<ThemeProvider>(context).color1,
+                    primary: Provider.of<ThemeProvider>(context).outer,
                     elevation: 5.0,
                   ),
                   onPressed: () {
@@ -67,7 +67,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
                             child: Icon(
                           Icons.account_tree_outlined,
                           size: 25,
-                          color: Provider.of<ThemeProvider>(context).color2,
+                          color: Provider.of<ThemeProvider>(context).mainFont,
                         )),
                         SizedBox(
                           width: 30,
@@ -76,7 +76,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
                           "更多",
                           style: TextStyle(
                               fontSize: 20,
-                              color: Provider.of<ThemeProvider>(context).color2,
+                              color: Provider.of<ThemeProvider>(context).mainFont,
                               fontWeight: FontWeight.w900),
                         ),
                       ],
@@ -100,7 +100,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
                   width: 50,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Provider.of<ThemeProvider>(context).color1,
+                      primary: Provider.of<ThemeProvider>(context).outer,
                       padding: EdgeInsets.zero,
                       elevation: 5.0,
                     ),
@@ -117,7 +117,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
                           child: Icon(
                             Icons.contacts,
                             size: 30,
-                            color: Provider.of<ThemeProvider>(context).color2,
+                            color: Provider.of<ThemeProvider>(context).mainFont,
                           ),
                         ),
                         SizedBox(
@@ -127,7 +127,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
                           "我",
                           style: TextStyle(
                               fontSize: 20,
-                              color: Provider.of<ThemeProvider>(context).color2,
+                              color: Provider.of<ThemeProvider>(context).mainFont,
                               fontWeight: FontWeight.w900),
                         ),
                       ],
@@ -149,7 +149,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
         children: <Widget>[
           ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Provider.of<ThemeProvider>(context).color1,
+                primary: Provider.of<ThemeProvider>(context).outer,
                 padding: EdgeInsets.zero,
                 elevation: 5.0,
               ),
@@ -160,7 +160,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
                 '看看收入',
                 style: TextStyle(
                     fontSize: 20,
-                    color: Provider.of<ThemeProvider>(context).color2,
+                    color: Provider.of<ThemeProvider>(context).mainFont,
                     fontWeight: FontWeight.w500),
               )),
           SizedBox(
@@ -247,7 +247,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
     width = size.width;
     height = size.height;
     return Scaffold(
-      backgroundColor: Provider.of<ThemeProvider>(context).color3,
+      backgroundColor: Provider.of<ThemeProvider>(context).background,
       body: Column(
         children: [
           SizedBox(

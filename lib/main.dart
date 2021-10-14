@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:twt_account/data/global_data.dart';
-import 'package:twt_account/statistics/statisPage.dart';
+import 'package:twt_account/statistics/statis_page.dart';
 import 'package:twt_account/statistics/statiscs_page_expend.dart';
-import 'login_in_page.dart';
-import 'moreThings/skin.dart';
-import 'moreThings/theme/theme_config.dart';
-import 'add_configure/add_configure.dart';
-import 'my_page.dart';
-import 'details/detail_message.dart';
-import 'moreThings/more_things.dart';
-import 'data/test.dart';
-import 'package:flutter/services.dart';
+import 'package:twt_account/login_in_page.dart';
+import 'package:twt_account/moreThings/skin.dart';
+import 'package:twt_account/moreThings/theme/theme_config.dart';
+import 'package:twt_account/add_configure/add_configure.dart';
+import 'package:twt_account/my_page.dart';
+import 'package:twt_account/details/detail_message.dart';
+import 'package:twt_account/moreThings/more_things.dart';
+import 'package:twt_account/data/test.dart';
 
 void main() async{
   //runApp(MyApp());
@@ -27,8 +26,6 @@ void main() async{
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

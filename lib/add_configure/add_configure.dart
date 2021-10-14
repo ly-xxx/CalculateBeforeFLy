@@ -43,15 +43,10 @@ class _AddConfigureState extends State<AddConfigure> {
 
   @override
   Widget build(BuildContext context) {
-    dynamic obj = ModalRoute
-        .of(context)!
-        .settings
-        .arguments;
+    dynamic obj = ModalRoute.of(context)!.settings.arguments;
     tallyMoneyStable = int.parse(obj['tallyMoney']);
     addingWhatStable = int.parse(obj['addingFuckInWhat']);
-    final size = MediaQuery
-        .of(context)
-        .size;
+    final size = MediaQuery.of(context).size;
     width = size.width;
     height = size.height;
     if (!flag) {
@@ -64,146 +59,131 @@ class _AddConfigureState extends State<AddConfigure> {
     if (addingWhat == 0) {
       addingWhat = 8;
     }
-    addingWhatShow = AddingWhat().addingWhatList[addingWhat];
+    addingWhatShow = AddingWhat.addingWhatList[addingWhat];
     dateElse = DateTime.now().toString().substring(5, 19);
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Container(
-            //height: 80,
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, "/detailMessagePage");
-                      },
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                            color: Provider
-                                .of<ThemeProvider>(context)
-                                .color1,
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(10.0))
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                                child: Icon(
-                                  Icons.list,
-                                  size: 40,
-                                  color: Provider
-                                      .of<ThemeProvider>(context)
-                                      .color2,
-                                )),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Text(
-                              "明细",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Provider
-                                      .of<ThemeProvider>(context)
-                                      .color2,
-                                  fontWeight: FontWeight.w900),
-                            ),
-                          ],
-                        ),
-                      )),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, "/moreThingsPage");
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 50,
-                    color: Provider
-                        .of<ThemeProvider>(context)
-                        .color3,
-                    child: Icon(
-                      Icons.settings,
-                      size: 25,
-                      color: Provider
-                          .of<ThemeProvider>(context)
-                          .color2,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Row(
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Container(
+              //height: 80,
+              child: Row(
                 children: <Widget>[
                   Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(),
-                        child: mainPage(),
-                      )),
-                  Container(
-                      width: 50,
-                      child: InkWell(
+                    child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, "/statisPage");
+                          Navigator.pushNamed(context, "/detailMessagePage");
                         },
                         child: Container(
+                          height: 50,
                           decoration: BoxDecoration(
-                              color: Provider
-                                  .of<ThemeProvider>(context)
-                                  .color1,
+                              color: Provider.of<ThemeProvider>(context).outer,
                               borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10.0))
+                                  bottomRight: Radius.circular(10.0))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                  child: Icon(
+                                Icons.list,
+                                size: 40,
+                                color: Provider.of<ThemeProvider>(context)
+                                    .mainFont,
+                              )),
+                              SizedBox(
+                                width: 30,
+                              ),
+                              Text(
+                                "明细",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Provider.of<ThemeProvider>(context)
+                                        .mainFont,
+                                    fontWeight: FontWeight.w900),
+                              ),
+                            ],
                           ),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.attach_money,
-                                  size: 30,
-                                  color: Provider
-                                      .of<ThemeProvider>(context)
-                                      .color2,
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Text(
-                                  "统\n计",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Provider
-                                          .of<ThemeProvider>(context)
-
-
-                                          .color2,
-                                      fontWeight: FontWeight.w900),
-                                ),
-                              ],
-                            ),
+                        )),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, "/moreThingsPage");
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      color: Provider.of<ThemeProvider>(context).background,
+                      child: Icon(
+                        Icons.settings,
+                        size: 25,
+                        color: Provider.of<ThemeProvider>(context).mainFont,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Row(children: <Widget>[
+                Expanded(
+                    child: Container(
+                  decoration: BoxDecoration(),
+                  child: mainPage(),
+                )),
+                Container(
+                    width: 50,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/statisPage");
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Provider.of<ThemeProvider>(context).outer,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10.0))),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.attach_money,
+                                size: 30,
+                                color: Provider.of<ThemeProvider>(context)
+                                    .mainFont,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Text(
+                                "统\n计",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Provider.of<ThemeProvider>(context)
+                                        .mainFont,
+                                    fontWeight: FontWeight.w900),
+                              ),
+                            ],
                           ),
                         ),
-                      )
-                  ),
-                ]
-            ),),
-        ],
+                      ),
+                    )),
+              ]),
+            ),
+          ],
+        ),
       ),
     );
   }
-
 
   Widget mainPage() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
@@ -212,13 +192,10 @@ class _AddConfigureState extends State<AddConfigure> {
               style: TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.w900,
-                shadows: <Shadow>[
-
-                ],
+                shadows: <Shadow>[],
               ),
             ),
           ),
-
           InkWell(
             // style: ElevatedButton.styleFrom(
             //   primary: Colors.white,
@@ -237,11 +214,10 @@ class _AddConfigureState extends State<AddConfigure> {
                         offset: Offset(0.0, 1.0), //阴影xy轴偏移量
                         blurRadius: 2.0, //阴影模糊程度
                         spreadRadius: 3.0 //阴影扩散程度
-                    )
+                        )
                   ],
                   color: Colors.grey,
-                  borderRadius: BorderRadius.all(Radius.circular(10.0))
-              ),
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
               width: width - 80,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
@@ -284,7 +260,7 @@ class _AddConfigureState extends State<AddConfigure> {
                                     hintText: "修改记账金额：当前 $tallyMoney",
                                     border: OutlineInputBorder(
                                       borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
+                                          BorderRadius.all(Radius.circular(10)),
                                     ),
                                   ),
                                   keyboardType: TextInputType.number,
@@ -406,7 +382,6 @@ class _AddConfigureState extends State<AddConfigure> {
             height: 20,
           ),
           InkWell(
-
             onTap: () {
               setState(() {
                 _2isShow = !_2isShow;
@@ -416,7 +391,6 @@ class _AddConfigureState extends State<AddConfigure> {
               decoration: BoxDecoration(
                 color: Colors.grey,
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
-
               ),
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
               width: width - 80,
@@ -426,8 +400,7 @@ class _AddConfigureState extends State<AddConfigure> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8.0))
-                  ),
+                      borderRadius: BorderRadius.all(Radius.circular(8.0))),
                   child: Text(
                     '$addingWhatShow',
                     textScaleFactor: 2.0,
@@ -538,8 +511,8 @@ class _AddConfigureState extends State<AddConfigure> {
                           prefs.setInt('todayExpenditure', a + tallyMoney);
                           prefs.setInt('monthExpenditure', b + tallyMoney);
                         }
-                        String dateTime = formatDate(
-                            DateTime.now(), ['yyyy', '年', 'mm', '月', 'dd', '日']);
+                        String dateTime = formatDate(DateTime.now(),
+                            ['yyyy', '年', 'mm', '月', 'dd', '日']);
                         List<String> item = [
                           tallyMoney.toString(),
                           addingWhat.toString(),
@@ -549,7 +522,8 @@ class _AddConfigureState extends State<AddConfigure> {
                         print('item $item is saved');
                         prefs.setInt('itemCount', _itemCount + 1);
                         prefs.setStringList(_itemCount.toString(), item);
-                        Navigator.popAndPushNamed(context, "/detailMessagePage");
+                        Navigator.popAndPushNamed(
+                            context, "/detailMessagePage");
                       }
                     },
                     child: Container(
@@ -580,7 +554,7 @@ class _AddConfigureState extends State<AddConfigure> {
                   decoration: new BoxDecoration(
                     color: Colors.white,
                     borderRadius:
-                    new BorderRadius.all(new Radius.circular(30.0)),
+                        new BorderRadius.all(new Radius.circular(30.0)),
                     image: new DecorationImage(
                       alignment: Alignment.centerRight,
                       image: new AssetImage('assets/images/logo.png'),
