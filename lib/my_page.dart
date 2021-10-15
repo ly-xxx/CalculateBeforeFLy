@@ -5,7 +5,7 @@ import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twt_account/moreThings/theme/theme_config.dart';
 import 'package:twt_account/data/global_data.dart';
-import 'package:twt_account/add_configure/adding_what_list.dart';
+import 'add_configure/adding_what_list.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({Key? key}) : super(key: key);
@@ -21,6 +21,7 @@ class _MyPageState extends State<MyPage> {
   int _budget = 0;
   int valueTransfer = 0;
   int tallyMoney = 0; //金额
+  IconData icon = Icons.more_horiz;
   double _monthExpenditureBudgetPercentage = 0;
   SharedPreferences prefs = GlobalData.getPref()!;
 
@@ -56,35 +57,29 @@ class _MyPageState extends State<MyPage> {
   double smallTallyWidth = 0;
 
   ///记账container颜色参数
-  int tallyContainerColor = 127;
-  int halfTallyContainerColor = 63;
-  int containerColor1 = 255;
-  int containerColor2 = 255;
-  int containerColor3 = 255;
-  int containerColor4 = 255;
+  Color tallyContainerColor = Colors.white;
+  Color halfTallyContainerColor = Colors.white;
+  Color containerColor1 = Colors.white;
+  Color containerColor2 = Colors.white;
+  Color containerColor3 = Colors.white;
+  Color containerColor4 = Colors.white;
+  Color textColorUnselected = Colors.white;
+  Color textColorSelected = Colors.white;
+  Color textColor1 = Colors.black;
+  Color textColor2 = Colors.black;
+  Color textColor3 = Colors.black;
+  Color textColor4 = Colors.black;
 
   ///tally黑框显示与否
   bool _isNotShow = true;
 
   bool get wantKeepAlive => true;
 
-  //List<Widget> _list = [];
-  // List addingWhatList = [
-  //   'xixi',
-  //   '收入了：生活费 工资',
-  //   '收入了：理财',
-  //   '收入了：学习',
-  //   '收入了：其他',
-  //   '支出了：餐饮 娱乐',
-  //   '支出了：生活',
-  //   '支出了：学习',
-  //   '支出了：其他'
-  // ];
   String addingWhatListOutput = "";
 
   get async => null;
 
-  Color indicatorColor = Colors.black12;
+  Color indicatorColor = Colors.white;
 
   _remove() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -148,37 +143,39 @@ class _MyPageState extends State<MyPage> {
     final size = MediaQuery.of(context).size;
     width = size.width;
     height = size.height;
-    smallTallyWidth = (width - 62) / 4;
-    addingWhatListOutput = AddingWhat().addingWhatList[addingFuckInWhat];
+    smallTallyWidth = (width - 100) / 4;
+    addingWhatListOutput = AddingWhat.addingWhatList[addingFuckInWhat];
+    icon = AddingWhat.addingWhatListIcon[addingFuckInWhat];
     if (_monthExpenditure == 0) {
       _monthExpenditureBudgetPercentage = 0;
     } else
       _monthExpenditureBudgetPercentage = _monthExpenditure / _budget * 0.9;
     if (_monthExpenditure > _budget)
-      indicatorColor = Provider.of<ThemeProvider>(context).color5;
+      indicatorColor = Provider.of<ThemeProvider>(context).indicatorBad;
     else
-      indicatorColor = Provider.of<ThemeProvider>(context).color4;
+      indicatorColor = Provider.of<ThemeProvider>(context).indicatorGood;
     return Scaffold(
-      backgroundColor: Provider.of<ThemeProvider>(context).color3,
-      body: Consumer<ThemeProvider>(
-        builder: (_, theme, __) => Stack(children: <Widget>[
-          Column(
-            children: <Widget>[
-              Container(
-                //height: 80,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: InkWell(
-                          onTap: () {
-                            Navigator.pushNamed(context, "/detailMessagePage");
+      backgroundColor: Provider.of<ThemeProvider>(context).background,
+      body: SafeArea(
+        child: Consumer<ThemeProvider>(
+          builder: (_, theme, __) => Stack(children: <Widget>[
+            Column(
+              children: <Widget>[
+                Container(
+                  height: 50,
+                  child: Row(
+                    children: <Widget>[
+                      ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: theme.outer,
+                            elevation: 5.0,
+                          ),
+                          onPressed: () {
+                            Navigator.popAndPushNamed(
+                                context, "/detailMessagePage");
                           },
                           child: Container(
-                            height: 50,
-                            decoration: BoxDecoration(
-                                color: theme.color1,
-                                borderRadius: BorderRadius.only(
-                                    bottomRight: Radius.circular(10.0))),
+                            width: width - 84,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
@@ -186,7 +183,7 @@ class _MyPageState extends State<MyPage> {
                                     child: Icon(
                                   Icons.list,
                                   size: 40,
-                                  color: theme.color2,
+                                  color: theme.mainFont,
                                 )),
                                 SizedBox(
                                   width: 30,
@@ -195,49 +192,49 @@ class _MyPageState extends State<MyPage> {
                                   "明细",
                                   style: TextStyle(
                                       fontSize: 20,
-                                      color: theme.color2,
+                                      color: theme.mainFont,
                                       fontWeight: FontWeight.w900),
                                 ),
                               ],
                             ),
                           )),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, "/moreThingsPage");
-                      },
-                      child: Container(
-                        height: 50,
-                        width: 50,
-                        color: Provider.of<ThemeProvider>(context).color3,
-                        child: Icon(
-                          Icons.settings,
-                          size: 25,
-                          color: Provider.of<ThemeProvider>(context).color2,
+                      Expanded(
+                        flex: 1,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.popAndPushNamed(
+                                context, "/moreThingsPage");
+                          },
+                          child: Icon(
+                            Icons.settings,
+                            size: 20,
+                            color: Provider.of<ThemeProvider>(context).mainFont,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Row(children: <Widget>[
-                  Expanded(
-                      child: Container(
-                    decoration: BoxDecoration(),
-                    child: mainPage(theme),
-                  )),
-                  Container(
-                      width: 50,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, "/statisPage");
-                        },
+                Expanded(
+                  child: Row(children: <Widget>[
+                    Expanded(
+                        flex: 9,
                         child: Container(
-                          decoration: BoxDecoration(
-                              color: theme.color1,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10.0))),
+                          decoration: BoxDecoration(),
+                          child: mainPage(theme),
+                        )),
+                    Container(
+                        width: 50,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            primary: theme.outer,
+                            elevation: 5.0,
+                          ),
+                          onPressed: () {
+                            Navigator.popAndPushNamed(
+                                context, "/askingPricePage");
+                          },
                           child: Align(
                             alignment: Alignment.center,
                             child: Column(
@@ -246,28 +243,28 @@ class _MyPageState extends State<MyPage> {
                                 Icon(
                                   Icons.attach_money,
                                   size: 30,
-                                  color: theme.color2,
+                                  color: theme.mainFont,
                                 ),
                                 SizedBox(
                                   height: 15,
                                 ),
                                 Text(
-                                  "统\n计",
+                                  "问\n价",
                                   style: TextStyle(
                                       fontSize: 20,
-                                      color: theme.color2,
+                                      color: theme.mainFont,
                                       fontWeight: FontWeight.w900),
                                 ),
                               ],
                             ),
                           ),
-                        ),
-                      )),
-                ]),
-              ),
-            ],
-          ),
-        ]),
+                        )),
+                  ]),
+                ),
+              ],
+            ),
+          ]),
+        ),
       ),
     );
   }
@@ -279,9 +276,9 @@ class _MyPageState extends State<MyPage> {
         //当前进度 0-1
         valueColor: AlwaysStoppedAnimation(indicatorColor),
         // 进度值的颜色.
-        borderColor: Provider.of<ThemeProvider>(context).color3,
+        borderColor: Provider.of<ThemeProvider>(context).background,
         borderWidth: 1,
-        backgroundColor: theme.color3,
+        backgroundColor: theme.background,
         // 背景颜色.
         direction: Axis
             .vertical, // 进度方向 (Axis.vertical = 从下到上, Axis.horizontal = 从左到右). 默认：Axis.vertical
@@ -289,7 +286,7 @@ class _MyPageState extends State<MyPage> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 30),
+          SizedBox(height: 40),
           Row(children: [
             SizedBox(
               width: 30,
@@ -301,9 +298,10 @@ class _MyPageState extends State<MyPage> {
                       "请输入预算",
                       // "$_monthExpenditure / $_budget",..
                       style: TextStyle(
-                          fontSize: 35,
-                          fontWeight: FontWeight.w900,
-                          color: theme.color2),
+                        fontSize: 35,
+                        fontWeight: FontWeight.w900,
+                        color: theme.mainFont,
+                      ),
                     )
                   : _monthExpenditure < 0
                       ? Text(
@@ -311,17 +309,19 @@ class _MyPageState extends State<MyPage> {
                           //"${_monthExpenditure.abs()} / $_budget",
                           // "$_monthExpenditure / $_budget",..
                           style: TextStyle(
-                              fontSize: 55,
-                              fontWeight: FontWeight.w900,
-                              color: theme.color2),
+                            fontSize: 55,
+                            fontWeight: FontWeight.w900,
+                            color: theme.mainFont,
+                          ),
                         )
                       : Text(
                           "${_monthExpenditure.abs()} / $_budget",
                           // "$_monthExpenditure / $_budget",..
                           style: TextStyle(
-                              fontSize: 55,
-                              fontWeight: FontWeight.w900,
-                              color: theme.color2),
+                            fontSize: 55,
+                            fontWeight: FontWeight.w900,
+                            color: theme.mainFont,
+                          ),
                         ),
             ),
           ]),
@@ -335,7 +335,7 @@ class _MyPageState extends State<MyPage> {
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w900,
-                        color: theme.color6),
+                        color: theme.assistFont),
                   )
                 : _monthExpenditure < 0
                     ? Text(
@@ -343,14 +343,14 @@ class _MyPageState extends State<MyPage> {
                         style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w900,
-                            color: theme.color6),
+                            color: theme.assistFont),
                       )
                     : Text(
                         "收入 / 预算",
                         style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w900,
-                            color: theme.color6),
+                            color: theme.assistFont),
                       )
           ]),
           SizedBox(height: 100),
@@ -403,20 +403,30 @@ class _MyPageState extends State<MyPage> {
                   currentY += e.delta.dy;
                   relativeX = currentX / (width - 52);
                   relativeY = currentY / height;
-                  tallyMoney = (100000 *
-                          (0.5 - relativeY) *
-                          (0.5 - relativeY) *
-                          (0.5 - relativeY) *
-                          (0.5 - relativeY))
+                  tallyMoney = (150000 *
+                          (0.45 - relativeY) *
+                          (0.45 - relativeY) *
+                          (0.45 - relativeY) *
+                          (0.45 - relativeY))
                       .floor();
-                  if (relativeY < 0.5) {
+                  if (relativeY < 0.45) {
                     //收入
-                    tallyTitle1 = "生活费\n工资";
+                    tallyTitle1 = "生活费";
                     tallyTitle2 = "理财";
                     tallyTitle3 = "学习";
                     tallyTitle4 = "其他";
-                    tallyContainerColor = 255;
-                    halfTallyContainerColor = 192;
+                    tallyContainerColor =
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .assist1;
+                    halfTallyContainerColor =
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .assistFont;
+                    textColorUnselected =
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .assistFont;
+                    textColorSelected =
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .assist1;
                     if (relativeX < 0.5) {
                       if (relativeX < 0.25) {
                         //生活费 工资
@@ -424,6 +434,10 @@ class _MyPageState extends State<MyPage> {
                         containerColor2 = tallyContainerColor;
                         containerColor3 = tallyContainerColor;
                         containerColor4 = tallyContainerColor;
+                        textColor1 = textColorSelected;
+                        textColor2 = textColorUnselected;
+                        textColor3 = textColorUnselected;
+                        textColor4 = textColorUnselected;
                         addingFuckInWhat = 1;
                       } else {
                         //理财
@@ -431,6 +445,10 @@ class _MyPageState extends State<MyPage> {
                         containerColor2 = halfTallyContainerColor;
                         containerColor3 = tallyContainerColor;
                         containerColor4 = tallyContainerColor;
+                        textColor1 = textColorUnselected;
+                        textColor2 = textColorSelected;
+                        textColor3 = textColorUnselected;
+                        textColor4 = textColorUnselected;
                         addingFuckInWhat = 2;
                       }
                     } else {
@@ -440,6 +458,10 @@ class _MyPageState extends State<MyPage> {
                         containerColor2 = tallyContainerColor;
                         containerColor3 = halfTallyContainerColor;
                         containerColor4 = tallyContainerColor;
+                        textColor1 = textColorUnselected;
+                        textColor2 = textColorUnselected;
+                        textColor3 = textColorSelected;
+                        textColor4 = textColorUnselected;
                         addingFuckInWhat = 3;
                       } else {
                         //其他
@@ -447,17 +469,31 @@ class _MyPageState extends State<MyPage> {
                         containerColor2 = tallyContainerColor;
                         containerColor3 = tallyContainerColor;
                         containerColor4 = halfTallyContainerColor;
+                        textColor1 = textColorUnselected;
+                        textColor2 = textColorUnselected;
+                        textColor3 = textColorUnselected;
+                        textColor4 = textColorSelected;
                         addingFuckInWhat = 4;
                       }
                     }
                   } else {
                     //支出
-                    tallyTitle1 = "餐饮\n娱乐";
+                    tallyTitle1 = "娱乐";
                     tallyTitle2 = "生活";
                     tallyTitle3 = "学习";
                     tallyTitle4 = "其他";
-                    tallyContainerColor = 0;
-                    halfTallyContainerColor = 96;
+                    tallyContainerColor =
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .assist2;
+                    halfTallyContainerColor =
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .assistFont;
+                    textColorUnselected =
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .assistFont;
+                    textColorSelected =
+                        Provider.of<ThemeProvider>(context, listen: false)
+                            .assist2;
                     if (relativeX < 0.5) {
                       if (relativeX < 0.25) {
                         //餐饮 娱乐
@@ -465,6 +501,10 @@ class _MyPageState extends State<MyPage> {
                         containerColor2 = tallyContainerColor;
                         containerColor3 = tallyContainerColor;
                         containerColor4 = tallyContainerColor;
+                        textColor1 = textColorSelected;
+                        textColor2 = textColorUnselected;
+                        textColor3 = textColorUnselected;
+                        textColor4 = textColorUnselected;
                         addingFuckInWhat = 5;
                       } else {
                         //生活
@@ -472,6 +512,10 @@ class _MyPageState extends State<MyPage> {
                         containerColor2 = halfTallyContainerColor;
                         containerColor3 = tallyContainerColor;
                         containerColor4 = tallyContainerColor;
+                        textColor1 = textColorUnselected;
+                        textColor2 = textColorSelected;
+                        textColor3 = textColorUnselected;
+                        textColor4 = textColorUnselected;
                         addingFuckInWhat = 6;
                       }
                     } else {
@@ -481,6 +525,10 @@ class _MyPageState extends State<MyPage> {
                         containerColor2 = tallyContainerColor;
                         containerColor3 = halfTallyContainerColor;
                         containerColor4 = tallyContainerColor;
+                        textColor1 = textColorUnselected;
+                        textColor2 = textColorUnselected;
+                        textColor3 = textColorSelected;
+                        textColor4 = textColorUnselected;
                         addingFuckInWhat = 7;
                       } else {
                         //其他
@@ -488,6 +536,10 @@ class _MyPageState extends State<MyPage> {
                         containerColor2 = tallyContainerColor;
                         containerColor3 = tallyContainerColor;
                         containerColor4 = halfTallyContainerColor;
+                        textColor1 = textColorUnselected;
+                        textColor2 = textColorUnselected;
+                        textColor3 = textColorUnselected;
+                        textColor4 = textColorSelected;
                         addingFuckInWhat = 8;
                       }
                     }
@@ -501,28 +553,31 @@ class _MyPageState extends State<MyPage> {
                 });
               },
               onPanEnd: (e) {
-                Navigator.pushNamed(context, "/addConfigure", arguments: {
-                  "tallyMoney": '$tallyMoney',
-                  "addingFuckInWhat": '$addingFuckInWhat'
-                }).then((value) => setState(() {
-                      _isNotShow = !_isNotShow;
-                    }));
+                if (tallyMoney == 0) {
+                  _isNotShow = !_isNotShow;
+                } else {
+                  Navigator.pushNamed(context, "/addConfigure", arguments: {
+                    "tallyMoney": '$tallyMoney',
+                    "addingFuckInWhat": '$addingFuckInWhat'
+                  }).then((value) => setState(() {
+                        _isNotShow = !_isNotShow;
+                      }));
+                }
               },
 
               // 手势检测的作用组件 , 监听该组件上的各种手势
               child: Column(
                 children: [
                   SizedBox(
-                    height: 50,
+                    height: 30,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(6.0),
                     child: Container(
-                        height: height - 142,
+                        height: height - 182,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          color: Color.fromARGB(180, tallyContainerColor,
-                              tallyContainerColor, tallyContainerColor),
+                          color: tallyContainerColor,
                           boxShadow: [
                             BoxShadow(
                                 color: Colors.black,
@@ -535,66 +590,106 @@ class _MyPageState extends State<MyPage> {
                         // 子组件居中
                         child: Row(children: <Widget>[
                           Container(
+                            margin: EdgeInsets.all(4),
+                            padding: EdgeInsets.all(3),
                             width: smallTallyWidth,
-                            color: Color.fromARGB(180, containerColor1,
-                                containerColor1, containerColor1),
+                            decoration: BoxDecoration(
+                              color: containerColor1,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Provider.of<ThemeProvider>(context)
+                                        .mainFont,
+                                    offset: Offset(1.0, 1.0), //阴影x轴偏移量
+                                    blurRadius: 1, //阴影模糊程度
+                                    spreadRadius: 0 //阴影扩散程度
+                                    )
+                              ],
+                            ),
                             child: Text(
                               '$tallyTitle1',
                               textScaleFactor: 1.7,
                               style: TextStyle(
-                                color: Color.fromARGB(
-                                    180,
-                                    255 - tallyContainerColor,
-                                    255 - tallyContainerColor,
-                                    255 - tallyContainerColor),
+                                color: textColor1,
                               ),
                             ),
                           ),
                           Container(
+                            margin: EdgeInsets.all(4),
+                            padding: EdgeInsets.all(3),
                             width: smallTallyWidth,
-                            color: Color.fromARGB(180, containerColor2,
-                                containerColor2, containerColor2),
+                            decoration: BoxDecoration(
+                              color: containerColor2,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Provider.of<ThemeProvider>(context)
+                                        .mainFont,
+                                    offset: Offset(1.0, 1.0), //阴影x轴偏移量
+                                    blurRadius: 1, //阴影模糊程度
+                                    spreadRadius: 0 //阴影扩散程度
+                                    )
+                              ],
+                            ),
                             child: Text(
                               '$tallyTitle2',
                               textScaleFactor: 1.7,
                               style: TextStyle(
-                                color: Color.fromARGB(
-                                    180,
-                                    255 - tallyContainerColor,
-                                    255 - tallyContainerColor,
-                                    255 - tallyContainerColor),
+                                color: textColor2,
                               ),
                             ),
                           ),
                           Container(
+                            margin: EdgeInsets.all(4),
+                            padding: EdgeInsets.all(3),
                             width: smallTallyWidth,
-                            color: Color.fromARGB(180, containerColor3,
-                                containerColor3, containerColor3),
+                            decoration: BoxDecoration(
+                              color: containerColor3,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Provider.of<ThemeProvider>(context)
+                                        .mainFont,
+                                    offset: Offset(1.0, 1.0), //阴影x轴偏移量
+                                    blurRadius: 1, //阴影模糊程度
+                                    spreadRadius: 0 //阴影扩散程度
+                                    )
+                              ],
+                            ),
                             child: Text(
                               '$tallyTitle3',
                               textScaleFactor: 1.7,
                               style: TextStyle(
-                                color: Color.fromARGB(
-                                    180,
-                                    255 - tallyContainerColor,
-                                    255 - tallyContainerColor,
-                                    255 - tallyContainerColor),
+                                color: textColor3,
                               ),
                             ),
                           ),
                           Container(
+                            margin: EdgeInsets.all(4),
+                            padding: EdgeInsets.all(3),
                             width: smallTallyWidth,
-                            color: Color.fromARGB(180, containerColor4,
-                                containerColor4, containerColor4),
+                            decoration: BoxDecoration(
+                              color: containerColor4,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(5.0)),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: Provider.of<ThemeProvider>(context)
+                                        .mainFont,
+                                    offset: Offset(1.0, 1.0), //阴影x轴偏移量
+                                    blurRadius: 1, //阴影模糊程度
+                                    spreadRadius: 0 //阴影扩散程度
+                                    )
+                              ],
+                            ),
                             child: Text(
                               '$tallyTitle4',
                               textScaleFactor: 1.7,
                               style: TextStyle(
-                                color: Color.fromARGB(
-                                    180,
-                                    255 - tallyContainerColor,
-                                    255 - tallyContainerColor,
-                                    255 - tallyContainerColor),
+                                color: textColor4,
                               ),
                             ),
                           ),
@@ -606,29 +701,49 @@ class _MyPageState extends State<MyPage> {
           ],
         ),
         Positioned(
-          top: 68,
+          top: 53,
           left: 24,
-          child: Text(
-            '$addingWhatListOutput',
-            textScaleFactor: 1.5,
-            style: TextStyle(
-              color: Color.fromARGB(180, 255 - tallyContainerColor,
-                  255 - tallyContainerColor, 255 - tallyContainerColor),
-              fontWeight: FontWeight.w900,
-            ),
+          child: Row(
+            children: [
+              SizedBox(width: 5),
+              Icon(
+                icon,
+                color: Provider.of<ThemeProvider>(context).mainFont,
+              ),
+              SizedBox(width: 10),
+              Text(
+                '$addingWhatListOutput',
+                textScaleFactor: 1.5,
+                style: TextStyle(
+                  color: Provider.of<ThemeProvider>(context).mainFont,
+                  fontWeight: FontWeight.w900,
+                ),
+              ),
+            ],
           ),
         ),
         Positioned(
-          top: 92,
+          top: 77,
           left: 24,
-          child: Text(
-            '$tallyMoney',
-            textScaleFactor: 5.0,
-            style: TextStyle(
-              color: Color.fromARGB(180, 255 - tallyContainerColor,
-                  255 - tallyContainerColor, 255 - tallyContainerColor),
-              fontWeight: FontWeight.w600,
-            ),
+          child: Row(
+            children: [
+              Text(
+                '￥',
+                textScaleFactor: 2.0,
+                style: TextStyle(
+                  color: Provider.of<ThemeProvider>(context).mainFont,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              Text(
+                '$tallyMoney',
+                textScaleFactor: 5.0,
+                style: TextStyle(
+                  color: Provider.of<ThemeProvider>(context).mainFont,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
           ),
         )
       ],
@@ -650,13 +765,13 @@ class _MyPageState extends State<MyPage> {
                     _todayExpenditure.abs().toString(),
                     style: TextStyle(
                         fontSize: 60,
-                        color: Provider.of<ThemeProvider>(context).color2,
+                        color: Provider.of<ThemeProvider>(context).mainFont,
                         fontWeight: FontWeight.w300),
                   ),
                   Text(_todayExpenditure > 0 ? '今日支出' : '今日收入',
                       style: TextStyle(
                           fontSize: 15,
-                          color: Provider.of<ThemeProvider>(context).color6,
+                          color: Provider.of<ThemeProvider>(context).assistFont,
                           fontWeight: FontWeight.w900)),
                 ],
               ),
@@ -670,13 +785,13 @@ class _MyPageState extends State<MyPage> {
                     _monthExpenditure.abs().toString(),
                     style: TextStyle(
                         fontSize: 60,
-                        color: Provider.of<ThemeProvider>(context).color2,
+                        color: Provider.of<ThemeProvider>(context).mainFont,
                         fontWeight: FontWeight.w300),
                   ),
                   Text(_monthExpenditure > 0 ? '本月支出' : '本月收入',
                       style: TextStyle(
                           fontSize: 15,
-                          color: Provider.of<ThemeProvider>(context).color6,
+                          color: Provider.of<ThemeProvider>(context).assistFont,
                           fontWeight: FontWeight.w900)),
                 ],
               ),
@@ -703,14 +818,16 @@ class _MyPageState extends State<MyPage> {
                           width: 110,
                           height: 110,
                           decoration: BoxDecoration(
-                              color: Provider.of<ThemeProvider>(context).color6,
+                              color: Provider.of<ThemeProvider>(context)
+                                  .assistFont,
                               borderRadius:
                                   BorderRadius.all(Radius.circular(150.0))),
                           child: Center(
                             child: Text("记一笔",
                                 style: TextStyle(
                                     fontSize: 25,
-                                    color: Colors.white,
+                                    color: Provider.of<ThemeProvider>(context)
+                                        .outer,
                                     fontWeight: FontWeight.w900)),
                           ),
                         )),
@@ -725,7 +842,7 @@ class _MyPageState extends State<MyPage> {
                     "$_averageDailyConsumption",
                     style: TextStyle(
                         fontSize: 60,
-                        color: Provider.of<ThemeProvider>(context).color2,
+                        color: Provider.of<ThemeProvider>(context).mainFont,
                         fontWeight: FontWeight.w300),
                   ),
                   InkWell(
@@ -737,7 +854,8 @@ class _MyPageState extends State<MyPage> {
                     child: Text("日均消费",
                         style: TextStyle(
                             fontSize: 15,
-                            color: Provider.of<ThemeProvider>(context).color6,
+                            color:
+                                Provider.of<ThemeProvider>(context).assistFont,
                             fontWeight: FontWeight.w900)),
                   ),
                 ],
