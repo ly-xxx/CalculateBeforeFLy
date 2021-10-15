@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 ///背景色
-final List<Color> themeListF = [
+final List<Color> themeListAA = [
   Color(0xFFF7F7F7),
   Color(0xFF10002C),
   Color(0xFFFFE6CA),

@@ -80,7 +80,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                          color: Provider.of<ThemeProvider>(context).mainFont,
+                          color: Provider.of<ThemeProvider>(context).outerSide,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10.0))),
                       child: Row(
@@ -88,9 +88,9 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                         children: <Widget>[
                           Container(
                               child: Icon(
-                            Icons.attach_money,
+                            Icons.stacked_bar_chart,
                             size: 25,
-                            color: Provider.of<ThemeProvider>(context).outer,
+                            //color: Provider.of<ThemeProvider>(context).outer,
                           )),
                           SizedBox(
                             width: 30,
@@ -99,8 +99,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                             "统计",
                             style: TextStyle(
                                 fontSize: 20,
-                                color:
-                                    Provider.of<ThemeProvider>(context).background,
+                                color: Colors.black,
                                 fontWeight: FontWeight.w900),
                           ),
                         ],
@@ -118,7 +117,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     return Column(
       children: <Widget>[
         SizedBox(
-          height: 100,
+          height: 30,
         ),
         Card(
           color: Colors.white,
@@ -271,8 +270,10 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                               child: IconButton(
                                   onPressed: () {
                                     int x;
-                                    if(textFieldController.text.isEmpty)x=_gdsz;
-                                    else x = int.parse(textFieldController.text);
+                                    if (textFieldController.text.isEmpty)
+                                      x = _gdsz;
+                                    else
+                                      x = int.parse(textFieldController.text);
                                     prefs.setInt('gdsz', x);
                                     print(_gdsz);
                                     if (_typeOfGdsz) {
@@ -320,13 +321,17 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
   Widget getCardTop() {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
-        height: 100,
+        height: 140,
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           ///圆形头像框
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey,
+              color: Color(0x0C000000),
               shape: BoxShape.circle,
+              border: new Border.all(
+                //边框颜色
+                color: Color(0xFFA1A1A1),
+              ),
             ),
             height: 200,
             width: 70,
@@ -336,9 +341,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
           Text(
             '用户名',
             style: TextStyle(
-                fontWeight: FontWeight.w500,
-                fontSize: 25,
-                color: Provider.of<ThemeProvider>(context).background),
+                fontWeight: FontWeight.w500, fontSize: 25, color: Colors.black),
           ),
           SizedBox(
             width: 60,
@@ -352,7 +355,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
             },
             icon: Icon(Icons.logout),
             iconSize: 40,
-            color: Provider.of<ThemeProvider>(context).mainFont,
+            color: Colors.black,
           ),
         ]),
       ),
@@ -376,53 +379,74 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
 
   Widget gridViewPage() {
     return Padding(
-      padding: EdgeInsets.all(5.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      padding: EdgeInsets.all(0.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          Container(
-            width: 135,
-            height: 135,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(15.0)),
-              border: new Border.all(
-                width: 1,
-                color: Colors.white24,
-              ),
-              color: Provider.of<ThemeProvider>(context).background,
-              // boxShadow: [
-              //   BoxShadow(
-              //     color: Colors.black12,
-              //     offset: Offset(0.0, 0.0), //阴影x轴偏移量
-              //     blurRadius: 4, //阴影模糊程度
-              //   )
-              // ],
-            ),
-            child: skinPage(),
-          ),
+          Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    border: new Border.all(
+                      width: 1,
+                      color: Colors.white24,
+                    ),
+                    //color: Provider.of<ThemeProvider>(context).background,
+                  ),
+                  child: skinPage(),
+                ),
+                Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    border: new Border.all(
+                      width: 1,
+                      color: Colors.white24,
+                    ),
+                    // color: Provider.of<ThemeProvider>(context).background,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        offset: Offset(0.0, 0.0), //阴影x轴偏移量
+                        blurRadius: 4, //阴影模糊程度
+                      )
+                    ],
+                  ),
+                  child: fixedPage(),
+                ),
+              ]),
           SizedBox(
-            width: 15,
+            height: 10,
           ),
-          Container(
-            width: 135,
-            height: 135,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(15.0)),
-              border: new Border.all(
-                width: 1,
-                color: Colors.white24,
+          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+            Container(
+              width: 120,
+              height: 120,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                border: new Border.all(
+                  width: 1,
+                  color: Colors.white24,
+                ),
+                // color: Provider.of<ThemeProvider>(context).background,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black12,
+                    offset: Offset(0.0, 0.0), //阴影x轴偏移量
+                    blurRadius: 4, //阴影模糊程度
+                  )
+                ],
               ),
-              color: Provider.of<ThemeProvider>(context).background,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  offset: Offset(0.0, 0.0), //阴影x轴偏移量
-                  blurRadius: 4, //阴影模糊程度
-                )
-              ],
+              child: AddPage(),
             ),
-            child: fixedPage(),
-          ),
+            SizedBox(width: 120,
+              height: 120,),
+          ]),
         ],
       ),
     );
@@ -436,16 +460,18 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
         Text(
           "$_keepDays",
           style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 55,
-              color: Provider.of<ThemeProvider>(context).mainFont),
+            fontWeight: FontWeight.w300,
+            fontSize: 55,
+            // color: Provider.of<ThemeProvider>(context).mainFont
+          ),
         ),
         Text(
           "记账天数",
           style: TextStyle(
-              fontWeight: FontWeight.w900,
-              fontSize: 15,
-              color: Provider.of<ThemeProvider>(context).assistFont),
+            fontWeight: FontWeight.w900,
+            fontSize: 15,
+            // color: Provider.of<ThemeProvider>(context).assistFont
+          ),
         )
       ],
     ));
@@ -459,16 +485,17 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
         Text(
           "$_keepCounts",
           style: TextStyle(
-              fontWeight: FontWeight.w300,
-              fontSize: 55,
-              color: Provider.of<ThemeProvider>(context).mainFont),
+            fontWeight: FontWeight.w300,
+            fontSize: 55,
+            //color: Provider.of<ThemeProvider>(context).mainFont
+          ),
         ),
         Text(
           "记账笔数",
           style: TextStyle(
             fontWeight: FontWeight.w900,
             fontSize: 15,
-            color: Provider.of<ThemeProvider>(context).assistFont,
+            // color: Provider.of<ThemeProvider>(context).assistFont,
           ),
         )
       ],
@@ -478,7 +505,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
   Widget skinPage() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Provider.of<ThemeProvider>(context).background,
+        primary: Colors.white,
       ),
       onPressed: () {
         Navigator.pushNamed(context, "/skinPage");
@@ -489,7 +516,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
             Icon(
               Icons.style_outlined,
               size: 40,
-              color: Provider.of<ThemeProvider>(context).background,
+              // color: Provider.of<ThemeProvider>(context).background,
             ),
             SizedBox(
               height: 10,
@@ -497,9 +524,10 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
             Text(
               '个性装扮',
               style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 20,
-                  color: Provider.of<ThemeProvider>(context).background),
+                fontWeight: FontWeight.w900,
+                fontSize: 20,
+                // color: Provider.of<ThemeProvider>(context).background
+              ),
             ),
           ]),
     );
@@ -508,11 +536,11 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
   Widget fixedPage() {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Provider.of<ThemeProvider>(context).background,
+          primary: Colors.white,
         ),
         onPressed: () {
           setState(() {
-            _offstage=!_offstage;
+            _offstage = !_offstage;
           });
         },
         child: Column(
@@ -521,7 +549,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
               Icon(
                 Icons.library_books,
                 size: 40,
-                color: Provider.of<ThemeProvider>(context).assistFont,
+                // color: Provider.of<ThemeProvider>(context).assistFont,
               ),
               SizedBox(
                 height: 10,
@@ -529,9 +557,50 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
               Text(
                 '固定收支',
                 style: TextStyle(
-                    fontWeight: FontWeight.w900,
-                    fontSize: 20,
-                    color: Provider.of<ThemeProvider>(context).mainFont),
+                  fontWeight: FontWeight.w900,
+                  fontSize: 20,
+                  // color: Provider.of<ThemeProvider>(context).mainFont
+                ),
+              ),
+            ]));
+  }
+
+  Widget AddPage() {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Colors.white,
+        ),
+        onPressed: () {
+          showDialog(
+              context: context,
+              builder: (_) {
+                return AlertDialog(
+                  backgroundColor: Colors.white,
+                  elevation: 5,
+                  content: Text('更多自定义功能敬请期待！',
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w900)),
+                );
+              });
+        },
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.add,
+                size: 40,
+                // color: Provider.of<ThemeProvider>(context).assistFont,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                '',
+                style: TextStyle(
+                  fontWeight: FontWeight.w900,
+                  fontSize: 20,
+                  // color: Provider.of<ThemeProvider>(context).mainFont
+                ),
               ),
             ]));
   }
@@ -542,7 +611,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     width = size.width;
     height = size.height;
     return Scaffold(
-      backgroundColor: Provider.of<ThemeProvider>(context).background,
+      backgroundColor: Provider.of<ThemeProvider>(context).moreBackground,
       body: Column(
         children: [
           Expanded(
@@ -557,7 +626,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                     child: Container(
                       width: 50,
                       decoration: BoxDecoration(
-                          color: Provider.of<ThemeProvider>(context).background,
+                          color: Provider.of<ThemeProvider>(context).outer,
                           borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(10.0))),
                       child: Column(
@@ -569,10 +638,10 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                           Align(
                             alignment: Alignment.center,
                             child: Icon(
-                              Icons.menu_open,
+                              Icons.library_books,
                               size: 30,
-                              color:
-                                  Provider.of<ThemeProvider>(context).mainFont,
+                              //color:
+                              // Provider.of<ThemeProvider>(context).mainFont,
                             ),
                           ),
                           SizedBox(
@@ -582,8 +651,8 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                             "明\n细",
                             style: TextStyle(
                                 fontSize: 20,
-                                color: Provider.of<ThemeProvider>(context)
-                                    .mainFont,
+                                // color: Provider.of<ThemeProvider>(context)
+                                //     .mainFont,
                                 fontWeight: FontWeight.w900),
                           ),
                         ],
@@ -593,6 +662,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                 ),
                 Expanded(
                   child: mainPage(),
+                  flex: 9,
                 ),
               ],
             ),

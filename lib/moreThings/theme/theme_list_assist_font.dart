@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 /// 提示性字体统一颜色
-final List<Color> themeListBB = [
+final List<Color> themeListAC = [
 
   Color(0x99121212),
   Color(0x99EEEEEE),

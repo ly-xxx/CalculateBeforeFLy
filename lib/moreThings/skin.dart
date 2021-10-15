@@ -28,24 +28,36 @@ class _SkinPageState extends State<SkinPage> {
     return GestureDetector(
       child: Container(
         width: double.infinity,
-        height: 50,
-        margin: EdgeInsets.only(top: 10, bottom: 10),
+        // padding: const EdgeInsets.all(40),
+        height: 70,
+        margin: EdgeInsets.only(top: 30, bottom: 30, left: 20, right: 20),
         decoration: BoxDecoration(
-          color: themeList[index],
+          image:
+          new DecorationImage(image: themeList[index], fit: BoxFit.cover),
+          boxShadow: [
+            //一组阴影
+            BoxShadow(
+              color: Colors.grey, //阴影颜色
+              offset: Offset(0.0, 0.0), //偏移量
+              blurRadius: 30.0, //模糊范围
+              spreadRadius: -10.0, //传播范围
+            )
+          ],
           borderRadius: BorderRadius.all(Radius.circular(20)),
         ),
+
         child: _index != index
             ? Text("") //如果没选中则无东西
             : Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Icon(
-                    Icons.check,
-                    color: Colors.white,
-                  ),
-                  SizedBox(width: 16),
-                ],
-              ),
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Icon(
+              Icons.check,
+              color: Colors.grey.shade800,
+            ),
+            SizedBox(width: 16),
+          ],
+        ),
       ),
       onTap: () async {
         SharedPreferences sp = await SharedPreferences.getInstance();
@@ -62,16 +74,17 @@ class _SkinPageState extends State<SkinPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Provider.of<ThemeProvider>(context).background,
+      backgroundColor:Color(0xFFEBEBF2),
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Provider.of<ThemeProvider>(context).mainFont,),
+        iconTheme: IconThemeData(
+        ),
         title: Text(
-          "设置主题",
+          "个性装扮",
           style: TextStyle(
-            color: Provider.of<ThemeProvider>(context).mainFont,
+            color: Colors.black,
           ),
         ),
-        backgroundColor: Provider.of<ThemeProvider>(context).outer,
+        backgroundColor: Colors.white,
         centerTitle: true,
         elevation: 10,
       ),

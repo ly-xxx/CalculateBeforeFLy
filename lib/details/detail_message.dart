@@ -27,14 +27,11 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
   //final p=GlobalData.instance;
   List<List<String>> _detailList = [];
 
-  //
   @override
   void initState() {
     int x = prefs.getInt("itemCount") ?? 0;
     print('x is $x');
     for (int i = 0; i < x; i++) {
-      //if()
-      //y.add(i);
       _detailList
           .add(prefs.getStringList(i.toString()) ?? ["0", "0", "no data"]);
       print('get StringList $i is ${_detailList[i]}');
@@ -65,7 +62,7 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                       decoration: BoxDecoration(
                         borderRadius:
                             BorderRadius.only(topRight: Radius.circular(10.0)),
-                        color: Provider.of<ThemeProvider>(context).outer,
+                        color: Colors.white,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -74,7 +71,7 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                               child: Icon(
                             Icons.home,
                             size: 30,
-                            color: Provider.of<ThemeProvider>(context).mainFont,
+                            //color: Provider.of<ThemeProvider>(context).mainFont,
                           )),
                           SizedBox(
                             width: 30,
@@ -83,8 +80,8 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                             "主页",
                             style: TextStyle(
                                 fontSize: 20,
-                                color: Provider.of<ThemeProvider>(context)
-                                    .mainFont,
+                                // color: Provider.of<ThemeProvider>(context)
+                                //     .mainFont,
                                 fontWeight: FontWeight.w900),
                           ),
                         ],
@@ -98,11 +95,11 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                 child: Container(
                   height: 50,
                   width: 50,
-                  color: Provider.of<ThemeProvider>(context).background,
+                  color:  Provider.of<ThemeProvider>(context).outer,
                   child: Icon(
-                    Icons.attach_money,
+                    Icons.stacked_bar_chart,
                     size: 25,
-                    color: Provider.of<ThemeProvider>(context).mainFont,
+                  //  color: Provider.of<ThemeProvider>(context).mainFont,
                   ),
                 ),
               ),
@@ -118,14 +115,14 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
     final size = MediaQuery.of(context).size;
     width = size.width;
     height = size.height;
-    edgeOfTab = Provider.of<ThemeProvider>(context).mainFont;
+    //edgeOfTab = Provider.of<ThemeProvider>(context).mainFont;
     if (!flag) {
       date2OnTop = DateTime.now().toString().substring(5, 7);
       date1OnTop = DateTime.now().toString().substring(0, 4);
     }
     return
       Scaffold(
-        backgroundColor: Provider.of<ThemeProvider>(context).background,
+        backgroundColor: Provider.of<ThemeProvider>(context).detailBackground,
         body: SafeArea(child:Column(children: [
           Expanded(
             child: Row(
@@ -142,26 +139,26 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                          color: Provider.of<ThemeProvider>(context).outer,
+                          color: Colors.white,
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(10.0))),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(
-                            Icons.account_tree_outlined,
+                            Icons.person,
                             size: 30,
-                            color: Provider.of<ThemeProvider>(context).mainFont,
+                         //   color: Provider.of<ThemeProvider>(context).mainFont,
                           ),
                           SizedBox(
                             height: 15,
                           ),
                           Text(
-                            "更\n多",
+                            "我\n的",
                             style: TextStyle(
                                 fontSize: 20,
-                                color: Provider.of<ThemeProvider>(context)
-                                    .mainFont,
+                                // color: Provider.of<ThemeProvider>(context)
+                                //     .mainFont,
                                 fontWeight: FontWeight.w900),
                           ),
                         ],
@@ -197,13 +194,13 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                           builder: (_) {
                             return AlertDialog(
                               backgroundColor:
-                                  Provider.of<ThemeProvider>(context).outer,
+                                 Colors.white,
                               elevation: 5,
                               content: Text('你确定要删除这条记录吗？',
                                   style: TextStyle(
                                       fontSize: 15,
-                                      color: Provider.of<ThemeProvider>(context)
-                                          .mainFont,
+                                      // color: Provider.of<ThemeProvider>(context)
+                                      //     .mainFont,
                                       fontWeight: FontWeight.w900)),
                               actions: [
                                 TextButton(
@@ -213,9 +210,9 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                                   child: Text('取消',
                                       style: TextStyle(
                                           fontSize: 20,
-                                          color: Provider.of<ThemeProvider>(
-                                                  context)
-                                              .assistFont,
+                                          // color: Provider.of<ThemeProvider>(
+                                          //         context)
+                                          //     .assistFont,
                                           fontWeight: FontWeight.w900)),
                                 ),
                                 TextButton(
@@ -225,9 +222,9 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                                     child: Text('确定',
                                         style: TextStyle(
                                             fontSize: 20,
-                                            color: Provider.of<ThemeProvider>(
-                                                    context)
-                                                .mainFont,
+                                            // color: Provider.of<ThemeProvider>(
+                                            //         context)
+                                            //     .mainFont,
                                             fontWeight: FontWeight.w900))),
                               ],
                             );
@@ -261,8 +258,8 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
                               colors: [
-                                Provider.of<ThemeProvider>(context).background,
-                                Provider.of<ThemeProvider>(context).background,
+              Colors.white,
+              Colors.white,
                               ],
                             ),
                             borderRadius:
@@ -274,25 +271,23 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                               },
                               child: ListTile(
                                 tileColor:
-                                    Provider.of<ThemeProvider>(context).outer,
+                                    Colors.black,
                                 leading: Icon(
                                   AddingWhat.addingWhatListIcon[
                                       int.parse(_detailList[_detailList.length-index-1][1])],
-                                  color: Provider.of<ThemeProvider>(context)
-                                      .mainFont,
+                                  // color: Provider.of<ThemeProvider>(context)
+                                  //     .mainFont,
                                 ),
                                 title: Text(
                                   AddingWhat.addingWhatList[
                                       int.parse(_detailList[_detailList.length-index-1][1])],
                                   style: TextStyle(
-                                      color: Provider.of<ThemeProvider>(context)
-                                          .mainFont),
+                                      color: Colors.black),
                                 ),
                                 subtitle: Text(
                                   _detailList[_detailList.length-index-1][2],
                                   style: TextStyle(
-                                      color: Provider.of<ThemeProvider>(context)
-                                          .mainFont),
+                                      color:  Colors.black),
                                 ),
                                 trailing: int.parse(_detailList[_detailList.length-index-1][1])>0&&int.parse(_detailList[_detailList.length-index-1][1])<5?
                                 Text(
@@ -300,19 +295,18 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                                   style: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.w400,
-                                      color: Provider.of<ThemeProvider>(context)
-                                          .mainFont),
+                                      color:  Colors.black),
                                 ):
                                 Text(
                                   '-${_detailList[_detailList.length-index-1][0]}',
                                   style: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.w400,
-                                      color: Provider.of<ThemeProvider>(context)
-                                          .mainFont),
+                                      // color: Provider.of<ThemeProvider>(context)
+                                      //     .mainFont),
                                 ),
                               ))),
-                    ));
+                    )));
               }
             ));
   }
@@ -346,15 +340,9 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                 '$date1OnTop年$date2OnTop月',
                 style: TextStyle(
                   fontSize: 35,
-                  color: Provider.of<ThemeProvider>(context).mainFont,
+                 // color: Provider.of<ThemeProvider>(context).mainFont,
                   fontWeight: FontWeight.w900,
-                  // shadows: <Shadow>[
-                  //   Shadow(
-                  //     offset: Offset(2.0, 2.0),
-                  //     blurRadius: 1.0,
-                  //     color: Color.fromARGB(120, 10, 10, 100),
-                  //   ),
-                  // ],
+
                 ),
               ),
               Icon(
@@ -379,10 +367,10 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                   width: 40,
                   height: 40,
                   child: FloatingActionButton(
-                    foregroundColor:
-                        Provider.of<ThemeProvider>(context).mainFont,
-                    backgroundColor:
-                        Provider.of<ThemeProvider>(context).mainFont,
+                    // foregroundColor:
+                    //     Provider.of<ThemeProvider>(context).mainFont,
+                    // backgroundColor:
+                    //     Provider.of<ThemeProvider>(context).mainFont,
                     elevation: 5,
                     splashColor: Colors.amber[100],
                     onPressed: () {

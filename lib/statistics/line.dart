@@ -23,7 +23,7 @@ int getDay(String month, String day){
   int x = prefs.getInt("itemCount") ?? 0;
 
   for (int i = 0; i < x; i++) {
-    _detailList.add(prefs.getStringList(i.toString())??["no data"]);
+    _detailList.add(prefs.getStringList(i.toString())??["0","0","no data"]);
   }
 
   List<List<String>> result = [];
@@ -58,17 +58,18 @@ int getDay(String month, String day){
 Widget getLine() {
 
   List<Linesales> dataLine = [
-    Linesales(d1, getDay(d1.month.toString(),d1.day.toString())),//日期，当日总收支
-    Linesales(d2, getDay(d2.month.toString(),d2.day.toString())),
-    Linesales(d3, getDay(d3.month.toString(),d3.day.toString())),
-    Linesales(d4, getDay(d4.month.toString(),d4.day.toString())),
-    Linesales(d5, getDay(d5.month.toString(),d5.day.toString())),
-    Linesales(now, getDay(now.month.toString(), now.day.toString())),
+    Linesales(d1, getDay(d1.month.toString(),d1.day.toString()),Color(0xFF7E7BA4)),//日期，当日总收支
+    Linesales(d2, getDay(d2.month.toString(),d2.day.toString()),Color(0xFF7E7BA4)),
+    Linesales(d3, getDay(d3.month.toString(),d3.day.toString()),Color(0xFF7E7BA4)),
+    Linesales(d4, getDay(d4.month.toString(),d4.day.toString()),Color(0xFF7E7BA4)),
+    Linesales(d5, getDay(d5.month.toString(),d5.day.toString()),Color(0xFF7E7BA4)),
+    Linesales(now, getDay(now.month.toString(), now.day.toString()),Color(0xFF7E7BA4)),
   ];
 
   var seriesLine = [
     charts.Series<Linesales, DateTime>(
       data: dataLine,
+      colorFn: (Linesales lines, _) =>lines.color,
       domainFn: (Linesales lines, _) => lines.time,
       measureFn: (Linesales lines, _) => lines.sale,
       id: "Lines",
@@ -91,7 +92,7 @@ Widget getLine() {
         // 区域颜色透明度 0.0-1.0
         areaOpacity: 0.2,
       ));
-  //line = charts.LineChart(series);
+
   return line;
 }
 
