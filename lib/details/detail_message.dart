@@ -187,17 +187,22 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                     return showDialog(
                         context: context,
                         builder: (_){
-                          return AlertDialog(
-                            title: Text('你确定？'),
-                            content: Text('你确定要删除这条记录吗？'),
-                            actions: [
-                              TextButton(onPressed: (){
-                                Navigator.of(context).pop(false);
-                              }, child: Text('取消')),
-                              TextButton(onPressed: (){
-                                Navigator.of(context).pop(true);
-                              }, child: Text('确定')),
-                            ],
+                          return Container(
+                            decoration: BoxDecoration(
+                              //borderRadius: BorderRadius.all(Radius.circular(50.0))
+                            ),
+                            child: AlertDialog(
+                              //title: Text('你确定？'),
+                              content: Text('你确定要删除这条记录吗？'),
+                              actions: [
+                                TextButton(onPressed: (){
+                                  Navigator.of(context).pop(false);
+                                }, child: Text('取消')),
+                                TextButton(onPressed: (){
+                                  Navigator.of(context).pop(true);
+                                }, child: Text('确定')),
+                              ],
+                            ),
                           );
                         }
                     );
@@ -235,18 +240,6 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                             ],
                           ),
                           borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          // border: new Border.all(
-                          //   width: 1,
-                          //   color: Provider.of<ThemeProvider>(context).color2,
-                          // ),
-                          // boxShadow: [
-                          //   BoxShadow(
-                          //     color: edgeOfTab,
-                          //     offset: Offset(0.0, 0.0), //阴影x轴偏移量
-                          //     blurRadius: 5, //阴影模糊程度
-                          //     spreadRadius: 1, //阴影扩散程度
-                          //   )
-                          // ],
                         ),
                         child: InkWell(
                             onTap: () {
@@ -270,8 +263,17 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                                     color: Provider.of<ThemeProvider>(context)
                                         .color2),
                               ),
-                              trailing: Text(
-                                _detailList[index][0],
+                              trailing: int.parse(_detailList[index][1])>0&&int.parse(_detailList[index][1])<=4?
+                              Text(
+                                '+${_detailList[index][0]}',
+                                style: TextStyle(
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w400,
+                                    color: Provider.of<ThemeProvider>(context)
+                                        .color2),
+                              ):
+                              Text(
+                                '-${_detailList[index][0]}',
                                 style: TextStyle(
                                     fontSize: 30,
                                     fontWeight: FontWeight.w400,

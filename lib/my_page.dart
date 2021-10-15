@@ -1,3 +1,4 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,12 +18,13 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   int _todayExpenditure = 0;
   int _monthExpenditure = 0;
-  int _averageDailyConsumption = 0;
+  double _averageDailyConsumption = 0.0;     //日均消费
   int _budget = 0;
   int valueTransfer = 0;
   int tallyMoney = 0; //金额
   double _monthExpenditureBudgetPercentage = 0;
   SharedPreferences prefs = GlobalData.getPref()!;
+  String _today='';
 
   double width = 0.0;
   double height = 0.0;
@@ -68,23 +70,20 @@ class _MyPageState extends State<MyPage> {
 
   bool get wantKeepAlive => true;
 
-  //List<Widget> _list = [];
-  // List addingWhatList = [
-  //   'xixi',
-  //   '收入了：生活费 工资',
-  //   '收入了：理财',
-  //   '收入了：学习',
-  //   '收入了：其他',
-  //   '支出了：餐饮 娱乐',
-  //   '支出了：生活',
-  //   '支出了：学习',
-  //   '支出了：其他'
-  // ];
+
   String addingWhatListOutput = "";
 
   get async => null;
 
   Color indicatorColor = Colors.black12;
+
+
+  @override
+  void initState() {
+    _today=formatDate(DateTime.now(), ['dd']);
+
+    super.initState();
+  }
 
   _remove() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -145,6 +144,7 @@ class _MyPageState extends State<MyPage> {
     _budget = prefs.getInt('budget') ?? 0;
     _todayExpenditure = prefs.getInt('todayExpenditure') ?? 0;
     _monthExpenditure = prefs.getInt('monthExpenditure') ?? 0;
+    _averageDailyConsumption=_monthExpenditure/int.parse(_today);
     final size = MediaQuery.of(context).size;
     width = size.width;
     height = size.height;
@@ -722,7 +722,7 @@ class _MyPageState extends State<MyPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "$_averageDailyConsumption",
+                    _averageDailyConsumption.abs().toStringAsFixed(1),
                     style: TextStyle(
                         fontSize: 60,
                         color: Provider.of<ThemeProvider>(context).color2,
@@ -734,7 +734,12 @@ class _MyPageState extends State<MyPage> {
                         _remove();
                       });
                     },
-                    child: Text("日均消费",
+                    child: _averageDailyConsumption>0?Text("日均消费",
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Provider.of<ThemeProvider>(context).color6,
+                            fontWeight: FontWeight.w900))
+                    :Text("日均收入",
                         style: TextStyle(
                             fontSize: 15,
                             color: Provider.of<ThemeProvider>(context).color6,

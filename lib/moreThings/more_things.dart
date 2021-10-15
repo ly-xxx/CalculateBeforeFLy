@@ -235,7 +235,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                       border: InputBorder.none,
-                                      hintText: "金额(默认为0)",
+                                      hintText: "金额",
                                       hintStyle: TextStyle(fontSize: 18)),
                                   style: TextStyle(fontSize: 18),
                                 ),
@@ -271,7 +271,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                               child: IconButton(
                                   onPressed: () {
                                     int x;
-                                    if(textFieldController.text.isEmpty)x=0;
+                                    if(textFieldController.text.isEmpty)x=_gdsz;
                                     else x = int.parse(textFieldController.text);
                                     prefs.setInt('gdsz', x);
                                     print(_gdsz);
