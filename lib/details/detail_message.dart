@@ -186,7 +186,7 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
             controller: _controller,
             itemCount: _detailList.length,
             itemBuilder: (_, index) {
-              if (_detailList[index][0] == '0') {
+              if (_detailList[_detailList.length-index-1][0] == '0') {
                 return Container();
               } else
                 return Dismissible(
@@ -199,12 +199,6 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                               backgroundColor:
                                   Provider.of<ThemeProvider>(context).outer,
                               elevation: 5,
-                              title: Text('你确定？',
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      color: Provider.of<ThemeProvider>(context)
-                                          .mainFont,
-                                      fontWeight: FontWeight.w900)),
                               content: Text('你确定要删除这条记录吗？',
                                   style: TextStyle(
                                       fontSize: 15,
@@ -283,25 +277,34 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                                     Provider.of<ThemeProvider>(context).outer,
                                 leading: Icon(
                                   AddingWhat.addingWhatListIcon[
-                                      int.parse(_detailList[index][1])],
+                                      int.parse(_detailList[_detailList.length-index-1][1])],
                                   color: Provider.of<ThemeProvider>(context)
                                       .mainFont,
                                 ),
                                 title: Text(
                                   AddingWhat.addingWhatList[
-                                      int.parse(_detailList[index][1])],
+                                      int.parse(_detailList[_detailList.length-index-1][1])],
                                   style: TextStyle(
                                       color: Provider.of<ThemeProvider>(context)
                                           .mainFont),
                                 ),
                                 subtitle: Text(
-                                  _detailList[index][2],
+                                  _detailList[_detailList.length-index-1][2],
                                   style: TextStyle(
                                       color: Provider.of<ThemeProvider>(context)
                                           .mainFont),
                                 ),
-                                trailing: Text(
-                                  _detailList[index][0],
+                                trailing: int.parse(_detailList[_detailList.length-index-1][1])>0&&int.parse(_detailList[_detailList.length-index-1][1])<5?
+                                Text(
+                                  '+${_detailList[_detailList.length-index-1][0]}',
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w400,
+                                      color: Provider.of<ThemeProvider>(context)
+                                          .mainFont),
+                                ):
+                                Text(
+                                  '-${_detailList[_detailList.length-index-1][0]}',
                                   style: TextStyle(
                                       fontSize: 30,
                                       fontWeight: FontWeight.w400,
@@ -310,108 +313,8 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                                 ),
                               ))),
                     ));
-              }else return Dismissible(
-                  key: UniqueKey(),
-                  confirmDismiss: (_)async{
-                    return showDialog(
-                        context: context,
-                        builder: (_){
-                          return Container(
-                            decoration: BoxDecoration(
-                              //borderRadius: BorderRadius.all(Radius.circular(50.0))
-                            ),
-                            child: AlertDialog(
-                              //title: Text('你确定？'),
-                              content: Text('你确定要删除这条记录吗？'),
-                              actions: [
-                                TextButton(onPressed: (){
-                                  Navigator.of(context).pop(false);
-                                }, child: Text('取消')),
-                                TextButton(onPressed: (){
-                                  Navigator.of(context).pop(true);
-                                }, child: Text('确定')),
-                              ],
-                            ),
-                          );
-                        }
-                    );
-                  },
-                  onDismissed: (_) {
-                    int a=prefs.getInt('todayExpenditure')??0;
-                    int b=prefs.getInt('monthExpenditure')??0;
-                    int type=int.parse(_detailList[index][1]);
-                    if(type<5){
-                      a=a+int.parse(_detailList[index][0]);
-                      b=b+int.parse(_detailList[index][0]);
-                    }else{
-                      a=a-int.parse(_detailList[index][0]);
-                      b=b-int.parse(_detailList[index][0]);
-                    }
-                    setState(() {
-                      prefs.setInt('todayExpenditure', a);
-                      prefs.setInt('monthExpenditure', b);
-                      prefs.remove(index.toString());
-                      _detailList.removeAt(index);
-                    });
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(3, 4, 4, 1),
-                    child: Container(
-                        height: 80,
-                        alignment: Alignment.centerLeft,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.centerLeft,
-                            end: Alignment.centerRight,
-                            colors: [
-                              Provider.of<ThemeProvider>(context).color1,
-                              Provider.of<ThemeProvider>(context).color1,
-                            ],
-                          ),
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                        ),
-                        child: InkWell(
-                            onTap: () {
-                              print("you click it");
-                            },
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.circle,
-                                color:
-                                Provider.of<ThemeProvider>(context).color2,
-                              ),
-                              title: Text(
-                                AddingWhat().addingWhatList[int.parse(_detailList[index][1])],
-                                style: TextStyle(
-                                    color: Provider.of<ThemeProvider>(context)
-                                        .color2),
-                              ),
-                              subtitle: Text(
-                                _detailList[index][2],
-                                style: TextStyle(
-                                    color: Provider.of<ThemeProvider>(context)
-                                        .color2),
-                              ),
-                              trailing: int.parse(_detailList[index][1])>0&&int.parse(_detailList[index][1])<=4?
-                              Text(
-                                '+${_detailList[index][0]}',
-                                style: TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w400,
-                                    color: Provider.of<ThemeProvider>(context)
-                                        .color2),
-                              ):
-                              Text(
-                                '-${_detailList[index][0]}',
-                                style: TextStyle(
-                                    fontSize: 30,
-                                    fontWeight: FontWeight.w400,
-                                    color: Provider.of<ThemeProvider>(context)
-                                        .color2),
-                              ),
-                            ))),
-                  ));
-            }));
+              }
+            ));
   }
 
   Widget detailMessage() {

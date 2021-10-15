@@ -25,6 +25,7 @@ class _MyPageState extends State<MyPage> {
   IconData icon = Icons.more_horiz;
   double _monthExpenditureBudgetPercentage = 0;
   SharedPreferences prefs = GlobalData.getPref()!;
+  String _today='';
 
   double width = 0.0;
   double height = 0.0;
@@ -183,7 +184,7 @@ class _MyPageState extends State<MyPage> {
                           child: Container(
                             height: 50,
                             decoration: BoxDecoration(
-                                color: theme.color1,
+                                color: theme.background,
                                 borderRadius: BorderRadius.only(
                                     bottomRight: Radius.circular(10.0))),
                             child: Row(
@@ -216,11 +217,11 @@ class _MyPageState extends State<MyPage> {
                       child: Container(
                         height: 50,
                         width: 50,
-                        color: Provider.of<ThemeProvider>(context).color3,
+                        color: Provider.of<ThemeProvider>(context).background,
                         child: Icon(
                           Icons.settings,
                           size: 25,
-                          color: Provider.of<ThemeProvider>(context).color2,
+                          //color: Provider.of<ThemeProvider>(context).background,
                         ),
                       ),
                     ),
@@ -242,7 +243,7 @@ class _MyPageState extends State<MyPage> {
                         },
                         child: Container(
                           decoration: BoxDecoration(
-                              color: theme.color1,
+                              color: theme.background,
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(10.0))),
                           child: Align(
@@ -864,7 +865,7 @@ class _MyPageState extends State<MyPage> {
                     child: _averageDailyConsumption>0?Text("日均消费",
                         style: TextStyle(
                             fontSize: 15,
-                            color: Provider.of<ThemeProvider>(context).color6,
+                            color: Provider.of<ThemeProvider>(context).background,
                             fontWeight: FontWeight.w900))
                     :Text("日均收入",
                         style: TextStyle(
