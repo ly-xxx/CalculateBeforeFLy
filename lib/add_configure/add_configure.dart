@@ -43,15 +43,10 @@ class _AddConfigureState extends State<AddConfigure> {
 
   @override
   Widget build(BuildContext context) {
-    dynamic obj = ModalRoute
-        .of(context)!
-        .settings
-        .arguments;
+    dynamic obj = ModalRoute.of(context)!.settings.arguments;
     tallyMoneyStable = int.parse(obj['tallyMoney']);
     addingWhatStable = int.parse(obj['addingFuckInWhat']);
-    final size = MediaQuery
-        .of(context)
-        .size;
+    final size = MediaQuery.of(context).size;
     width = size.width;
     height = size.height;
     if (!flag) {
@@ -64,166 +59,148 @@ class _AddConfigureState extends State<AddConfigure> {
     if (addingWhat == 0) {
       addingWhat = 8;
     }
-    addingWhatShow = AddingWhat().addingWhatList[addingWhat];
+    addingWhatShow = AddingWhat.addingWhatList[addingWhat];
     dateElse = DateTime.now().toString().substring(5, 19);
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Container(
-            //height: 80,
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, "/detailMessagePage");
-                      },
-                      child: Container(
-                        height: 50,
-                        decoration: BoxDecoration(
-                            color: Provider
-                                .of<ThemeProvider>(context)
-                                .color1,
-                            borderRadius: BorderRadius.only(
-                                bottomRight: Radius.circular(10.0))
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Container(
-                                child: Icon(
-                                  Icons.list,
-                                  size: 40,
-                                  color: Provider
-                                      .of<ThemeProvider>(context)
-                                      .color2,
-                                )),
-                            SizedBox(
-                              width: 30,
-                            ),
-                            Text(
-                              "明细",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Provider
-                                      .of<ThemeProvider>(context)
-                                      .color2,
-                                  fontWeight: FontWeight.w900),
-                            ),
-                          ],
-                        ),
-                      )),
-                ),
-                InkWell(
-                  onTap: () {
-                    Navigator.pushNamed(context, "/moreThingsPage");
-                  },
-                  child: Container(
-                    height: 50,
-                    width: 50,
-                    color: Provider
-                        .of<ThemeProvider>(context)
-                        .color3,
-                    child: Icon(
-                      Icons.settings,
-                      size: 25,
-                      color: Provider
-                          .of<ThemeProvider>(context)
-                          .color2,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Expanded(
-            child: Row(
+      backgroundColor: Provider.of<ThemeProvider>(context)
+          .background,
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            Container(
+              //height: 80,
+              child: Row(
                 children: <Widget>[
                   Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(),
-                        child: mainPage(),
-                      )),
-                  Container(
-                      width: 50,
-                      child: InkWell(
+                    child: InkWell(
                         onTap: () {
-                          Navigator.pushNamed(context, "/statisPage");
+                          Navigator.pushNamed(context, "/detailMessagePage");
                         },
                         child: Container(
+                          height: 50,
                           decoration: BoxDecoration(
-                              color: Provider
-                                  .of<ThemeProvider>(context)
-                                  .color1,
+                              color: Provider.of<ThemeProvider>(context).outer,
                               borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10.0))
+                                  bottomRight: Radius.circular(10.0))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Container(
+                                  child: Icon(
+                                Icons.list,
+                                size: 40,
+                                color: Provider.of<ThemeProvider>(context)
+                                    .mainFont,
+                              )),
+                              SizedBox(
+                                width: 30,
+                              ),
+                              Text(
+                                "明细",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Provider.of<ThemeProvider>(context)
+                                        .mainFont,
+                                    fontWeight: FontWeight.w900),
+                              ),
+                            ],
                           ),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.attach_money,
-                                  size: 30,
-                                  color: Provider
-                                      .of<ThemeProvider>(context)
-                                      .color2,
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Text(
-                                  "统\n计",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: Provider
-                                          .of<ThemeProvider>(context)
-
-
-                                          .color2,
-                                      fontWeight: FontWeight.w900),
-                                ),
-                              ],
-                            ),
+                        )),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, "/moreThingsPage");
+                    },
+                    child: Container(
+                      height: 50,
+                      width: 50,
+                      color: Provider.of<ThemeProvider>(context).background,
+                      child: Icon(
+                        Icons.settings,
+                        size: 25,
+                        color: Provider.of<ThemeProvider>(context).mainFont,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: Row(children: <Widget>[
+                Expanded(
+                    child: Container(
+                  decoration: BoxDecoration(),
+                  child: mainPage(),
+                )),
+                Container(
+                    width: 50,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/statisPage");
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: Provider.of<ThemeProvider>(context).outer,
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10.0))),
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              Icon(
+                                Icons.attach_money,
+                                size: 30,
+                                color: Provider.of<ThemeProvider>(context)
+                                    .mainFont,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Text(
+                                "统\n计",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: Provider.of<ThemeProvider>(context)
+                                        .mainFont,
+                                    fontWeight: FontWeight.w900),
+                              ),
+                            ],
                           ),
                         ),
-                      )
-                  ),
-                ]
-            ),),
-        ],
+                      ),
+                    )),
+              ]),
+            ),
+          ],
+        ),
       ),
     );
   }
-
 
   Widget mainPage() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
         children: [
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 15,
+          ),
           Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              '  将要记下：',
-              textScaleFactor: 2.0,
+              ' 将要记下：',
+              textScaleFactor: 3.0,
               style: TextStyle(
-                color: Colors.black,
+                color: Provider.of<ThemeProvider>(context)
+                    .assistFont,
                 fontWeight: FontWeight.w900,
-                shadows: <Shadow>[
-
-                ],
+                shadows: <Shadow>[],
               ),
             ),
           ),
-
+          SizedBox(height: 10),
           InkWell(
-            // style: ElevatedButton.styleFrom(
-            //   primary: Colors.white,
-            //   elevation: 5.0,
-            // ),
             onTap: () {
               setState(() {
                 _1isShow = !_1isShow;
@@ -233,15 +210,16 @@ class _AddConfigureState extends State<AddConfigure> {
               decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.black12,
+                        color: Provider.of<ThemeProvider>(context)
+                            .mainFont,
                         offset: Offset(0.0, 1.0), //阴影xy轴偏移量
-                        blurRadius: 2.0, //阴影模糊程度
-                        spreadRadius: 3.0 //阴影扩散程度
-                    )
+                        blurRadius: 1.0, //阴影模糊程度
+                        spreadRadius: 1.0 //阴影扩散程度
+                        )
                   ],
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.all(Radius.circular(10.0))
-              ),
+                  color: Provider.of<ThemeProvider>(context)
+                      .outer,
+                  borderRadius: BorderRadius.all(Radius.circular(10.0))),
               width: width - 80,
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
@@ -252,7 +230,8 @@ class _AddConfigureState extends State<AddConfigure> {
                   Text(
                     '记账金额',
                     style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.w600),
+                        color: Provider.of<ThemeProvider>(context)
+                            .mainFont, fontWeight: FontWeight.w600),
                     textScaleFactor: 1.5,
                   ),
                   Container(
@@ -265,7 +244,8 @@ class _AddConfigureState extends State<AddConfigure> {
                         child: Text(
                           '$tallyMoney',
                           textScaleFactor: 5.0,
-                          style: TextStyle(color: Colors.black),
+                          style: TextStyle(color: Provider.of<ThemeProvider>(context)
+                                  .mainFont),
                         ),
                       ),
                       Offstage(
@@ -277,14 +257,16 @@ class _AddConfigureState extends State<AddConfigure> {
                               Container(
                                 width: width - 170,
                                 child: TextField(
-                                  cursorColor: Colors.orange,
-                                  cursorWidth: 15,
-                                  cursorRadius: Radius.circular(15),
+                                  cursorColor: Provider.of<ThemeProvider>(context)
+                                      .assistFont,
+                                  cursorWidth: 2,
                                   decoration: InputDecoration(
                                     hintText: "修改记账金额：当前 $tallyMoney",
+                                    hintStyle: TextStyle(color: Provider.of<ThemeProvider>(context)
+                                            .assistFont),
                                     border: OutlineInputBorder(
                                       borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
+                                          BorderRadius.all(Radius.circular(10)),
                                     ),
                                   ),
                                   keyboardType: TextInputType.number,
@@ -301,7 +283,8 @@ class _AddConfigureState extends State<AddConfigure> {
                               Expanded(
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: Colors.white70,
+                                    primary: Provider.of<ThemeProvider>(context)
+                                        .background,
                                     elevation: 5.0,
                                   ),
                                   onPressed: () {
@@ -314,7 +297,8 @@ class _AddConfigureState extends State<AddConfigure> {
                                     height: 40,
                                     child: Icon(
                                       Icons.check_outlined,
-                                      color: Colors.black,
+                                      color: Provider.of<ThemeProvider>(context)
+                                          .mainFont,
                                     ),
                                   ),
                                 ),
@@ -333,7 +317,8 @@ class _AddConfigureState extends State<AddConfigure> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
+                            primary: Provider.of<ThemeProvider>(context)
+                                .background,
                             elevation: 5.0,
                           ),
                           onPressed: () {
@@ -344,12 +329,14 @@ class _AddConfigureState extends State<AddConfigure> {
                           },
                           child: Icon(
                             Icons.arrow_downward_sharp,
-                            color: Colors.black,
+                            color: Provider.of<ThemeProvider>(context)
+                                .mainFont,
                           ),
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
+                            primary: Provider.of<ThemeProvider>(context)
+                                .background,
                             elevation: 5.0,
                           ),
                           onPressed: () {
@@ -360,12 +347,14 @@ class _AddConfigureState extends State<AddConfigure> {
                           },
                           child: Icon(
                             Icons.arrow_drop_down,
-                            color: Colors.black,
+                            color: Provider.of<ThemeProvider>(context)
+                                  .mainFont,
                           ),
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
+                            primary: Provider.of<ThemeProvider>(context)
+                                .background,
                             elevation: 5.0,
                           ),
                           onPressed: () {
@@ -376,12 +365,14 @@ class _AddConfigureState extends State<AddConfigure> {
                           },
                           child: Icon(
                             Icons.arrow_drop_up,
-                            color: Colors.black,
+                            color: Provider.of<ThemeProvider>(context)
+                                .mainFont,
                           ),
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
+                            primary: Provider.of<ThemeProvider>(context)
+                                .background,
                             elevation: 5.0,
                           ),
                           onPressed: () {
@@ -391,7 +382,8 @@ class _AddConfigureState extends State<AddConfigure> {
                           },
                           child: Icon(
                             Icons.arrow_upward_sharp,
-                            color: Colors.black,
+                            color: Provider.of<ThemeProvider>(context)
+                                .mainFont,
                           ),
                         ),
                       ]),
@@ -406,7 +398,6 @@ class _AddConfigureState extends State<AddConfigure> {
             height: 20,
           ),
           InkWell(
-
             onTap: () {
               setState(() {
                 _2isShow = !_2isShow;
@@ -414,9 +405,9 @@ class _AddConfigureState extends State<AddConfigure> {
             },
             child: Container(
               decoration: BoxDecoration(
-                color: Colors.grey,
+                color: Provider.of<ThemeProvider>(context)
+                    .outer,
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
-
               ),
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
               width: width - 80,
@@ -426,13 +417,13 @@ class _AddConfigureState extends State<AddConfigure> {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(8.0))
-                  ),
+                      borderRadius: BorderRadius.all(Radius.circular(8.0))),
                   child: Text(
                     '$addingWhatShow',
                     textScaleFactor: 2.0,
                     style: TextStyle(
-                        color: Colors.black, fontWeight: FontWeight.w900),
+                        color: Provider.of<ThemeProvider>(context)
+                            .assistFont, fontWeight: FontWeight.w900),
                   ),
                 ),
                 Offstage(
@@ -446,7 +437,8 @@ class _AddConfigureState extends State<AddConfigure> {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
+                              primary: Provider.of<ThemeProvider>(context)
+                                  .background,
                               elevation: 5.0,
                             ),
                             onPressed: () {
@@ -457,19 +449,22 @@ class _AddConfigureState extends State<AddConfigure> {
                             },
                             child: Icon(
                               Icons.arrow_back_ios_rounded,
-                              color: Colors.black,
+                              color: Provider.of<ThemeProvider>(context)
+                                  .mainFont,
                             ),
                           ),
                           Text(
                             '更改',
                             textScaleFactor: 1.5,
                             style: TextStyle(
-                                color: Colors.black,
+                                color: Provider.of<ThemeProvider>(context)
+                                    .mainFont,
                                 fontWeight: FontWeight.w900),
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.white,
+                              primary: Provider.of<ThemeProvider>(context)
+                                  .background,
                               elevation: 5.0,
                             ),
                             onPressed: () {
@@ -480,7 +475,8 @@ class _AddConfigureState extends State<AddConfigure> {
                             },
                             child: Icon(
                               Icons.arrow_forward_ios_rounded,
-                              color: Colors.black,
+                              color: Provider.of<ThemeProvider>(context)
+                                  .mainFont,
                             ),
                           ),
                         ]),
@@ -499,17 +495,18 @@ class _AddConfigureState extends State<AddConfigure> {
             width: width - 50,
             child: Row(
               children: [
+                SizedBox(width: 8),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.red,
+                    primary: Color.fromARGB(255, 212, 164, 164),
                     elevation: 5.0,
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
                   child: Container(
-                    width: width / 2 - 150,
-                    height: 100,
+                    width: width / 2 - 135,
+                    height: 60,
                     child: Icon(
                       Icons.delete_forever,
                       color: Colors.black,
@@ -522,7 +519,7 @@ class _AddConfigureState extends State<AddConfigure> {
                 Expanded(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.greenAccent,
+                      primary: Color.fromARGB(255, 162, 219, 170),
                       elevation: 5.0,
                     ),
                     onPressed: () {
@@ -538,8 +535,8 @@ class _AddConfigureState extends State<AddConfigure> {
                           prefs.setInt('todayExpenditure', a + tallyMoney);
                           prefs.setInt('monthExpenditure', b + tallyMoney);
                         }
-                        String dateTime = formatDate(
-                            DateTime.now(), ['yyyy', '年', 'mm', '月', 'dd', '日']);
+                        String dateTime = formatDate(DateTime.now(),
+                            ['yyyy', '年', 'mm', '月', 'dd', '日']);
                         List<String> item = [
                           tallyMoney.toString(),
                           addingWhat.toString(),
@@ -549,18 +546,20 @@ class _AddConfigureState extends State<AddConfigure> {
                         print('item $item is saved');
                         prefs.setInt('itemCount', _itemCount + 1);
                         prefs.setStringList(_itemCount.toString(), item);
-                        Navigator.popAndPushNamed(context, "/detailMessagePage");
+                        Navigator.popAndPushNamed(
+                            context, "/detailMessagePage");
                       }
                     },
                     child: Container(
-                      height: 100,
+                      height: 60,
                       child: Icon(
                         Icons.check_outlined,
-                        color: Colors.black,
+                        color:Colors.black,
                       ),
                     ),
                   ),
                 ),
+                SizedBox(width: 8),
               ],
             ),
           ),
@@ -572,19 +571,17 @@ class _AddConfigureState extends State<AddConfigure> {
               offstage: !_isShow,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.white,
+                  primary: Provider.of<ThemeProvider>(context)
+                      .outer,
                   elevation: 5.0,
                 ),
                 child: Container(
                   padding: EdgeInsets.all(30),
                   decoration: new BoxDecoration(
-                    color: Colors.white,
+                    color: Provider.of<ThemeProvider>(context)
+                        .outer,
                     borderRadius:
-                    new BorderRadius.all(new Radius.circular(30.0)),
-                    image: new DecorationImage(
-                      alignment: Alignment.centerRight,
-                      image: new AssetImage('assets/images/logo.png'),
-                    ),
+                        new BorderRadius.all(new Radius.circular(30.0)),
                   ),
                   height: 100,
                   width: width - 80,
@@ -593,7 +590,8 @@ class _AddConfigureState extends State<AddConfigure> {
                     style: TextStyle(
                         fontWeight: FontWeight.w900,
                         fontSize: 20,
-                        color: Colors.black),
+                        color: Provider.of<ThemeProvider>(context)
+                            .mainFont,),
                   ),
                 ),
                 onPressed: () {
@@ -606,6 +604,7 @@ class _AddConfigureState extends State<AddConfigure> {
             Offstage(
               offstage: _isShow,
               child: Container(
+                margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
                 decoration: new BoxDecoration(
                   color: Colors.white,
@@ -626,7 +625,7 @@ class _AddConfigureState extends State<AddConfigure> {
                   ),
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Colors.black12,
+                      primary: Colors.white,
                       elevation: 5.0,
                     ),
                     onPressed: () {

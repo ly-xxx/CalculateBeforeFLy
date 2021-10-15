@@ -15,16 +15,17 @@ class StatisPage extends StatefulWidget {
   @override
   _StatisPageState createState() => _StatisPageState();
 }
+
 SharedPreferences prefs = GlobalData.getPref()!;
 DateTime now = new DateTime.now();
-double _monthIncome=(getMonth(now.month.toString(), 1)+getMonth(now.month.toString(), 2)
-    +getMonth(now.month.toString(), 3)+getMonth(now.month.toString(), 4))??0;
+double _monthIncome = (getMonth(now.month.toString(), 1) +
+    getMonth(now.month.toString(), 2) +
+    getMonth(now.month.toString(), 3) +
+    getMonth(now.month.toString(), 4));
 
 class _StatisPageState extends State<StatisPage> {
-
   double width = 0.0;
   double height = 0.0;
-
 
   Widget top(context) {
     return Column(
@@ -42,13 +43,13 @@ class _StatisPageState extends State<StatisPage> {
                   child: Icon(
                     Icons.menu_open,
                     size: 20,
-                    color: Provider.of<ThemeProvider>(context).color2,
+                    color: Provider.of<ThemeProvider>(context).mainFont,
                   ),
                 ),
               ),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Provider.of<ThemeProvider>(context).color1,
+                    primary: Provider.of<ThemeProvider>(context).outer,
                     elevation: 5.0,
                   ),
                   onPressed: () {
@@ -63,7 +64,7 @@ class _StatisPageState extends State<StatisPage> {
                             child: Icon(
                           Icons.person,
                           size: 25,
-                          color: Provider.of<ThemeProvider>(context).color2,
+                          color: Provider.of<ThemeProvider>(context).mainFont,
                         )),
                         SizedBox(
                           width: 30,
@@ -72,7 +73,8 @@ class _StatisPageState extends State<StatisPage> {
                           "我的",
                           style: TextStyle(
                               fontSize: 20,
-                              color: Provider.of<ThemeProvider>(context).color2,
+                              color:
+                                  Provider.of<ThemeProvider>(context).mainFont,
                               fontWeight: FontWeight.w900),
                         ),
                       ],
@@ -96,7 +98,7 @@ class _StatisPageState extends State<StatisPage> {
                   width: 50,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Provider.of<ThemeProvider>(context).color1,
+                      primary: Provider.of<ThemeProvider>(context).outer,
                       elevation: 5.0,
                     ),
                     onPressed: () {
@@ -112,7 +114,7 @@ class _StatisPageState extends State<StatisPage> {
                           child: Icon(
                             Icons.home,
                             size: 30,
-                            color: Provider.of<ThemeProvider>(context).color2,
+                            color: Provider.of<ThemeProvider>(context).mainFont,
                           ),
                         ),
                         SizedBox(
@@ -122,7 +124,8 @@ class _StatisPageState extends State<StatisPage> {
                           "首\n页",
                           style: TextStyle(
                               fontSize: 20,
-                              color: Provider.of<ThemeProvider>(context).color2,
+                              color:
+                                  Provider.of<ThemeProvider>(context).mainFont,
                               fontWeight: FontWeight.w900),
                         ),
                       ],
@@ -144,7 +147,7 @@ class _StatisPageState extends State<StatisPage> {
         children: <Widget>[
           ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Provider.of<ThemeProvider>(context).color1,
+                primary: Provider.of<ThemeProvider>(context).outer,
                 padding: EdgeInsets.zero,
                 elevation: 5.0,
               ),
@@ -155,7 +158,7 @@ class _StatisPageState extends State<StatisPage> {
                 '看看支出',
                 style: TextStyle(
                     fontSize: 20,
-                    color: Provider.of<ThemeProvider>(context).color2,
+                    color: Provider.of<ThemeProvider>(context).mainFont,
                     fontWeight: FontWeight.w500),
               )),
           SizedBox(
@@ -177,10 +180,13 @@ class _StatisPageState extends State<StatisPage> {
           ),
           Card(
             color: Colors.white,
-            shadowColor: Colors.grey.shade800, // 阴影颜色
+            shadowColor: Colors.grey.shade800,
+            // 阴影颜色
             // elevation: 10, // 阴影高度
-            borderOnForeground: false, // 是否在 child 前绘制 border，默认为 true
-            margin: EdgeInsets.fromLTRB(10, 0, 0, 30), // 外边距
+            borderOnForeground: false,
+            // 是否在 child 前绘制 border，默认为 true
+            margin: EdgeInsets.fromLTRB(10, 0, 0, 30),
+            // 外边距
 
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(40),
@@ -211,10 +217,13 @@ class _StatisPageState extends State<StatisPage> {
           ),
           Card(
             color: Colors.white,
-            shadowColor: Colors.grey.shade800, // 阴影颜色
+            shadowColor: Colors.grey.shade800,
+            // 阴影颜色
             //elevation: 10, // 阴影高度
-            borderOnForeground: false, // 是否在 child 前绘制 border，默认为 true
-            margin: EdgeInsets.fromLTRB(10, 0, 0, 30), // 外边距
+            borderOnForeground: false,
+            // 是否在 child 前绘制 border，默认为 true
+            margin: EdgeInsets.fromLTRB(10, 0, 0, 30),
+            // 外边距
 
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(40),
@@ -236,50 +245,50 @@ class _StatisPageState extends State<StatisPage> {
     );
   }
 
+  Card card() {
+    var card = Card(
+        color: Colors.white,
+        shadowColor: Colors.grey.shade800,
+        // 阴影颜色
+        //elevation: 10, // 阴影高度
+        borderOnForeground: false,
+        // 是否在 child 前绘制 border，默认为 true
+        margin: EdgeInsets.fromLTRB(10, 0, 0, 10),
+        // 外边距
 
-
-Card card() {
-  var card = Card(
-      color: Colors.white,
-      shadowColor: Colors.grey.shade800, // 阴影颜色
-      //elevation: 10, // 阴影高度
-      borderOnForeground: false, // 是否在 child 前绘制 border，默认为 true
-      margin: EdgeInsets.fromLTRB(10, 0, 0, 10), // 外边距
-
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
-        side: const BorderSide(
-          color: Colors.white,
-          width: 3,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          side: const BorderSide(
+            color: Colors.white,
+            width: 3,
+          ),
         ),
-      ),
-      child: Container(
-          margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-          alignment: Alignment(-1, -1),
-          child: Column(children:  <Widget>[
-            
-            Text(
-              '本月收入合计',
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 15.0,
-                //  fontWeight: FontWeight.w900, //字体大小
+        child: Container(
+            margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
+            alignment: Alignment(-1, -1),
+            child: Column(children: <Widget>[
+              Text(
+                '本月收入合计',
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 15.0,
+                  //  fontWeight: FontWeight.w900, //字体大小
+                ),
               ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-             "$_monthIncome",
-              textAlign: TextAlign.left,
-              style: TextStyle(
-                fontSize: 30.0,
-                fontWeight: FontWeight.w900, //字体大小
+              SizedBox(
+                height: 10,
               ),
-            ),
-          ])));
-  return card;
-}
+              Text(
+                "$_monthIncome",
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.w900, //字体大小
+                ),
+              ),
+            ])));
+    return card;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -287,7 +296,7 @@ Card card() {
     width = size.width;
     height = size.height;
     return Scaffold(
-      backgroundColor: Provider.of<ThemeProvider>(context).color3,
+      backgroundColor: Provider.of<ThemeProvider>(context).background,
       body: Column(
         children: [
           SizedBox(

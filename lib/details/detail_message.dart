@@ -23,8 +23,10 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
   String date2OnTop = "加载错误！";
   bool flag = false;
   SharedPreferences prefs = GlobalData.getPref()!;
+
   //final p=GlobalData.instance;
   List<List<String>> _detailList = [];
+
   //
   @override
   void initState() {
@@ -33,7 +35,8 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
     for (int i = 0; i < x; i++) {
       //if()
       //y.add(i);
-      _detailList.add(prefs.getStringList(i.toString())??["0","0","no data"]);
+      _detailList
+          .add(prefs.getStringList(i.toString()) ?? ["0", "0", "no data"]);
       print('get StringList $i is ${_detailList[i]}');
     }
     super.initState();
@@ -60,18 +63,19 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.only(topRight: Radius.circular(10.0)),
-                        color: Provider.of<ThemeProvider>(context).color1,
+                        borderRadius:
+                            BorderRadius.only(topRight: Radius.circular(10.0)),
+                        color: Provider.of<ThemeProvider>(context).outer,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
                               child: Icon(
-                                Icons.home,
-                                size: 30,
-                                color: Provider.of<ThemeProvider>(context).color2,
-                              )),
+                            Icons.home,
+                            size: 30,
+                            color: Provider.of<ThemeProvider>(context).mainFont,
+                          )),
                           SizedBox(
                             width: 30,
                           ),
@@ -79,7 +83,8 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                             "主页",
                             style: TextStyle(
                                 fontSize: 20,
-                                color: Provider.of<ThemeProvider>(context).color2,
+                                color: Provider.of<ThemeProvider>(context)
+                                    .mainFont,
                                 fontWeight: FontWeight.w900),
                           ),
                         ],
@@ -93,11 +98,11 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                 child: Container(
                   height: 50,
                   width: 50,
-                  color: Provider.of<ThemeProvider>(context).color3,
+                  color: Provider.of<ThemeProvider>(context).background,
                   child: Icon(
                     Icons.attach_money,
                     size: 25,
-                    color: Provider.of<ThemeProvider>(context).color2,
+                    color: Provider.of<ThemeProvider>(context).mainFont,
                   ),
                 ),
               ),
@@ -113,74 +118,198 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
     final size = MediaQuery.of(context).size;
     width = size.width;
     height = size.height;
-    edgeOfTab = Provider.of<ThemeProvider>(context).color2;
+    edgeOfTab = Provider.of<ThemeProvider>(context).mainFont;
     if (!flag) {
       date2OnTop = DateTime.now().toString().substring(5, 7);
       date1OnTop = DateTime.now().toString().substring(0, 4);
     }
-    return Scaffold(
-      backgroundColor: Provider.of<ThemeProvider>(context).color3,
-      body: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: detailMessage(),
-                    flex: 9,
-                  ),
-                  Container(
-                    width: 50,
-                    child: InkWell(
-                      onTap: () {
-                        Navigator.popAndPushNamed(context, "/moreThingsPage");
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Provider.of<ThemeProvider>(context).color1,
-                            borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10.0))
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.account_tree_outlined,
-                              size: 30,
-                              color: Provider.of<ThemeProvider>(context).color2,
-                            ),
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              "更\n多",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color:
-                                  Provider.of<ThemeProvider>(context).color2,
-                                  fontWeight: FontWeight.w900),
-                            ),
-                          ],
-                        ),
+    return
+      Scaffold(
+        backgroundColor: Provider.of<ThemeProvider>(context).background,
+        body: SafeArea(child:Column(children: [
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Expanded(
+                  child: detailMessage(),
+                  flex: 9,
+                ),
+                SizedBox(
+                  width: 50,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.popAndPushNamed(context, "/moreThingsPage");
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Provider.of<ThemeProvider>(context).outer,
+                          borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(10.0))),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(
+                            Icons.account_tree_outlined,
+                            size: 30,
+                            color: Provider.of<ThemeProvider>(context).mainFont,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            "更\n多",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Provider.of<ThemeProvider>(context)
+                                    .mainFont,
+                                fontWeight: FontWeight.w900),
+                          ),
+                        ],
                       ),
                     ),
-                  )
-                ],
-              ),
+                  ),
+                )
+              ],
             ),
-            bottom(context),
-          ]),
+          ),
+          bottom(context),
+        ]),
+      ),
     );
   }
 
   Widget realDetail() {
     return Scrollbar(
         controller: _controller,
+        isAlwaysShown: true,
         child: ListView.builder(
             controller: _controller,
             itemCount: _detailList.length,
             itemBuilder: (_, index) {
-              if(_detailList[index][0]=='0'){
+              if (_detailList[index][0] == '0') {
                 return Container();
+              } else
+                return Dismissible(
+                    key: UniqueKey(),
+                    confirmDismiss: (_) async {
+                      return showDialog(
+                          context: context,
+                          builder: (_) {
+                            return AlertDialog(
+                              backgroundColor:
+                                  Provider.of<ThemeProvider>(context).outer,
+                              elevation: 5,
+                              title: Text('你确定？',
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      color: Provider.of<ThemeProvider>(context)
+                                          .mainFont,
+                                      fontWeight: FontWeight.w900)),
+                              content: Text('你确定要删除这条记录吗？',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: Provider.of<ThemeProvider>(context)
+                                          .mainFont,
+                                      fontWeight: FontWeight.w900)),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop(false);
+                                  },
+                                  child: Text('取消',
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Provider.of<ThemeProvider>(
+                                                  context)
+                                              .assistFont,
+                                          fontWeight: FontWeight.w900)),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop(true);
+                                    },
+                                    child: Text('确定',
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            color: Provider.of<ThemeProvider>(
+                                                    context)
+                                                .mainFont,
+                                            fontWeight: FontWeight.w900))),
+                              ],
+                            );
+                          });
+                    },
+                    onDismissed: (_) {
+                      int a = prefs.getInt('todayExpenditure') ?? 0;
+                      int b = prefs.getInt('monthExpenditure') ?? 0;
+                      int type = int.parse(_detailList[index][1]);
+                      if (type < 5) {
+                        a = a + int.parse(_detailList[index][0]);
+                        b = b + int.parse(_detailList[index][0]);
+                      } else {
+                        a = a - int.parse(_detailList[index][0]);
+                        b = b - int.parse(_detailList[index][0]);
+                      }
+                      setState(() {
+                        prefs.setInt('todayExpenditure', a);
+                        prefs.setInt('monthExpenditure', b);
+                        prefs.remove(index.toString());
+                        _detailList.removeAt(index);
+                      });
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(3, 4, 4, 1),
+                      child: Container(
+                          height: 80,
+                          alignment: Alignment.centerLeft,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.centerLeft,
+                              end: Alignment.centerRight,
+                              colors: [
+                                Provider.of<ThemeProvider>(context).background,
+                                Provider.of<ThemeProvider>(context).background,
+                              ],
+                            ),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                          ),
+                          child: InkWell(
+                              onTap: () {
+                                print("you click it");
+                              },
+                              child: ListTile(
+                                tileColor:
+                                    Provider.of<ThemeProvider>(context).outer,
+                                leading: Icon(
+                                  AddingWhat.addingWhatListIcon[
+                                      int.parse(_detailList[index][1])],
+                                  color: Provider.of<ThemeProvider>(context)
+                                      .mainFont,
+                                ),
+                                title: Text(
+                                  AddingWhat.addingWhatList[
+                                      int.parse(_detailList[index][1])],
+                                  style: TextStyle(
+                                      color: Provider.of<ThemeProvider>(context)
+                                          .mainFont),
+                                ),
+                                subtitle: Text(
+                                  _detailList[index][2],
+                                  style: TextStyle(
+                                      color: Provider.of<ThemeProvider>(context)
+                                          .mainFont),
+                                ),
+                                trailing: Text(
+                                  _detailList[index][0],
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w400,
+                                      color: Provider.of<ThemeProvider>(context)
+                                          .mainFont),
+                                ),
+                              ))),
+                    ));
               }else return Dismissible(
                   key: UniqueKey(),
                   confirmDismiss: (_)async{
@@ -289,7 +418,7 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
     return Column(
       children: <Widget>[
         SizedBox(
-          height: 40,
+          height: 20,
         ),
         InkWell(
           onTap: () {
@@ -298,21 +427,23 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                 minTime: DateTime(1970, 1, 1),
                 maxTime: DateTime(2098, 12, 31),
                 onChanged: (date) {}, onConfirm: (date) {
-                  setState(() {
-                    flag = true;
-                    date2OnTop = date.toString().substring(5, 7);
-                    date1OnTop = date.toString().substring(0, 4);
-                  });
-                }, currentTime: DateTime.now(), locale: LocaleType.zh);
+              setState(() {
+                flag = true;
+                date2OnTop = date.toString().substring(5, 7);
+                date1OnTop = date.toString().substring(0, 4);
+              });
+            }, currentTime: DateTime.now(), locale: LocaleType.zh);
           },
           child: Row(
             children: [
-              SizedBox(width: 20,),
+              SizedBox(
+                width: 20,
+              ),
               Text(
                 '$date1OnTop年$date2OnTop月',
                 style: TextStyle(
                   fontSize: 35,
-                  color: Provider.of<ThemeProvider>(context).color2,
+                  color: Provider.of<ThemeProvider>(context).mainFont,
                   fontWeight: FontWeight.w900,
                   // shadows: <Shadow>[
                   //   Shadow(
@@ -331,54 +462,40 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
           ),
         ),
         SizedBox(
-          height: 60,
+          height: 10,
         ),
         Expanded(
           child: Padding(
             padding: EdgeInsets.fromLTRB(10, 3, 10, 10),
-            child: Container(
-              // decoration: BoxDecoration(
-              //   color: Provider.of<ThemeProvider>(context).color3,
-              //   borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              //   boxShadow: [
-              //     BoxShadow(
-              //         color: Provider.of<ThemeProvider>(context).color2,
-              //         offset: Offset(0.0, 0.0), //阴影x轴偏移量
-              //         blurRadius: 3, //阴影模糊程度
-              //         spreadRadius: 1 //阴影扩散程度
-              //         )
-              //   ],
-              // ),
-              child: Stack(children: <Widget>[
-                realDetail(),
-                Positioned(
-                  right: 10,
-                  bottom: 10,
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    child: FloatingActionButton(
-                      foregroundColor:
-                      Provider.of<ThemeProvider>(context).color2,
-                      backgroundColor:
-                      Provider.of<ThemeProvider>(context).color2,
-                      elevation: 5,
-                      splashColor: Colors.amber[100],
-                      onPressed: () {
-                        _controller.animateTo(
-                          -20,
-                          duration: Duration(milliseconds: 600),
-                          curve: Curves.ease,
-                        );
-                      },
-                      child: Icon(Icons.arrow_drop_up_outlined,
-                          color: Provider.of<ThemeProvider>(context).color1,
-                          size: 30.0),
-                    ),
+            child: Stack(children: <Widget>[
+              realDetail(),
+              Positioned(
+                right: 10,
+                bottom: 10,
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  child: FloatingActionButton(
+                    foregroundColor:
+                        Provider.of<ThemeProvider>(context).mainFont,
+                    backgroundColor:
+                        Provider.of<ThemeProvider>(context).mainFont,
+                    elevation: 5,
+                    splashColor: Colors.amber[100],
+                    onPressed: () {
+                      _controller.animateTo(
+                        -20,
+                        duration: Duration(milliseconds: 600),
+                        curve: Curves.ease,
+                      );
+                    },
+                    child: Icon(Icons.arrow_drop_up_outlined,
+                        color: Provider.of<ThemeProvider>(context).outer,
+                        size: 30.0),
                   ),
                 ),
-              ]),
-            ),
+              ),
+            ]),
           ),
         ),
       ],
