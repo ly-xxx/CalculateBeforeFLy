@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twt_account/data/global_data.dart';
 import 'package:twt_account/data/toast_provider.dart';
-import 'package:twt_account/moreThings/theme/theme_config.dart';
+
+import 'theme/theme_config.dart';
 
 class MoreThingsPage extends StatefulWidget {
   const MoreThingsPage({Key? key, int? data}) : super(key: key);
@@ -16,7 +16,7 @@ class MoreThingsPage extends StatefulWidget {
 
 class _MoreThingsPageState extends State<MoreThingsPage> {
   int _keepCounts = 0;
-  int _keepDays = 1;
+  int _keepDays = 0;
   int _todayExpenditure = 0;
   int _monthExpenditure = 0;
   int _gdsz = 0; //固定收支
@@ -36,7 +36,6 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     _monthExpenditure = prefs.getInt('monthExpenditure') ?? 0;
     _gdsz = prefs.getInt('gdsz') ?? 0;
     _typeOfGdsz = prefs.getBool('typeOfGdsz') ?? true;
-    _keepCounts=prefs.getInt("itemCount") ?? 0;
     super.initState();
   }
 
@@ -69,19 +68,19 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                   child: Icon(
                     Icons.home,
                     size: 25,
-                    color: Provider.of<ThemeProvider>(context).color2,
+                    //color: Provider.of<ThemeProvider>(context).background,
                   ),
                 ),
               ),
               Expanded(
                 child: InkWell(
                     onTap: () {
-                      Navigator.popAndPushNamed(context, "/statisPage");
+                      Navigator.popAndPushNamed(context, "/askingPricePage");
                     },
                     child: Container(
                       height: 50,
                       decoration: BoxDecoration(
-                          color: Provider.of<ThemeProvider>(context).color1,
+                          color: Provider.of<ThemeProvider>(context).mainFont,
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10.0))),
                       child: Row(
@@ -91,7 +90,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                               child: Icon(
                             Icons.attach_money,
                             size: 25,
-                            color: Provider.of<ThemeProvider>(context).color2,
+                            color: Provider.of<ThemeProvider>(context).outer,
                           )),
                           SizedBox(
                             width: 30,
@@ -101,7 +100,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                             style: TextStyle(
                                 fontSize: 20,
                                 color:
-                                    Provider.of<ThemeProvider>(context).color2,
+                                    Provider.of<ThemeProvider>(context).background,
                                 fontWeight: FontWeight.w900),
                           ),
                         ],
@@ -236,7 +235,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                                   keyboardType: TextInputType.number,
                                   decoration: InputDecoration(
                                       border: InputBorder.none,
-                                      hintText: "金额(默认为0)",
+                                      hintText: "金额",
                                       hintStyle: TextStyle(fontSize: 18)),
                                   style: TextStyle(fontSize: 18),
                                 ),
@@ -272,7 +271,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                               child: IconButton(
                                   onPressed: () {
                                     int x;
-                                    if(textFieldController.text.isEmpty)x=0;
+                                    if(textFieldController.text.isEmpty)x=_gdsz;
                                     else x = int.parse(textFieldController.text);
                                     prefs.setInt('gdsz', x);
                                     print(_gdsz);
@@ -339,7 +338,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
             style: TextStyle(
                 fontWeight: FontWeight.w500,
                 fontSize: 25,
-                color: Provider.of<ThemeProvider>(context).color2),
+                color: Provider.of<ThemeProvider>(context).background),
           ),
           SizedBox(
             width: 60,
@@ -353,7 +352,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
             },
             icon: Icon(Icons.logout),
             iconSize: 40,
-            color: Provider.of<ThemeProvider>(context).color2,
+            color: Provider.of<ThemeProvider>(context).mainFont,
           ),
         ]),
       ),
@@ -390,14 +389,14 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                 width: 1,
                 color: Colors.white24,
               ),
-              color: Provider.of<ThemeProvider>(context).color1,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black12,
-                  offset: Offset(0.0, 0.0), //阴影x轴偏移量
-                  blurRadius: 4, //阴影模糊程度
-                )
-              ],
+              color: Provider.of<ThemeProvider>(context).background,
+              // boxShadow: [
+              //   BoxShadow(
+              //     color: Colors.black12,
+              //     offset: Offset(0.0, 0.0), //阴影x轴偏移量
+              //     blurRadius: 4, //阴影模糊程度
+              //   )
+              // ],
             ),
             child: skinPage(),
           ),
@@ -413,7 +412,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                 width: 1,
                 color: Colors.white24,
               ),
-              color: Provider.of<ThemeProvider>(context).color1,
+              color: Provider.of<ThemeProvider>(context).background,
               boxShadow: [
                 BoxShadow(
                   color: Colors.black12,
@@ -439,14 +438,14 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
           style: TextStyle(
               fontWeight: FontWeight.w300,
               fontSize: 55,
-              color: Provider.of<ThemeProvider>(context).color2),
+              color: Provider.of<ThemeProvider>(context).mainFont),
         ),
         Text(
           "记账天数",
           style: TextStyle(
               fontWeight: FontWeight.w900,
               fontSize: 15,
-              color: Provider.of<ThemeProvider>(context).color6),
+              color: Provider.of<ThemeProvider>(context).assistFont),
         )
       ],
     ));
@@ -462,14 +461,14 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
           style: TextStyle(
               fontWeight: FontWeight.w300,
               fontSize: 55,
-              color: Provider.of<ThemeProvider>(context).color2),
+              color: Provider.of<ThemeProvider>(context).mainFont),
         ),
         Text(
           "记账笔数",
           style: TextStyle(
             fontWeight: FontWeight.w900,
             fontSize: 15,
-            color: Provider.of<ThemeProvider>(context).color6,
+            color: Provider.of<ThemeProvider>(context).assistFont,
           ),
         )
       ],
@@ -479,7 +478,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
   Widget skinPage() {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Provider.of<ThemeProvider>(context).color1,
+        primary: Provider.of<ThemeProvider>(context).background,
       ),
       onPressed: () {
         Navigator.pushNamed(context, "/skinPage");
@@ -490,7 +489,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
             Icon(
               Icons.style_outlined,
               size: 40,
-              color: Provider.of<ThemeProvider>(context).color2,
+              color: Provider.of<ThemeProvider>(context).background,
             ),
             SizedBox(
               height: 10,
@@ -500,7 +499,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
               style: TextStyle(
                   fontWeight: FontWeight.w900,
                   fontSize: 20,
-                  color: Provider.of<ThemeProvider>(context).color6),
+                  color: Provider.of<ThemeProvider>(context).background),
             ),
           ]),
     );
@@ -509,7 +508,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
   Widget fixedPage() {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Provider.of<ThemeProvider>(context).color1,
+          primary: Provider.of<ThemeProvider>(context).background,
         ),
         onPressed: () {
           setState(() {
@@ -522,7 +521,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
               Icon(
                 Icons.library_books,
                 size: 40,
-                color: Provider.of<ThemeProvider>(context).color2,
+                color: Provider.of<ThemeProvider>(context).assistFont,
               ),
               SizedBox(
                 height: 10,
@@ -532,7 +531,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                 style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: 20,
-                    color: Provider.of<ThemeProvider>(context).color6),
+                    color: Provider.of<ThemeProvider>(context).mainFont),
               ),
             ]));
   }
@@ -543,7 +542,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     width = size.width;
     height = size.height;
     return Scaffold(
-      backgroundColor: Provider.of<ThemeProvider>(context).color3,
+      backgroundColor: Provider.of<ThemeProvider>(context).background,
       body: Column(
         children: [
           Expanded(
@@ -558,7 +557,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                     child: Container(
                       width: 50,
                       decoration: BoxDecoration(
-                          color: Provider.of<ThemeProvider>(context).color1,
+                          color: Provider.of<ThemeProvider>(context).background,
                           borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(10.0))),
                       child: Column(
@@ -572,7 +571,8 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                             child: Icon(
                               Icons.menu_open,
                               size: 30,
-                              color: Provider.of<ThemeProvider>(context).color2,
+                              color:
+                                  Provider.of<ThemeProvider>(context).mainFont,
                             ),
                           ),
                           SizedBox(
@@ -582,8 +582,8 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                             "明\n细",
                             style: TextStyle(
                                 fontSize: 20,
-                                color:
-                                    Provider.of<ThemeProvider>(context).color2,
+                                color: Provider.of<ThemeProvider>(context)
+                                    .mainFont,
                                 fontWeight: FontWeight.w900),
                           ),
                         ],

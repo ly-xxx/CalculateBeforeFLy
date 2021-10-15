@@ -1,3 +1,4 @@
+import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,7 +6,7 @@ import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twt_account/moreThings/theme/theme_config.dart';
 import 'package:twt_account/data/global_data.dart';
-import 'add_configure/adding_what_list.dart';
+import 'package:twt_account/add_configure/adding_what_list.dart';
 
 class MyPage extends StatefulWidget {
   const MyPage({Key? key}) : super(key: key);
@@ -17,13 +18,14 @@ class MyPage extends StatefulWidget {
 class _MyPageState extends State<MyPage> {
   int _todayExpenditure = 0;
   int _monthExpenditure = 0;
-  int _averageDailyConsumption = 0;
+  double _averageDailyConsumption = 0.0;     //日均消费
   int _budget = 0;
   int valueTransfer = 0;
   int tallyMoney = 0; //金额
   IconData icon = Icons.more_horiz;
   double _monthExpenditureBudgetPercentage = 0;
   SharedPreferences prefs = GlobalData.getPref()!;
+  String _today='';
 
   double width = 0.0;
   double height = 0.0;
@@ -75,11 +77,20 @@ class _MyPageState extends State<MyPage> {
 
   bool get wantKeepAlive => true;
 
+
   String addingWhatListOutput = "";
 
   get async => null;
 
   Color indicatorColor = Colors.white;
+
+
+  @override
+  void initState() {
+    _today=formatDate(DateTime.now(), ['dd']);
+
+    super.initState();
+  }
 
   _remove() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -140,6 +151,7 @@ class _MyPageState extends State<MyPage> {
     _budget = prefs.getInt('budget') ?? 0;
     _todayExpenditure = prefs.getInt('todayExpenditure') ?? 0;
     _monthExpenditure = prefs.getInt('monthExpenditure') ?? 0;
+    _averageDailyConsumption=_monthExpenditure/int.parse(_today);
     final size = MediaQuery.of(context).size;
     width = size.width;
     height = size.height;
@@ -156,26 +168,25 @@ class _MyPageState extends State<MyPage> {
       indicatorColor = Provider.of<ThemeProvider>(context).indicatorGood;
     return Scaffold(
       backgroundColor: Provider.of<ThemeProvider>(context).background,
-      body: SafeArea(
-        child: Consumer<ThemeProvider>(
-          builder: (_, theme, __) => Stack(children: <Widget>[
-            Column(
-              children: <Widget>[
-                Container(
-                  height: 50,
-                  child: Row(
-                    children: <Widget>[
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: theme.outer,
-                            elevation: 5.0,
-                          ),
-                          onPressed: () {
-                            Navigator.popAndPushNamed(
-                                context, "/detailMessagePage");
+      body: Consumer<ThemeProvider>(
+        builder: (_, theme, __) => Stack(children: <Widget>[
+          Column(
+            children: <Widget>[
+              Container(
+                //height: 80,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, "/detailMessagePage");
                           },
                           child: Container(
-                            width: width - 84,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                color: theme.background,
+                                borderRadius: BorderRadius.only(
+                                    bottomRight: Radius.circular(10.0))),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
@@ -198,43 +209,43 @@ class _MyPageState extends State<MyPage> {
                               ],
                             ),
                           )),
-                      Expanded(
-                        flex: 1,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.popAndPushNamed(
-                                context, "/moreThingsPage");
-                          },
-                          child: Icon(
-                            Icons.settings,
-                            size: 20,
-                            color: Provider.of<ThemeProvider>(context).mainFont,
-                          ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pushNamed(context, "/moreThingsPage");
+                      },
+                      child: Container(
+                        height: 50,
+                        width: 50,
+                        color: Provider.of<ThemeProvider>(context).background,
+                        child: Icon(
+                          Icons.settings,
+                          size: 25,
+                          //color: Provider.of<ThemeProvider>(context).background,
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                Expanded(
-                  child: Row(children: <Widget>[
-                    Expanded(
-                        flex: 9,
+              ),
+              Expanded(
+                child: Row(children: <Widget>[
+                  Expanded(
+                      child: Container(
+                    decoration: BoxDecoration(),
+                    child: mainPage(theme),
+                  )),
+                  Container(
+                      width: 50,
+                      child: InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, "/statisPage");
+                        },
                         child: Container(
-                          decoration: BoxDecoration(),
-                          child: mainPage(theme),
-                        )),
-                    Container(
-                        width: 50,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.zero,
-                            primary: theme.outer,
-                            elevation: 5.0,
-                          ),
-                          onPressed: () {
-                            Navigator.popAndPushNamed(
-                                context, "/askingPricePage");
-                          },
+                          decoration: BoxDecoration(
+                              color: theme.background,
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(10.0))),
                           child: Align(
                             alignment: Alignment.center,
                             child: Column(
@@ -249,7 +260,7 @@ class _MyPageState extends State<MyPage> {
                                   height: 15,
                                 ),
                                 Text(
-                                  "问\n价",
+                                  "统\n计",
                                   style: TextStyle(
                                       fontSize: 20,
                                       color: theme.mainFont,
@@ -258,13 +269,13 @@ class _MyPageState extends State<MyPage> {
                               ],
                             ),
                           ),
-                        )),
-                  ]),
-                ),
-              ],
-            ),
-          ]),
-        ),
+                        ),
+                      )),
+                ]),
+              ),
+            ],
+          ),
+        ]),
       ),
     );
   }
@@ -286,7 +297,7 @@ class _MyPageState extends State<MyPage> {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          SizedBox(height: 40),
+          SizedBox(height: 30),
           Row(children: [
             SizedBox(
               width: 30,
@@ -569,7 +580,7 @@ class _MyPageState extends State<MyPage> {
               child: Column(
                 children: [
                   SizedBox(
-                    height: 30,
+                    height: 50,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(6.0),
@@ -839,7 +850,7 @@ class _MyPageState extends State<MyPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "$_averageDailyConsumption",
+                    _averageDailyConsumption.abs().toStringAsFixed(1),
                     style: TextStyle(
                         fontSize: 60,
                         color: Provider.of<ThemeProvider>(context).mainFont,
@@ -851,7 +862,12 @@ class _MyPageState extends State<MyPage> {
                         _remove();
                       });
                     },
-                    child: Text("日均消费",
+                    child: _averageDailyConsumption>0?Text("日均消费",
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Provider.of<ThemeProvider>(context).background,
+                            fontWeight: FontWeight.w900))
+                    :Text("日均收入",
                         style: TextStyle(
                             fontSize: 15,
                             color:
