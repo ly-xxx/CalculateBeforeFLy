@@ -27,14 +27,11 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
   //final p=GlobalData.instance;
   List<List<String>> _detailList = [];
 
-  //
   @override
   void initState() {
     int x = prefs.getInt("itemCount") ?? 0;
     print('x is $x');
     for (int i = 0; i < x; i++) {
-      //if()
-      //y.add(i);
       _detailList
           .add(prefs.getStringList(i.toString()) ?? ["0", "0", "no data"]);
       print('get StringList $i is ${_detailList[i]}');

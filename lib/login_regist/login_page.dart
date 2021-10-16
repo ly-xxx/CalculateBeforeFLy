@@ -1,4 +1,10 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:twt_account/login_regist/login_bean.dart';
+
+import '../data/global_data.dart';
 
 class LoginInPage extends StatefulWidget {
   const LoginInPage({Key? key}) : super(key: key);
@@ -9,6 +15,9 @@ class LoginInPage extends StatefulWidget {
 
 class _LoginInPageState extends State<LoginInPage> {
   bool _value = true;
+  SharedPreferences prefs = GlobalData.getPref()!;
+  TextEditingController _userNameController = new TextEditingController();
+  TextEditingController _passwordController = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +52,7 @@ class _LoginInPageState extends State<LoginInPage> {
             children: <Widget>[
               Container(
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(75.0)),
+                  borderRadius: BorderRadius.all(Radius.circular(60.0)),
                   border: new Border.all(
                     width: 5,
                     color: Colors.white70,
@@ -56,13 +65,13 @@ class _LoginInPageState extends State<LoginInPage> {
                         spreadRadius: 25 //阴影扩散程度
                         )
                   ],
-                  image: new DecorationImage(
-                    alignment: Alignment.centerRight,
-                    image: new AssetImage('assets/images/furry.png'),
-                  ),
+                  // image: new DecorationImage(
+                  //   alignment: Alignment.centerRight,
+                  //   image: new AssetImage('assets/images/huajilogo.png'),
+                  // ),
                 ),
-                height: 150,
-                width: 150,
+                height: 120,
+                width: 120,
               ),
               SizedBox(
                 height: 120,
@@ -91,11 +100,13 @@ class _LoginInPageState extends State<LoginInPage> {
                         decoration: InputDecoration(
                           hintText: "账号",
                         ),
+                        controller: _userNameController,
                       ),
                       TextField(
                         decoration: InputDecoration(
                           hintText: "密码",
                         ),
+                        controller: _passwordController,
                       )
                     ],
                   ),
@@ -104,17 +115,67 @@ class _LoginInPageState extends State<LoginInPage> {
               SizedBox(height: 20),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
+                    primary: Color.fromARGB(255, 227, 255, 224),
                     elevation: 5.0,
                   ),
-                  onPressed: () {
-                    Navigator.popAndPushNamed(context, "/myPage");
+                  onPressed: () async {
+                    var response = await Dio()
+                        .post("http://121.43.164.122:3390/user/login",
+                            //options: Options(headers: headers),
+                            queryParameters: {
+                          "userName": _userNameController.text,
+                          "password": _passwordController.text,
+                        });
+                    print(response);
+                    int isLogin = LoginBean.fromJson(response.data).result!.isLogin!;
+                    if (isLogin == 1) {
+                      SharedPreferences prefs = GlobalData.getPref()!;
+                      prefs.setStringList("user", [
+                        LoginBean.fromJson(response.data).result!.userName!,
+                        LoginBean.fromJson(response.data).result!.nickName!,
+                        LoginBean.fromJson(response.data).result!.password!
+                      ]);
+                      prefs.setBool("logState", true);
+                      Navigator.popAndPushNamed(context, "/myPage");
+                    } else {
+                      prefs.setBool("logState", false);
+                    }
+
+                    print("wowowowowow");
+                    print(prefs.getStringList("user"));
+                    // bool logged = prefs.getBool("logState") ??
+                    //         () {
+                    //       print("not logged");
+                    //       return false;
+                    //     }();
+                    //Navigator.popAndPushNamed(context, "/registerPage");
                   },
                   child: Container(
                     width: 100,
                     child: Center(
                       child: Text(
                         "登录!",
+                        style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w900),
+                      ),
+                    ),
+                  )),
+              SizedBox(height: 20),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Color.fromARGB(255, 252, 255, 224),
+                    elevation: 5.0,
+                  ),
+                  onPressed: () {
+                    Navigator.popAndPushNamed(context, "/registerPage");
+                  },
+                  child: Container(
+                    width: 100,
+                    child: Center(
+                      child: Text(
+                        "注册",
                         style: TextStyle(
                             fontSize: 18,
                             color: Colors.black,

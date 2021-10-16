@@ -33,6 +33,7 @@ class Global with ChangeNotifier {
     _itemCount=value;
     notifyListeners();
   }
+
   void itemAdd() {
     _itemCount++;
     notifyListeners();
