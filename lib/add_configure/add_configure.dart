@@ -339,8 +339,6 @@ class _AddConfigureState extends State<AddConfigure> {
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Provider.of<ThemeProvider>(context)
-                                .background,
                             elevation: 5.0,
                           ),
                           onPressed: () {
@@ -441,8 +439,6 @@ class _AddConfigureState extends State<AddConfigure> {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Provider.of<ThemeProvider>(context)
-                                  .background,
                               elevation: 5.0,
                             ),
                             onPressed: () {
@@ -467,8 +463,6 @@ class _AddConfigureState extends State<AddConfigure> {
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Provider.of<ThemeProvider>(context)
-                                  .background,
                               elevation: 5.0,
                             ),
                             onPressed: () {

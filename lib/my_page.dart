@@ -1,5 +1,3 @@
-
-
 import 'package:date_format/date_format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -175,11 +173,10 @@ Color fontColor=  Color(0xFF2F2E41);
       backgroundColor: background,
       body: Consumer<ThemeProvider>(
         builder: (_, theme, __) => Stack(children: <Widget>[
-          Column(
-            children: <Widget>[
-              Container(
-                //height: 80,
-                child: Row(
+          SafeArea(
+            child: Column(
+              children: <Widget>[
+                Row(
                   children: <Widget>[
                     Expanded(
                       child: InkWell(
@@ -232,53 +229,53 @@ Color fontColor=  Color(0xFF2F2E41);
                     ),
                   ],
                 ),
-              ),
-              Expanded(
-                child: Row(children: <Widget>[
-                  Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(),
-                        child: mainPage(theme),
-                      )),
-                  Container(
-                      width: 50,
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, "/statisPage");
-                        },
+                Expanded(
+                  child: Row(children: <Widget>[
+                    Expanded(
                         child: Container(
-                          decoration: BoxDecoration(
-                              color: theme.outerSide,
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10.0))),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Icon(
-                                  Icons.stacked_bar_chart,
-                                  size: 30,
-                                  color: fontColor,
-                                ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Text(
-                                  "统\n计",
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      color: fontColor,
-                                      fontWeight: FontWeight.w900),
-                                ),
-                              ],
+                          decoration: BoxDecoration(),
+                          child: mainPage(theme),
+                        )),
+                    Container(
+                        width: 50,
+                        child: InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, "/statisPage");
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: theme.outerSide,
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10.0))),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Icon(
+                                    Icons.stacked_bar_chart,
+                                    size: 30,
+                                    color: fontColor,
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Text(
+                                    "统\n计",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: fontColor,
+                                        fontWeight: FontWeight.w900),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      )),
-                ]),
-              ),
-            ],
+                        )),
+                  ]),
+                ),
+              ],
+            ),
           ),
         ]),
       ),

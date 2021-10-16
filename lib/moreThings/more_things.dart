@@ -28,7 +28,6 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
   double width = 0.0;
   double height = 0.0;
   SharedPreferences prefs = GlobalData.getPref()!;
-  SharedPreferences prefs = GlobalData.getPref()!;
   TextEditingController textFieldController = new TextEditingController();
 
   @override
@@ -322,7 +321,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
   Widget getCardTop() {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
-        height: 140,
+        height: 100,
         child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           ///圆形头像框
           Container(
@@ -334,18 +333,20 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                 color: Color(0xFFA1A1A1),
               ),
             ),
+            child: Icon(Icons.person,
+            size: 35,
+            color: Colors.black54,),
             height: 200,
-            width: 70,
+            width: 50,
           ),
 
           ///用户名
           Text(
-            '用户名',
+            prefs.getStringList('user')![1],
             style: TextStyle(
-                fontWeight: FontWeight.w500, fontSize: 25, color: Colors.black),
-          ),
-          SizedBox(
-            width: 60,
+                fontWeight: FontWeight.w900,
+                fontSize: 25,
+                color: Colors.black38),
           ),
 
           ///退出登录
@@ -375,18 +376,48 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
           )
         ],
       ),
+      SizedBox(height: 30)
     ]);
   }
 
   Widget gridViewPage() {
     return Padding(
-      padding: EdgeInsets.all(0.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
+        padding: EdgeInsets.all(0.0),
+        child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    Container(
+                      width: 120,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        border: new Border.all(
+                          width: 1,
+                          color: Colors.white24,
+                        ),
+                        //color: Provider.of<ThemeProvider>(context).background,
+                      ),
+                      child: skinPage(),
+                    ),
+                    Container(
+                      width: 120,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        border: new Border.all(
+                          width: 1,
+                          color: Colors.white24,
+                        ),
+                        //color: Provider.of<ThemeProvider>(context).background,
+                      ),
+                      child: fixedPage(),
+                    ),
+                  ]),
+              SizedBox(height: 20,),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 Container(
                   width: 120,
                   height: 120,
@@ -398,7 +429,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                     ),
                     //color: Provider.of<ThemeProvider>(context).background,
                   ),
-                  child: skinPage(),
+                  child: cntPage(),
                 ),
                 Container(
                   width: 120,
@@ -415,92 +446,13 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                         color: Colors.black12,
                         offset: Offset(0.0, 0.0), //阴影x轴偏移量
                         blurRadius: 4, //阴影模糊程度
-        Row(
-          children: [
-            SizedBox(
-              width: 20,
-            ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(25.0)),
-                border: new Border.all(
-                  width: 1,
-                  color: Colors.white70,
-                ),
-                image: new DecorationImage(
-                  alignment: Alignment.centerRight,
-                  image: new AssetImage('assets/images/themelist02.png'),
-                  fit: BoxFit.fitHeight
-                ),
-              ),
-              height: 50,
-              width: 70,
-            ),
-            SizedBox(
-              width: 12,
-            ),
-            Text(
-              prefs.getStringList('user')![1],
-              style: TextStyle(
-                  fontWeight: FontWeight.w900,
-                  fontSize: 30,
-                  color: Provider.of<ThemeProvider>(context).mainFont),
-            ),
-          ],
-        ),
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(20.0)),
-                border: new Border.all(
-                  width: 1,
-                  color: Colors.white24,
-                ),
-                color: Provider.of<ThemeProvider>(context).outer,
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black12,
-                      offset: Offset(0.0, 0.0), //阴影x轴偏移量
-                      blurRadius: 2, //阴影模糊程度
-                      spreadRadius: 2 //阴影扩散程度
                       )
                     ],
                   ),
-                  child: fixedPage(),
+                  child: AddPage(),
                 ),
-              ]),
-          SizedBox(
-            height: 10,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                border: new Border.all(
-                  width: 1,
-                  color: Colors.white24,
-                ),
-                // color: Provider.of<ThemeProvider>(context).background,
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black12,
-                    offset: Offset(0.0, 0.0), //阴影x轴偏移量
-                    blurRadius: 4, //阴影模糊程度
-                  )
-                ],
-              ),
-              child: AddPage(),
-            ),
-            SizedBox(width: 120,
-              height: 120,),
-          ]),
-        ],
-      ),
-    );
+              ])
+            ]));
   }
 
   Widget daysPage() {
@@ -646,7 +598,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                 height: 10,
               ),
               Text(
-                '',
+                '更多功能',
                 style: TextStyle(
                   fontWeight: FontWeight.w900,
                   fontSize: 20,

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -36,15 +37,6 @@ class _SkinPageState extends State<SkinPage> {
         decoration: BoxDecoration(
           image:
           new DecorationImage(image: themeList[index], fit: BoxFit.cover),
-          boxShadow: [
-            //一组阴影
-            BoxShadow(
-              color: Colors.grey, //阴影颜色
-              offset: Offset(0.0, 0.0), //偏移量
-              blurRadius: 30.0, //模糊范围
-              spreadRadius: -10.0, //传播范围
-            )
-          ],
           borderRadius: BorderRadius.all(Radius.circular(20)),
           boxShadow: [
             BoxShadow(

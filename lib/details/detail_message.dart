@@ -97,11 +97,11 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                 child: Container(
                   height: 50,
                   width: 50,
-                  color:  Provider.of<ThemeProvider>(context).outer,
+                  color: Provider.of<ThemeProvider>(context).outer,
                   child: Icon(
                     Icons.stacked_bar_chart,
                     size: 25,
-                  //  color: Provider.of<ThemeProvider>(context).mainFont,
+                    //  color: Provider.of<ThemeProvider>(context).mainFont,
                   ),
                 ),
               ),
@@ -122,10 +122,10 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
       date2OnTop = DateTime.now().toString().substring(5, 7);
       date1OnTop = DateTime.now().toString().substring(0, 4);
     }
-    return
-      Scaffold(
-        backgroundColor: Provider.of<ThemeProvider>(context).detailBackground,
-        body: SafeArea(child:Column(children: [
+    return Scaffold(
+      backgroundColor: Provider.of<ThemeProvider>(context).detailBackground,
+      body: SafeArea(
+        child: Column(children: [
           Expanded(
             child: Row(
               children: <Widget>[
@@ -150,7 +150,7 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                           Icon(
                             Icons.person,
                             size: 30,
-                         //   color: Provider.of<ThemeProvider>(context).mainFont,
+                            //   color: Provider.of<ThemeProvider>(context).mainFont,
                           ),
                           SizedBox(
                             height: 15,
@@ -185,7 +185,7 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
             controller: _controller,
             itemCount: _detailList.length,
             itemBuilder: (_, index) {
-              if (_detailList[_detailList.length-index-1][0] == '0') {
+              if (_detailList[_detailList.length - index - 1][0] == '0') {
                 return Container();
               } else
                 return Dismissible(
@@ -195,8 +195,7 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                           context: context,
                           builder: (_) {
                             return AlertDialog(
-                              backgroundColor:
-                                 Colors.white,
+                              backgroundColor: Colors.white,
                               elevation: 5,
                               content: Text('你确定要删除这条记录吗？',
                                   style: TextStyle(
@@ -260,8 +259,8 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                       });
                     },
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(3, 4, 4, 1),
-                      child: Container(
+                        padding: EdgeInsets.fromLTRB(3, 4, 4, 1),
+                        child: Container(
                           height: 80,
                           alignment: Alignment.centerLeft,
                           decoration: BoxDecoration(
@@ -269,8 +268,8 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
                               colors: [
-              Colors.white,
-              Colors.white,
+                                Colors.white,
+                                Colors.white,
                               ],
                             ),
                             borderRadius:
@@ -281,45 +280,55 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                                 print("you click it");
                               },
                               child: ListTile(
-                                tileColor:
-                                    Colors.black,
-                                leading: Icon(
-                                  AddingWhat.addingWhatListIcon[
-                                      int.parse(_detailList[_detailList.length-index-1][1])],
-                                  // color: Provider.of<ThemeProvider>(context)
-                                  //     .mainFont,
-                                ),
-                                title: Text(
-                                  AddingWhat.addingWhatList[
-                                      int.parse(_detailList[_detailList.length-index-1][1])],
-                                  style: TextStyle(
-                                      color: Colors.black),
-                                ),
-                                subtitle: Text(
-                                  _detailList[_detailList.length-index-1][2],
-                                  style: TextStyle(
-                                      color:  Colors.black),
-                                ),
-                                trailing: int.parse(_detailList[_detailList.length-index-1][1])>0&&int.parse(_detailList[_detailList.length-index-1][1])<5?
-                                Text(
-                                  '+${_detailList[_detailList.length-index-1][0]}',
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w400,
-                                      color:  Colors.black),
-                                ):
-                                Text(
-                                  '-${_detailList[_detailList.length-index-1][0]}',
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w400,
-                                      // color: Provider.of<ThemeProvider>(context)
-                                      //     .mainFont),
-                                ),
-                              ))),
-                    )));
-              }
-            ));
+                                  tileColor: Colors.black,
+                                  leading: Icon(
+                                    AddingWhat.addingWhatListIcon[int.parse(
+                                        _detailList[_detailList.length -
+                                            index -
+                                            1][1])],
+                                    // color: Provider.of<ThemeProvider>(context)
+                                    //     .mainFont,
+                                  ),
+                                  title: Text(
+                                    AddingWhat.addingWhatList[int.parse(
+                                        _detailList[_detailList.length -
+                                            index -
+                                            1][1])],
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  subtitle: Text(
+                                    _detailList[_detailList.length - index - 1]
+                                        [2],
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  trailing: int.parse(_detailList[
+                                                  _detailList.length -
+                                                      index -
+                                                      1][1]) >
+                                              0 &&
+                                          int.parse(_detailList[
+                                                  _detailList.length -
+                                                      index -
+                                                      1][1]) <
+                                              5
+                                      ? Text(
+                                          '+${_detailList[_detailList.length - index - 1][0]}',
+                                          style: TextStyle(
+                                              fontSize: 30,
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black),
+                                        )
+                                      : Text(
+                                          '-${_detailList[_detailList.length - index - 1][0]}',
+                                          style: TextStyle(
+                                            fontSize: 30,
+                                            fontWeight: FontWeight.w400,
+                                            // color: Provider.of<ThemeProvider>(context)
+                                            //     .mainFont),
+                                          ),
+                                        ))),
+                        )));
+            }));
   }
 
   Future<bool> delete(int tally_id, String userName) async {
@@ -336,8 +345,8 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
     }
   }
 
-  Future<bool> add(int tally_id, String userName, int tally_labels, String tally_datetime,
-      String tally_num) async {
+  Future<bool> add(int tally_id, String userName, int tally_labels,
+      String tally_datetime, String tally_num) async {
     String dateTime = tally_datetime.toString().substring(0, 4) +
         '/' +
         tally_datetime.toString().substring(5, 6) +
@@ -363,139 +372,136 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
   }
 
   Widget detailMessage() {
-    return Column(
-      children: <Widget>[
-        SizedBox(
-          height: 20,
-        ),
-        Row(
-          children: [
-            InkWell(
-              onTap: () {
-                DatePicker.showDatePicker(context,
-                    showTitleActions: true,
-                    minTime: DateTime(1970, 1, 1),
-                    maxTime: DateTime(2098, 12, 31),
-                    onChanged: (date) {}, onConfirm: (date) {
-                  setState(() {
-                    flag = true;
-                    date2OnTop = date.toString().substring(5, 7);
-                    date1OnTop = date.toString().substring(0, 4);
+    return Column(children: <Widget>[
+      SizedBox(
+        height: 20,
+      ),
+      Row(
+        children: [
+          InkWell(
+            onTap: () {
+              DatePicker.showDatePicker(context,
+                  showTitleActions: true,
+                  minTime: DateTime(1970, 1, 1),
+                  maxTime: DateTime(2098, 12, 31),
+                  onChanged: (date) {}, onConfirm: (date) {
+                setState(() {
+                  flag = true;
+                  date2OnTop = date.toString().substring(5, 7);
+                  date1OnTop = date.toString().substring(0, 4);
+                });
+              }, currentTime: DateTime.now(), locale: LocaleType.zh);
+            },
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 20,
+                ),
+                Text(
+                  '$date1OnTop年$date2OnTop月',
+                  style: TextStyle(
+                    fontSize: 35,
+                    color: Provider.of<ThemeProvider>(context).mainFont,
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                Icon(
+                  Icons.arrow_drop_down,
+                  size: 40,
+                )
+              ],
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.arrow_circle_down_outlined,
+                color: Provider.of<ThemeProvider>(context).mainFont),
+            onPressed: () async {
+              var response =
+                  await Dio().get("http://121.43.164.122:3390/user/getTallies",
+                      //options: Options(headers: headers),
+                      queryParameters: {
+                    "userName": prefs.getStringList('user')![0],
                   });
-                }, currentTime: DateTime.now(), locale: LocaleType.zh);
-              },
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Text(
-                    '$date1OnTop年$date2OnTop月',
-                    style: TextStyle(
-                      fontSize: 35,
-                      color: Provider.of<ThemeProvider>(context).mainFont,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  Icon(
-                    Icons.arrow_drop_down,
-                    size: 40,
-                  )
-                ],
-              ),
-            ),
-            IconButton(
-              icon: Icon(Icons.arrow_circle_down_outlined,
-                  color: Provider.of<ThemeProvider>(context).mainFont),
-              onPressed: () async {
-                var response = await Dio()
-                    .get("http://121.43.164.122:3390/user/getTallies",
-                        //options: Options(headers: headers),
-                        queryParameters: {
-                      "userName": prefs.getStringList('user')![0],
-                    });
-                print(response);
-              },
-            ),
-            IconButton(
+              print(response);
+            },
+          ),
+          IconButton(
               icon: Icon(Icons.arrow_circle_up_outlined,
                   color: Provider.of<ThemeProvider>(context).mainFont),
-              onPressed: () {}
-            ),
-          ],
-        InkWell(
-          onTap: () {
-            DatePicker.showDatePicker(context,
-                showTitleActions: true,
-                minTime: DateTime(1970, 1, 1),
-                maxTime: DateTime(2098, 12, 31),
-                onChanged: (date) {}, onConfirm: (date) {
-              setState(() {
-                flag = true;
-                date2OnTop = date.toString().substring(5, 7);
-                date1OnTop = date.toString().substring(0, 4);
-              });
-            }, currentTime: DateTime.now(), locale: LocaleType.zh);
-          },
-          child: Row(
-            children: [
-              SizedBox(
-                width: 20,
-              ),
-              Text(
-                '$date1OnTop年$date2OnTop月',
-                style: TextStyle(
-                  fontSize: 35,
-                 // color: Provider.of<ThemeProvider>(context).mainFont,
-                  fontWeight: FontWeight.w900,
-
+              onPressed: () {}),
+          InkWell(
+            onTap: () {
+              DatePicker.showDatePicker(context,
+                  showTitleActions: true,
+                  minTime: DateTime(1970, 1, 1),
+                  maxTime: DateTime(2098, 12, 31),
+                  onChanged: (date) {}, onConfirm: (date) {
+                setState(() {
+                  flag = true;
+                  date2OnTop = date.toString().substring(5, 7);
+                  date1OnTop = date.toString().substring(0, 4);
+                });
+              }, currentTime: DateTime.now(), locale: LocaleType.zh);
+            },
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 20,
                 ),
-              ),
-              Icon(
-                Icons.arrow_drop_down,
-                size: 40,
-              )
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(10, 3, 10, 10),
-            child: Stack(children: <Widget>[
-              realDetail(),
-              Positioned(
-                right: 10,
-                bottom: 10,
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  child: FloatingActionButton(
-                    // foregroundColor:
-                    //     Provider.of<ThemeProvider>(context).mainFont,
-                    // backgroundColor:
-                    //     Provider.of<ThemeProvider>(context).mainFont,
-                    elevation: 5,
-                    splashColor: Colors.amber[100],
-                    onPressed: () {
-                      _controller.animateTo(
-                        -20,
-                        duration: Duration(milliseconds: 600),
-                        curve: Curves.ease,
-                      );
-                    },
-                    child: Icon(Icons.arrow_drop_up_outlined,
-                        color: Provider.of<ThemeProvider>(context).outer,
-                        size: 30.0),
+                Text(
+                  '$date1OnTop年$date2OnTop月',
+                  style: TextStyle(
+                    fontSize: 35,
+                    // color: Provider.of<ThemeProvider>(context).mainFont,
+                    fontWeight: FontWeight.w900,
                   ),
                 ),
-              ),
-            ]),
+                Icon(
+                  Icons.arrow_drop_down,
+                  size: 40,
+                )
+              ],
+            ),
           ),
-        ),
-      ],
-    );
+          SizedBox(
+            height: 10,
+          ),
+          Expanded(
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(10, 3, 10, 10),
+              child: Stack(children: <Widget>[
+                realDetail(),
+                Positioned(
+                  right: 10,
+                  bottom: 10,
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    child: FloatingActionButton(
+                      // foregroundColor:
+                      //     Provider.of<ThemeProvider>(context).mainFont,
+                      // backgroundColor:
+                      //     Provider.of<ThemeProvider>(context).mainFont,
+                      elevation: 5,
+                      splashColor: Colors.amber[100],
+                      onPressed: () {
+                        _controller.animateTo(
+                          -20,
+                          duration: Duration(milliseconds: 600),
+                          curve: Curves.ease,
+                        );
+                      },
+                      child: Icon(Icons.arrow_drop_up_outlined,
+                          color: Provider.of<ThemeProvider>(context).outer,
+                          size: 30.0),
+                    ),
+                  ),
+                ),
+              ]),
+            ),
+          ),
+        ],
+      ),
+    ]);
   }
 }
