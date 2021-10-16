@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
+import 'package:twt_account/data/toast_provider.dart';
 import '../data/global_data.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -36,10 +37,10 @@ class _RegisterPageState extends State<RegisterPage> {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
-                elevation: 8.0,
+                elevation: 2.0,
               ),
               child: Text(
-                "返回",
+                "返回登录",
                 style: TextStyle(
                     fontSize: 18,
                     color: Colors.black,
@@ -51,106 +52,114 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
           SizedBox(height: 20),
-          Column(
-            children: <Widget>[
-              Container(
-                decoration: new BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      offset: Offset(0.0, 3.0), //阴影x轴偏移量
-                      blurRadius: 2, //阴影模糊程度
-                      spreadRadius: 1, //阴影扩散程度
-                    )
-                  ],
-                  color: Colors.white,
-                ),
-                width: 300,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
-                  child: Column(
-                    children: <Widget>[
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: "账号",
-                        ),
-                        controller: _userNameController,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: "昵称",
-                        ),
-                        controller: _nickNameController,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: "密码",
-                        ),
-                        controller: _passwordController,
-                      ),
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: "确认密码",
-                        ),
-                        controller: _passwordSecondController,
-                      ),
-                      SizedBox(height: 10)
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 252, 255, 224),
-                    elevation: 5.0,
-                  ),
-                  onPressed: () async {
-                    if (_passwordController.text == _passwordSecondController.text) {
-                      var response = await Dio().post(
-                          "http://121.43.164.122:3390/user/register",
-                          //options: Options(headers: headers),
-                          queryParameters: {
-                            "userName": _userNameController.text,
-                            "nickName": _nickNameController.text,
-                            "password": _passwordController.text,
-                          });
-                      print(response);
-                      //Navigator.popAndPushNamed(context, "/registerPage");
-                    }
-                  },
-                  child: Container(
-                    width: 100,
-                    child: Center(
-                      child: Text(
-                        "注册!",
-                        style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w900),
-                      ),
-                    ),
-                  )),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+          Text(' 欢迎注册划记账号!',
+            textScaleFactor: 2.0,
+            style: TextStyle(
+                color: Colors.black54,
+                fontWeight: FontWeight.w900),
+          ),
+          SizedBox(height: 20),
+          Container(
+            decoration: new BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  offset: Offset(0.0, 1.0), //阴影x轴偏移量
+                  blurRadius: 1, //阴影模糊程度
+                  spreadRadius: 1, //阴影扩散程度
+                )
+              ],
+              color: Colors.white,
+            ),
+            width: 300,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+              child: Column(
                 children: <Widget>[
-                  Checkbox(
-                      value: this._value,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          this._value = value!;
-                        });
-                      }),
-                  Text(
-                    "了解并同意隐私政策",
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.w900),
-                  )
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: "账号",
+                        helperText: "登录划记并进行同步的唯一凭据"
+                    ),
+                    controller: _userNameController,
+                  ),
+                  TextField(
+                    decoration: InputDecoration(
+                      hintText: "昵称",
+                        helperText: "主页将会展示的名字"
+                    ),
+                    controller: _nickNameController,
+                  ),
+                  TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: "密码",
+                      helperText: "密码长度应不少于8位，由数字和字母组成"
+                    ),
+                    controller: _passwordController,
+                  ),
+                  TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      hintText: "确认密码",
+                    ),
+                    controller: _passwordSecondController,
+                  ),
+                  SizedBox(height: 10)
                 ],
+              ),
+            ),
+          ),
+          SizedBox(height: 20),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                primary: Color.fromARGB(255, 224, 249, 255),
+                elevation: 5.0,
+              ),
+              onPressed: () async {
+                if (_passwordController.text == _passwordSecondController.text) {
+                  var response = await Dio().post(
+                      "http://121.43.164.122:3390/user/register",
+                      //options: Options(headers: headers),
+                      queryParameters: {
+                        "userName": _userNameController.text,
+                        "nickName": _nickNameController.text,
+                        "password": _passwordController.text,
+                      });
+                  print(response);
+                  //Navigator.popAndPushNamed(context, "/registerPage");
+                } else ToastProvider.error('两次密码输入不一致！');
+              },
+              child: Container(
+                width: 100,
+                child: Center(
+                  child: Text(
+                    "注册!",
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Colors.black,
+                        fontWeight: FontWeight.w900),
+                  ),
+                ),
+              )),
+          SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Checkbox(
+                  value: this._value,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      this._value = value!;
+                    });
+                  }),
+              Text(
+                "了解并同意隐私政策",
+                style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w900),
               )
             ],
           )

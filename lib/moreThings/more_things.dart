@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:twt_account/data/global_data.dart';
 import 'package:twt_account/data/toast_provider.dart';
 
 import 'theme/theme_config.dart';
@@ -20,6 +22,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
   // double _monthExpenditure = 0;
   double width = 0.0;
   double height = 0.0;
+  SharedPreferences prefs = GlobalData.getPref()!;
 
   Widget bottom(context) {
     return Column(
@@ -94,24 +97,25 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
             ),
             Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(35.0)),
+                borderRadius: BorderRadius.all(Radius.circular(25.0)),
                 border: new Border.all(
                   width: 1,
                   color: Colors.white70,
                 ),
                 image: new DecorationImage(
                   alignment: Alignment.centerRight,
-                  image: new AssetImage('assets/images/furry.png'),
+                  image: new AssetImage('assets/images/themelist02.png'),
+                  fit: BoxFit.fitHeight
                 ),
               ),
-              height: 70,
+              height: 50,
               width: 70,
             ),
             SizedBox(
-              width: 20,
+              width: 12,
             ),
             Text(
-              '付瑞',
+              prefs.getStringList('user')![1],
               style: TextStyle(
                   fontWeight: FontWeight.w900,
                   fontSize: 30,

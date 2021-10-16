@@ -2,7 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:twt_account/data/toast_provider.dart';
 import 'package:twt_account/login_regist/login_bean.dart';
+import 'package:twt_account/login_regist/login_failed_bean.dart';
 
 import '../data/global_data.dart';
 
@@ -42,8 +44,11 @@ class _LoginInPageState extends State<LoginInPage> {
                     color: Colors.black,
                     fontWeight: FontWeight.w900),
               ),
-              onPressed: () {
-                Navigator.pushNamed(context, "/myPage");
+              onPressed: () async {
+                SharedPreferences prefs = GlobalData.getPref()!;
+                prefs.setStringList("user", ['null', '请登录以同步', '']);
+                prefs.setBool("logState", false);
+                Navigator.popAndPushNamed(context, "/myPage");
               },
             ),
           ),
@@ -65,10 +70,10 @@ class _LoginInPageState extends State<LoginInPage> {
                         spreadRadius: 25 //阴影扩散程度
                         )
                   ],
-                  // image: new DecorationImage(
-                  //   alignment: Alignment.centerRight,
-                  //   image: new AssetImage('assets/images/huajilogo.png'),
-                  // ),
+                  image: new DecorationImage(
+                    alignment: Alignment.centerRight,
+                    image: new AssetImage('assets/images/huaJi.png'),
+                  ),
                 ),
                 height: 120,
                 width: 120,
@@ -98,7 +103,7 @@ class _LoginInPageState extends State<LoginInPage> {
                       SizedBox(height: 10),
                       TextField(
                         decoration: InputDecoration(
-                          hintText: "账号",
+                          hintText: "划记账号",
                         ),
                         controller: _userNameController,
                       ),
@@ -115,7 +120,7 @@ class _LoginInPageState extends State<LoginInPage> {
               SizedBox(height: 20),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 227, 255, 224),
+                    primary: Color.fromARGB(255, 245, 255, 241),
                     elevation: 5.0,
                   ),
                   onPressed: () async {
@@ -127,22 +132,23 @@ class _LoginInPageState extends State<LoginInPage> {
                           "password": _passwordController.text,
                         });
                     print(response);
-                    int isLogin = LoginBean.fromJson(response.data).result!.isLogin!;
-                    if (isLogin == 1) {
-                      SharedPreferences prefs = GlobalData.getPref()!;
-                      prefs.setStringList("user", [
-                        LoginBean.fromJson(response.data).result!.userName!,
-                        LoginBean.fromJson(response.data).result!.nickName!,
-                        LoginBean.fromJson(response.data).result!.password!
-                      ]);
-                      prefs.setBool("logState", true);
-                      Navigator.popAndPushNamed(context, "/myPage");
-                    } else {
-                      prefs.setBool("logState", false);
-                    }
-
-                    print("wowowowowow");
-                    print(prefs.getStringList("user"));
+                      int isLogin =
+                          LoginBean.fromJson(response.data).result!.isLogin!;
+                      if (isLogin == 1) {
+                        SharedPreferences prefs = GlobalData.getPref()!;
+                        prefs.setStringList("user", [
+                          LoginBean.fromJson(response.data).result!.userName!,
+                          LoginBean.fromJson(response.data).result!.nickName!,
+                          LoginBean.fromJson(response.data).result!.password!,
+                        ]);
+                        prefs.setBool("logState", true);
+                        ToastProvider.success("登录成功!");
+                        Navigator.popAndPushNamed(context, "/myPage");
+                      } else {
+                        prefs.setBool("logState", false);
+                        ToastProvider.error('登录失败哩');
+                      }
+                      print(prefs.getStringList("user"));
                     // bool logged = prefs.getBool("logState") ??
                     //         () {
                     //       print("not logged");
@@ -165,7 +171,7 @@ class _LoginInPageState extends State<LoginInPage> {
               SizedBox(height: 20),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 252, 255, 224),
+                    primary: Color.fromARGB(255, 231, 224, 218),
                     elevation: 5.0,
                   ),
                   onPressed: () {

@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:twt_account/data/global_data.dart';
 import 'package:twt_account/moreThings/theme/theme.dart';
 import 'package:twt_account/moreThings/theme/theme_config.dart';
 
@@ -33,6 +35,14 @@ class _SkinPageState extends State<SkinPage> {
         decoration: BoxDecoration(
           color: themeList[index],
           borderRadius: BorderRadius.all(Radius.circular(20)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey,
+              offset: Offset(0.0, 1.0), //阴影x轴偏移量
+              blurRadius: 0.5, //阴影模糊程度
+              spreadRadius: 1, //阴影扩散程度
+            )
+          ],
         ),
         child: _index != index
             ? Text("") //如果没选中则无东西
@@ -40,15 +50,23 @@ class _SkinPageState extends State<SkinPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Icon(
-                    Icons.check,
-                    color: Colors.white,
+                    Icons.check_outlined,
+                    color: Provider.of<ThemeProvider>(context).mainFont,
                   ),
                   SizedBox(width: 16),
                 ],
               ),
       ),
       onTap: () async {
-        SharedPreferences sp = await SharedPreferences.getInstance();
+        SharedPreferences prefs = GlobalData.getPref()!;
+        var response = await Dio()
+            .post("http://121.43.164.122:3390/user/addSkin",
+            queryParameters: {
+              "userName": prefs.getStringList('user')![1],
+              "skinNow": index,
+            });
+        print(response);
+        SharedPreferences sp = GlobalData.getPref()!;
         sp.setInt("theme", index); //点击后，修改持久化框架里的theme数据库
         Provider.of<ThemeProvider>(context, listen: false)
             .setTheme(index); //修改全局状态为选中的值
@@ -64,7 +82,9 @@ class _SkinPageState extends State<SkinPage> {
     return Scaffold(
       backgroundColor: Provider.of<ThemeProvider>(context).background,
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Provider.of<ThemeProvider>(context).mainFont,),
+        iconTheme: IconThemeData(
+          color: Provider.of<ThemeProvider>(context).mainFont,
+        ),
         title: Text(
           "设置主题",
           style: TextStyle(
