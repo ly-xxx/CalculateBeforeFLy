@@ -1,6 +1,8 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twt_account/data/global_data.dart';
+import 'package:twt_account/details/delete_bean.dart';
 import 'package:twt_account/moreThings/theme/theme_config.dart';
 import 'dart:ui';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -120,10 +122,10 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
       date2OnTop = DateTime.now().toString().substring(5, 7);
       date1OnTop = DateTime.now().toString().substring(0, 4);
     }
-    return
-      Scaffold(
-        backgroundColor: Provider.of<ThemeProvider>(context).background,
-        body: SafeArea(child:Column(children: [
+    return Scaffold(
+      backgroundColor: Provider.of<ThemeProvider>(context).background,
+      body: SafeArea(
+        child: Column(children: [
           Expanded(
             child: Row(
               children: <Widget>[
@@ -236,7 +238,7 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                             );
                           });
                     },
-                    onDismissed: (_) {
+                    onDismissed: (_) async {
                       int a = prefs.getInt('todayExpenditure') ?? 0;
                       int b = prefs.getInt('monthExpenditure') ?? 0;
                       int type = int.parse(_detailList[index][1]);
@@ -247,6 +249,15 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                         a = a - int.parse(_detailList[index][0]);
                         b = b - int.parse(_detailList[index][0]);
                       }
+                      ////////
+                      var response = await Dio().post(
+                          "http://121.43.164.122:3390/user/deleteTally",
+                          queryParameters: {
+                            "userName": prefs.getStringList('user')![0],
+                            "tally_id": index,
+                          });
+                      print(response);
+                      ////////
                       setState(() {
                         prefs.setInt('todayExpenditure', a);
                         prefs.setInt('monthExpenditure', b);
@@ -310,52 +321,107 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
             }));
   }
 
+  Future<bool> delete(int tally_id, String userName) async {
+    var response = await Dio()
+        .post("http://121.43.164.122:3390/user/deleteTally", queryParameters: {
+      "userName": userName,
+      "tally_id": tally_id,
+    });
+    print(response);
+    if (DeleteBean.fromJson(response.data).code! == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  Future<bool> add(int tally_id, String userName, int tally_labels, String tally_datetime,
+      String tally_num) async {
+    String dateTime = tally_datetime.toString().substring(0, 4) +
+        '/' +
+        tally_datetime.toString().substring(5, 6) +
+        '/' +
+        tally_datetime.toString().substring(7, 8) +
+        ' ' +
+        '00:00:00';
+    var response = await Dio()
+        .post("http://121.43.164.122:3390/user/addTally", queryParameters: {
+      "userName": userName,
+      "tally_id": tally_id,
+      "tally_labels": tally_labels,
+      "tally_datetime": dateTime,
+      "tally_discription": tally_num,
+    });
+
+    print(response);
+    if (DeleteBean.fromJson(response.data).code! == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Widget detailMessage() {
     return Column(
       children: <Widget>[
         SizedBox(
           height: 20,
         ),
-        InkWell(
-          onTap: () {
-            DatePicker.showDatePicker(context,
-                showTitleActions: true,
-                minTime: DateTime(1970, 1, 1),
-                maxTime: DateTime(2098, 12, 31),
-                onChanged: (date) {}, onConfirm: (date) {
-              setState(() {
-                flag = true;
-                date2OnTop = date.toString().substring(5, 7);
-                date1OnTop = date.toString().substring(0, 4);
-              });
-            }, currentTime: DateTime.now(), locale: LocaleType.zh);
-          },
-          child: Row(
-            children: [
-              SizedBox(
-                width: 20,
+        Row(
+          children: [
+            InkWell(
+              onTap: () {
+                DatePicker.showDatePicker(context,
+                    showTitleActions: true,
+                    minTime: DateTime(1970, 1, 1),
+                    maxTime: DateTime(2098, 12, 31),
+                    onChanged: (date) {}, onConfirm: (date) {
+                  setState(() {
+                    flag = true;
+                    date2OnTop = date.toString().substring(5, 7);
+                    date1OnTop = date.toString().substring(0, 4);
+                  });
+                }, currentTime: DateTime.now(), locale: LocaleType.zh);
+              },
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    '$date1OnTop年$date2OnTop月',
+                    style: TextStyle(
+                      fontSize: 35,
+                      color: Provider.of<ThemeProvider>(context).mainFont,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_drop_down,
+                    size: 40,
+                  )
+                ],
               ),
-              Text(
-                '$date1OnTop年$date2OnTop月',
-                style: TextStyle(
-                  fontSize: 35,
-                  color: Provider.of<ThemeProvider>(context).mainFont,
-                  fontWeight: FontWeight.w900,
-                  // shadows: <Shadow>[
-                  //   Shadow(
-                  //     offset: Offset(2.0, 2.0),
-                  //     blurRadius: 1.0,
-                  //     color: Color.fromARGB(120, 10, 10, 100),
-                  //   ),
-                  // ],
-                ),
-              ),
-              Icon(
-                Icons.arrow_drop_down,
-                size: 40,
-              )
-            ],
-          ),
+            ),
+            IconButton(
+              icon: Icon(Icons.arrow_circle_down_outlined,
+                  color: Provider.of<ThemeProvider>(context).mainFont),
+              onPressed: () async {
+                var response = await Dio()
+                    .get("http://121.43.164.122:3390/user/getTallies",
+                        //options: Options(headers: headers),
+                        queryParameters: {
+                      "userName": prefs.getStringList('user')![0],
+                    });
+                print(response);
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.arrow_circle_up_outlined,
+                  color: Provider.of<ThemeProvider>(context).mainFont),
+              onPressed: () {}
+            ),
+          ],
         ),
         SizedBox(
           height: 10,

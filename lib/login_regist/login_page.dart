@@ -1,10 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:twt_account/data/toast_provider.dart';
 import 'package:twt_account/login_regist/login_bean.dart';
 import 'package:twt_account/login_regist/login_failed_bean.dart';
+import 'package:twt_account/moreThings/theme/theme_config.dart';
 
 import '../data/global_data.dart';
 
@@ -24,10 +26,9 @@ class _LoginInPageState extends State<LoginInPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: ListView(
         children: <Widget>[
-          SizedBox(height: 50),
+          SizedBox(height: 30),
           Container(
             padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
             alignment: Alignment.centerRight,
@@ -35,7 +36,7 @@ class _LoginInPageState extends State<LoginInPage> {
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
-                elevation: 8.0,
+                elevation: 3.0,
               ),
               child: Text(
                 "跳过",
@@ -132,29 +133,28 @@ class _LoginInPageState extends State<LoginInPage> {
                           "password": _passwordController.text,
                         });
                     print(response);
-                      int isLogin =
-                          LoginBean.fromJson(response.data).result!.isLogin!;
-                      if (isLogin == 1) {
-                        SharedPreferences prefs = GlobalData.getPref()!;
-                        prefs.setStringList("user", [
-                          LoginBean.fromJson(response.data).result!.userName!,
-                          LoginBean.fromJson(response.data).result!.nickName!,
-                          LoginBean.fromJson(response.data).result!.password!,
-                        ]);
-                        prefs.setBool("logState", true);
-                        ToastProvider.success("登录成功!");
-                        Navigator.popAndPushNamed(context, "/myPage");
-                      } else {
-                        prefs.setBool("logState", false);
-                        ToastProvider.error('登录失败哩');
-                      }
-                      print(prefs.getStringList("user"));
-                    // bool logged = prefs.getBool("logState") ??
-                    //         () {
-                    //       print("not logged");
-                    //       return false;
-                    //     }();
-                    //Navigator.popAndPushNamed(context, "/registerPage");
+                    int isLogin =
+                        LoginBean.fromJson(response.data).result!.isLogin!;
+                    if (isLogin == 1) {
+                      SharedPreferences prefs = GlobalData.getPref()!;
+                      prefs.setStringList("user", [
+                        LoginBean.fromJson(response.data).result!.userName!,
+                        LoginBean.fromJson(response.data).result!.nickName!,
+                        LoginBean.fromJson(response.data).result!.password!,
+                      ]);
+                      prefs.setBool("logState", true);
+                      ToastProvider.success("登录成功!");
+                      Provider.of<ThemeProvider>(context, listen: false)
+                          .setTheme(LoginBean.fromJson(response.data)
+                              .result!
+                              .skinNow!); //修改全局状态为选中的值
+
+                      Navigator.popAndPushNamed(context, "/myPage");
+                    } else {
+                      prefs.setBool("logState", false);
+                      ToastProvider.error('登录失败哩');
+                    }
+                    print(prefs.getStringList("user"));
                   },
                   child: Container(
                     width: 100,

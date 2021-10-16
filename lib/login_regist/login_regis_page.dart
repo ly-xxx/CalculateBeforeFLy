@@ -26,10 +26,9 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: ListView(
         children: <Widget>[
-          SizedBox(height: 50),
+          SizedBox(height: 20),
           Container(
             padding: EdgeInsets.fromLTRB(20, 0, 40, 0),
             alignment: Alignment.centerLeft,
@@ -52,14 +51,20 @@ class _RegisterPageState extends State<RegisterPage> {
             ),
           ),
           SizedBox(height: 20),
-          Text(' 欢迎注册划记账号!',
-            textScaleFactor: 2.0,
-            style: TextStyle(
-                color: Colors.black54,
-                fontWeight: FontWeight.w900),
+          Row(
+            children: [
+              SizedBox(width: 20),
+              Text(' 欢迎注册划记账号!',
+                textScaleFactor: 2.0,
+                style: TextStyle(
+                    color: Colors.black54,
+                    fontWeight: FontWeight.w900),
+              ),
+            ],
           ),
           SizedBox(height: 20),
           Container(
+            margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
             decoration: new BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(10.0)),
               boxShadow: [
@@ -72,7 +77,6 @@ class _RegisterPageState extends State<RegisterPage> {
               ],
               color: Colors.white,
             ),
-            width: 300,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
               child: Column(
@@ -114,8 +118,8 @@ class _RegisterPageState extends State<RegisterPage> {
           SizedBox(height: 20),
           ElevatedButton(
               style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 224, 249, 255),
-                elevation: 5.0,
+                primary: Color.fromARGB(255, 247, 241, 241),
+                elevation: 0.5,
               ),
               onPressed: () async {
                 if (_passwordController.text == _passwordSecondController.text) {
@@ -132,7 +136,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 } else ToastProvider.error('两次密码输入不一致！');
               },
               child: Container(
-                width: 100,
                 child: Center(
                   child: Text(
                     "注册!",
