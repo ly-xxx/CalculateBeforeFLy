@@ -17,12 +17,12 @@ List<List<String>> _detailList = [];
 
 Widget getLine_e() {
   List<Linesales> dataLine = [
-    Linesales(d1, getDay(d1.month.toString(), d1.day.toString())), //日期，当日总收支
-    Linesales(d2, getDay(d2.month.toString(), d2.day.toString())),
-    Linesales(d3, getDay(d3.month.toString(), d3.day.toString())),
-    Linesales(d4, getDay(d4.month.toString(), d4.day.toString())),
-    Linesales(d5, getDay(d5.month.toString(), d5.day.toString())),
-    Linesales(now, getDay(now.month.toString(), now.day.toString())),
+    Linesales(d1, getDay(d1.month.toString(), d1.day.toString()),Color(0xFF2F2E41)), //日期，当日总收支
+    Linesales(d2, getDay(d2.month.toString(), d2.day.toString()),Color(0xFF2F2E41)),
+    Linesales(d3, getDay(d3.month.toString(), d3.day.toString()),Color(0xFF2F2E41)),
+    Linesales(d4, getDay(d4.month.toString(), d4.day.toString()),Color(0xFF2F2E41)),
+    Linesales(d5, getDay(d5.month.toString(), d5.day.toString()),Color(0xFF2F2E41)),
+    Linesales(now, getDay(now.month.toString(), now.day.toString()),Color(0xFF2F2E41)),
   ];
 
   var seriesLine = [
@@ -30,6 +30,7 @@ Widget getLine_e() {
       data: dataLine,
       domainFn: (Linesales lines, _) => lines.time,
       measureFn: (Linesales lines, _) => lines.sale,
+      colorFn: (Linesales lines, _) =>lines.color,
       id: "Lines",
     )
   ];

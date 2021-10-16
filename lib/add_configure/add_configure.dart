@@ -63,7 +63,7 @@ class _AddConfigureState extends State<AddConfigure> {
     addingWhatShow = AddingWhat.addingWhatList[addingWhat];
     dateElse = DateTime.now().toString().substring(5, 19);
     return Scaffold(
-      backgroundColor: Provider.of<ThemeProvider>(context).background,
+      backgroundColor: Color(0xFFFFFFFF),
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -114,9 +114,9 @@ class _AddConfigureState extends State<AddConfigure> {
                     child: Container(
                       height: 50,
                       width: 50,
-                      color: Provider.of<ThemeProvider>(context).background,
+                      //color: Provider.of<ThemeProvider>(context).background,
                       child: Icon(
-                        Icons.settings,
+                        Icons.person,
                         size: 25,
                         color: Provider.of<ThemeProvider>(context).mainFont,
                       ),
@@ -140,7 +140,7 @@ class _AddConfigureState extends State<AddConfigure> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Provider.of<ThemeProvider>(context).outer,
+                            color: Provider.of<ThemeProvider>(context).outerSide,
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10.0))),
                         child: Align(
@@ -151,8 +151,8 @@ class _AddConfigureState extends State<AddConfigure> {
                               Icon(
                                 Icons.attach_money,
                                 size: 30,
-                                color: Provider.of<ThemeProvider>(context)
-                                    .mainFont,
+                                // color: Provider.of<ThemeProvider>(context)
+                                //     .mainFont,
                               ),
                               SizedBox(
                                 height: 15,
@@ -161,8 +161,8 @@ class _AddConfigureState extends State<AddConfigure> {
                                 "统\n计",
                                 style: TextStyle(
                                     fontSize: 20,
-                                    color: Provider.of<ThemeProvider>(context)
-                                        .mainFont,
+                                    // color: Provider.of<ThemeProvider>(context)
+                                    //     .mainFont,
                                     fontWeight: FontWeight.w900),
                               ),
                             ],
@@ -192,7 +192,8 @@ class _AddConfigureState extends State<AddConfigure> {
               ' 将要记下：',
               textScaleFactor: 3.0,
               style: TextStyle(
-                color: Provider.of<ThemeProvider>(context).assistFont,
+                // color: Provider.of<ThemeProvider>(context)
+                //     .assistFont,
                 fontWeight: FontWeight.w900,
                 shadows: <Shadow>[],
               ),
@@ -209,13 +210,15 @@ class _AddConfigureState extends State<AddConfigure> {
               decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                        color: Provider.of<ThemeProvider>(context).mainFont,
+                        // color: Provider.of<ThemeProvider>(context)
+                        //     .mainFont,
                         offset: Offset(0.0, 1.0), //阴影xy轴偏移量
                         blurRadius: 1.0, //阴影模糊程度
                         spreadRadius: 1.0 //阴影扩散程度
                         )
                   ],
-                  color: Provider.of<ThemeProvider>(context).outer,
+                  color: Provider.of<ThemeProvider>(context)
+                      .confirmMid,
                   borderRadius: BorderRadius.all(Radius.circular(10.0))),
               width: width - 80,
               child: Padding(
@@ -227,7 +230,8 @@ class _AddConfigureState extends State<AddConfigure> {
                   Text(
                     '记账金额',
                     style: TextStyle(
-                        color: Provider.of<ThemeProvider>(context).mainFont,
+                        // color: Provider.of<ThemeProvider>(context)
+                        //     .mainFont,
                         fontWeight: FontWeight.w600),
                     textScaleFactor: 1.5,
                   ),
@@ -241,9 +245,11 @@ class _AddConfigureState extends State<AddConfigure> {
                         child: Text(
                           '$tallyMoney',
                           textScaleFactor: 5.0,
-                          style: TextStyle(
-                              color:
-                                  Provider.of<ThemeProvider>(context).mainFont),
+                          style: TextStyle
+                            (
+                              // color: Provider.of<ThemeProvider>(context)
+                              //     .mainFont
+                          ),
                         ),
                       ),
                       Offstage(
@@ -255,16 +261,15 @@ class _AddConfigureState extends State<AddConfigure> {
                               Container(
                                 width: width - 170,
                                 child: TextField(
-                                  cursorColor:
-                                      Provider.of<ThemeProvider>(context)
-                                          .assistFont,
+                                  // cursorColor: Provider.of<ThemeProvider>(context)
+                                  //     .assistFont,
                                   cursorWidth: 2,
                                   decoration: InputDecoration(
                                     hintText: "修改记账金额：当前 $tallyMoney",
                                     hintStyle: TextStyle(
-                                        color:
-                                            Provider.of<ThemeProvider>(context)
-                                                .assistFont),
+                                        // color: Provider.of<ThemeProvider>(context)
+                                        //     .assistFont
+                                    ),
                                     border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(10)),
@@ -284,8 +289,7 @@ class _AddConfigureState extends State<AddConfigure> {
                               Expanded(
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    primary: Provider.of<ThemeProvider>(context)
-                                        .background,
+                                    primary: Color(0xFF2F2E41),
                                     elevation: 5.0,
                                   ),
                                   onPressed: () {
@@ -297,9 +301,8 @@ class _AddConfigureState extends State<AddConfigure> {
                                   child: Container(
                                     height: 40,
                                     child: Icon(
-                                      Icons.check_outlined,
-                                      color: Provider.of<ThemeProvider>(context)
-                                          .mainFont,
+                                      Icons.check_box_outlined,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),
@@ -318,8 +321,8 @@ class _AddConfigureState extends State<AddConfigure> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary:
-                                Provider.of<ThemeProvider>(context).background,
+                            primary: Provider.of<ThemeProvider>(context)
+                                .confirmMid,
                             elevation: 5.0,
                           ),
                           onPressed: () {
@@ -330,13 +333,14 @@ class _AddConfigureState extends State<AddConfigure> {
                           },
                           child: Icon(
                             Icons.arrow_downward_sharp,
-                            color: Provider.of<ThemeProvider>(context).mainFont,
+                            color: Provider.of<ThemeProvider>(context)
+                                .mainFont,
                           ),
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary:
-                                Provider.of<ThemeProvider>(context).background,
+                            primary: Provider.of<ThemeProvider>(context)
+                                .background,
                             elevation: 5.0,
                           ),
                           onPressed: () {
@@ -347,13 +351,14 @@ class _AddConfigureState extends State<AddConfigure> {
                           },
                           child: Icon(
                             Icons.arrow_drop_down,
-                            color: Provider.of<ThemeProvider>(context).mainFont,
+                            // color: Provider.of<ThemeProvider>(context)
+                            //       .mainFont,
                           ),
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary:
-                                Provider.of<ThemeProvider>(context).background,
+                            primary: Provider.of<ThemeProvider>(context)
+                                .confirmMid,
                             elevation: 5.0,
                           ),
                           onPressed: () {
@@ -364,13 +369,14 @@ class _AddConfigureState extends State<AddConfigure> {
                           },
                           child: Icon(
                             Icons.arrow_drop_up,
-                            color: Provider.of<ThemeProvider>(context).mainFont,
+                            // color: Provider.of<ThemeProvider>(context)
+                            //     .mainFont,
                           ),
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary:
-                                Provider.of<ThemeProvider>(context).background,
+                            primary: Provider.of<ThemeProvider>(context)
+                                .confirmMid,
                             elevation: 5.0,
                           ),
                           onPressed: () {
@@ -380,7 +386,8 @@ class _AddConfigureState extends State<AddConfigure> {
                           },
                           child: Icon(
                             Icons.arrow_upward_sharp,
-                            color: Provider.of<ThemeProvider>(context).mainFont,
+                            // color: Provider.of<ThemeProvider>(context)
+                            //     .mainFont,
                           ),
                         ),
                       ]),
@@ -402,7 +409,8 @@ class _AddConfigureState extends State<AddConfigure> {
             },
             child: Container(
               decoration: BoxDecoration(
-                color: Provider.of<ThemeProvider>(context).outer,
+                color: Provider.of<ThemeProvider>(context)
+                    .outer,
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
               ),
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -418,8 +426,8 @@ class _AddConfigureState extends State<AddConfigure> {
                     '$addingWhatShow',
                     textScaleFactor: 2.0,
                     style: TextStyle(
-                        color: Provider.of<ThemeProvider>(context).assistFont,
-                        fontWeight: FontWeight.w900),
+                        color: Provider.of<ThemeProvider>(context)
+                            .assistFont, fontWeight: FontWeight.w900),
                   ),
                 ),
                 Offstage(
@@ -445,8 +453,8 @@ class _AddConfigureState extends State<AddConfigure> {
                             },
                             child: Icon(
                               Icons.arrow_back_ios_rounded,
-                              color:
-                                  Provider.of<ThemeProvider>(context).mainFont,
+                              color: Provider.of<ThemeProvider>(context)
+                                  .mainFont,
                             ),
                           ),
                           Text(
@@ -471,8 +479,8 @@ class _AddConfigureState extends State<AddConfigure> {
                             },
                             child: Icon(
                               Icons.arrow_forward_ios_rounded,
-                              color:
-                                  Provider.of<ThemeProvider>(context).mainFont,
+                              color: Provider.of<ThemeProvider>(context)
+                                  .mainFont,
                             ),
                           ),
                         ]),
@@ -518,7 +526,7 @@ class _AddConfigureState extends State<AddConfigure> {
                       primary: Color.fromARGB(255, 162, 219, 170),
                       elevation: 5.0,
                     ),
-                    onPressed: () async {
+                    onPressed: () {
                       if (tallyMoney == 0) {
                         Fluttertoast.showToast(msg: "数据不合理");
                       } else {
@@ -533,25 +541,6 @@ class _AddConfigureState extends State<AddConfigure> {
                         }
                         String dateTime = formatDate(DateTime.now(),
                             ['yyyy', '年', 'mm', '月', 'dd', '日']);
-                        String date = dateTime.substring(0, 4) +
-                            '/' +
-                            dateTime.substring(5, 6) +
-                            '/' +
-                            dateTime.substring(7, 8) +
-                            ' ' +
-                            '00:00:00';
-                        ////////
-                        var response = await Dio().post(
-                            "http://121.43.164.122:3390/user/addTally",
-                            queryParameters: {
-                              "userName": prefs.getStringList('user')![0],
-                              "tally_id": _itemCount,
-                              "tally_labels": addingWhat,
-                              "tally_datetime": date,
-                              "tally_description": tallyMoney,
-                            });
-                        print(response);
-                        ////////
                         List<String> item = [
                           tallyMoney.toString(),
                           addingWhat.toString(),
@@ -569,7 +558,7 @@ class _AddConfigureState extends State<AddConfigure> {
                       height: 60,
                       child: Icon(
                         Icons.check_outlined,
-                        color: Colors.black,
+                        color:Colors.black,
                       ),
                     ),
                   ),
@@ -586,13 +575,15 @@ class _AddConfigureState extends State<AddConfigure> {
               offstage: !_isShow,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Provider.of<ThemeProvider>(context).outer,
+                  primary: Provider.of<ThemeProvider>(context)
+                      .outer,
                   elevation: 5.0,
                 ),
                 child: Container(
                   padding: EdgeInsets.all(30),
                   decoration: new BoxDecoration(
-                    color: Provider.of<ThemeProvider>(context).outer,
+                    color: Provider.of<ThemeProvider>(context)
+                        .outer,
                     borderRadius:
                         new BorderRadius.all(new Radius.circular(30.0)),
                   ),
@@ -601,10 +592,10 @@ class _AddConfigureState extends State<AddConfigure> {
                   child: Text(
                     '更多选项:',
                     style: TextStyle(
-                      fontWeight: FontWeight.w900,
-                      fontSize: 20,
-                      color: Provider.of<ThemeProvider>(context).mainFont,
-                    ),
+                        fontWeight: FontWeight.w900,
+                        fontSize: 20,
+                        color: Provider.of<ThemeProvider>(context)
+                            .mainFont,),
                   ),
                 ),
                 onPressed: () {
