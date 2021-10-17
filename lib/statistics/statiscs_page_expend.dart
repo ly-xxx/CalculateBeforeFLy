@@ -53,7 +53,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
             decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius:
-                    BorderRadius.only(bottomRight: Radius.circular(10.0))),
+                    BorderRadius.only(bottomLeft: Radius.circular(10.0))),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -302,7 +302,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(10.0))),
+                              topRight: Radius.circular(10.0))),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[

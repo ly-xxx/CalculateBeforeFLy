@@ -1,8 +1,6 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twt_account/data/global_data.dart';
-import 'package:twt_account/details/delete_bean.dart';
 import 'package:twt_account/moreThings/theme/theme_config.dart';
 import 'dart:ui';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -29,11 +27,14 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
   //final p=GlobalData.instance;
   List<List<String>> _detailList = [];
 
+  //
   @override
   void initState() {
     int x = prefs.getInt("itemCount") ?? 0;
     print('x is $x');
     for (int i = 0; i < x; i++) {
+      //if()
+      //y.add(i);
       _detailList
           .add(prefs.getStringList(i.toString()) ?? ["0", "0", "no data"]);
       print('get StringList $i is ${_detailList[i]}');
@@ -63,18 +64,18 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                       height: 50,
                       decoration: BoxDecoration(
                         borderRadius:
-                            BorderRadius.only(topRight: Radius.circular(10.0)),
-                        color: Colors.white,
+                        BorderRadius.only(topRight: Radius.circular(10.0)),
+                        color: Colors.white
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
                               child: Icon(
-                            Icons.home,
-                            size: 30,
-                            //color: Provider.of<ThemeProvider>(context).mainFont,
-                          )),
+                                Icons.home,
+                                size: 30,
+                                color: Provider.of<ThemeProvider>(context).mainFont,
+                              )),
                           SizedBox(
                             width: 30,
                           ),
@@ -101,7 +102,7 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                   child: Icon(
                     Icons.stacked_bar_chart,
                     size: 25,
-                    //  color: Provider.of<ThemeProvider>(context).mainFont,
+                    //color: Provider.of<ThemeProvider>(context).mainFont,
                   ),
                 ),
               ),
@@ -122,10 +123,10 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
       date2OnTop = DateTime.now().toString().substring(5, 7);
       date1OnTop = DateTime.now().toString().substring(0, 4);
     }
-    return Scaffold(
-      backgroundColor: Provider.of<ThemeProvider>(context).detailBackground,
-      body: SafeArea(
-        child: Column(children: [
+    return
+      Scaffold(
+        backgroundColor: Provider.of<ThemeProvider>(context).detailBackground,
+        body: SafeArea(child:Column(children: [
           Expanded(
             child: Row(
               children: <Widget>[
@@ -148,9 +149,9 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Icon(
-                            Icons.person,
+                            Icons.account_tree_outlined,
                             size: 30,
-                            //   color: Provider.of<ThemeProvider>(context).mainFont,
+                            //color: Provider.of<ThemeProvider>(context).mainFont,
                           ),
                           SizedBox(
                             height: 15,
@@ -173,8 +174,8 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
           ),
           bottom(context),
         ]),
-      ),
-    );
+        ),
+      );
   }
 
   Widget realDetail() {
@@ -185,7 +186,7 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
             controller: _controller,
             itemCount: _detailList.length,
             itemBuilder: (_, index) {
-              if (_detailList[_detailList.length - index - 1][0] == '0') {
+              if (_detailList[_detailList.length-index-1][0] == '0') {
                 return Container();
               } else
                 return Dismissible(
@@ -195,7 +196,8 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                           context: context,
                           builder: (_) {
                             return AlertDialog(
-                              backgroundColor: Colors.white,
+                              backgroundColor:
+                              Provider.of<ThemeProvider>(context).outer,
                               elevation: 5,
                               content: Text('你确定要删除这条记录吗？',
                                   style: TextStyle(
@@ -212,7 +214,7 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                                       style: TextStyle(
                                           fontSize: 20,
                                           // color: Provider.of<ThemeProvider>(
-                                          //         context)
+                                          //     context)
                                           //     .assistFont,
                                           fontWeight: FontWeight.w900)),
                                 ),
@@ -224,43 +226,34 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                                         style: TextStyle(
                                             fontSize: 20,
                                             // color: Provider.of<ThemeProvider>(
-                                            //         context)
+                                            //     context)
                                             //     .mainFont,
                                             fontWeight: FontWeight.w900))),
                               ],
                             );
                           });
                     },
-                    onDismissed: (_) async {
+                    onDismissed: (_) {
                       int a = prefs.getInt('todayExpenditure') ?? 0;
                       int b = prefs.getInt('monthExpenditure') ?? 0;
-                      int type = int.parse(_detailList[index][1]);
+                      int type = int.parse(_detailList[_detailList.length-index-1][1]);
                       if (type < 5) {
-                        a = a + int.parse(_detailList[index][0]);
-                        b = b + int.parse(_detailList[index][0]);
+                        a = a + int.parse(_detailList[_detailList.length-index-1][0]);
+                        b = b + int.parse(_detailList[_detailList.length-index-1][0]);
                       } else {
-                        a = a - int.parse(_detailList[index][0]);
-                        b = b - int.parse(_detailList[index][0]);
+                        a = a - int.parse(_detailList[_detailList.length-index-1][0]);
+                        b = b - int.parse(_detailList[_detailList.length-index-1][0]);
                       }
-                      ////////
-                      var response = await Dio().post(
-                          "http://121.43.164.122:3390/user/deleteTally",
-                          queryParameters: {
-                            "userName": prefs.getStringList('user')![0],
-                            "tally_id": index,
-                          });
-                      print(response);
-                      ////////
                       setState(() {
                         prefs.setInt('todayExpenditure', a);
                         prefs.setInt('monthExpenditure', b);
-                        prefs.remove(index.toString());
-                        _detailList.removeAt(index);
+                        prefs.remove((_detailList.length-index-1).toString());
+                        _detailList.removeAt(_detailList.length-index-1);
                       });
                     },
                     child: Padding(
-                        padding: EdgeInsets.fromLTRB(3, 4, 4, 1),
-                        child: Container(
+                      padding: EdgeInsets.fromLTRB(3, 4, 4, 1),
+                      child: Container(
                           height: 80,
                           alignment: Alignment.centerLeft,
                           decoration: BoxDecoration(
@@ -268,240 +261,149 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                               begin: Alignment.centerLeft,
                               end: Alignment.centerRight,
                               colors: [
+                                // Provider.of<ThemeProvider>(context).background,
+                                // Provider.of<ThemeProvider>(context).background,
                                 Colors.white,
                                 Colors.white,
                               ],
                             ),
                             borderRadius:
-                                BorderRadius.all(Radius.circular(10.0)),
+                            BorderRadius.all(Radius.circular(10.0)),
                           ),
                           child: InkWell(
                               onTap: () {
                                 print("you click it");
                               },
                               child: ListTile(
-                                  tileColor: Colors.black,
-                                  leading: Icon(
-                                    AddingWhat.addingWhatListIcon[int.parse(
-                                        _detailList[_detailList.length -
-                                            index -
-                                            1][1])],
-                                    // color: Provider.of<ThemeProvider>(context)
-                                    //     .mainFont,
-                                  ),
-                                  title: Text(
-                                    AddingWhat.addingWhatList[int.parse(
-                                        _detailList[_detailList.length -
-                                            index -
-                                            1][1])],
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                  subtitle: Text(
-                                    _detailList[_detailList.length - index - 1]
-                                        [2],
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                  trailing: int.parse(_detailList[
-                                                  _detailList.length -
-                                                      index -
-                                                      1][1]) >
-                                              0 &&
-                                          int.parse(_detailList[
-                                                  _detailList.length -
-                                                      index -
-                                                      1][1]) <
-                                              5
-                                      ? Text(
-                                          '+${_detailList[_detailList.length - index - 1][0]}',
-                                          style: TextStyle(
-                                              fontSize: 30,
-                                              fontWeight: FontWeight.w400,
-                                              color: Colors.black),
-                                        )
-                                      : Text(
-                                          '-${_detailList[_detailList.length - index - 1][0]}',
-                                          style: TextStyle(
-                                            fontSize: 30,
-                                            fontWeight: FontWeight.w400,
-                                            // color: Provider.of<ThemeProvider>(context)
-                                            //     .mainFont),
-                                          ),
-                                        ))),
-                        )));
-            }));
-  }
-
-  Future<bool> delete(int tally_id, String userName) async {
-    var response = await Dio()
-        .post("http://121.43.164.122:3390/user/deleteTally", queryParameters: {
-      "userName": userName,
-      "tally_id": tally_id,
-    });
-    print(response);
-    if (DeleteBean.fromJson(response.data).code! == 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  Future<bool> add(int tally_id, String userName, int tally_labels,
-      String tally_datetime, String tally_num) async {
-    String dateTime = tally_datetime.toString().substring(0, 4) +
-        '/' +
-        tally_datetime.toString().substring(5, 6) +
-        '/' +
-        tally_datetime.toString().substring(7, 8) +
-        ' ' +
-        '00:00:00';
-    var response = await Dio()
-        .post("http://121.43.164.122:3390/user/addTally", queryParameters: {
-      "userName": userName,
-      "tally_id": tally_id,
-      "tally_labels": tally_labels,
-      "tally_datetime": dateTime,
-      "tally_discription": tally_num,
-    });
-
-    print(response);
-    if (DeleteBean.fromJson(response.data).code! == 0) {
-      return true;
-    } else {
-      return false;
-    }
+                                tileColor:
+                                Provider.of<ThemeProvider>(context).outer,
+                                leading: Icon(
+                                  AddingWhat.addingWhatListIcon[
+                                  int.parse(_detailList[_detailList.length-index-1][1])],
+                                  color: Provider.of<ThemeProvider>(context)
+                                      .mainFont,
+                                ),
+                                title: Text(
+                                  AddingWhat.addingWhatList[
+                                  int.parse(_detailList[_detailList.length-index-1][1])],
+                                  style: TextStyle(
+                                      color: Provider.of<ThemeProvider>(context)
+                                          .mainFont),
+                                ),
+                                subtitle: Text(
+                                  _detailList[_detailList.length-index-1][2],
+                                  style: TextStyle(
+                                      color: Provider.of<ThemeProvider>(context)
+                                          .mainFont),
+                                ),
+                                trailing: int.parse(_detailList[_detailList.length-index-1][1])>0&&int.parse(_detailList[_detailList.length-index-1][1])<5?
+                                Text(
+                                  '+${_detailList[_detailList.length-index-1][0]}',
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w400,
+                                      color: Provider.of<ThemeProvider>(context)
+                                          .mainFont),
+                                ):
+                                Text(
+                                  '-${_detailList[_detailList.length-index-1][0]}',
+                                  style: TextStyle(
+                                      fontSize: 30,
+                                      fontWeight: FontWeight.w400,
+                                      color: Provider.of<ThemeProvider>(context)
+                                          .mainFont),
+                                ),
+                              ))),
+                    ));
+            }
+        ));
   }
 
   Widget detailMessage() {
-    return Column(children: <Widget>[
-      SizedBox(
-        height: 20,
-      ),
-      Row(
-        children: [
-          InkWell(
-            onTap: () {
-              DatePicker.showDatePicker(context,
-                  showTitleActions: true,
-                  minTime: DateTime(1970, 1, 1),
-                  maxTime: DateTime(2098, 12, 31),
-                  onChanged: (date) {}, onConfirm: (date) {
-                setState(() {
-                  flag = true;
-                  date2OnTop = date.toString().substring(5, 7);
-                  date1OnTop = date.toString().substring(0, 4);
-                });
-              }, currentTime: DateTime.now(), locale: LocaleType.zh);
-            },
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 20,
-                ),
-                Text(
-                  '$date1OnTop年$date2OnTop月',
-                  style: TextStyle(
-                    fontSize: 35,
-                    color: Provider.of<ThemeProvider>(context).mainFont,
-                    fontWeight: FontWeight.w900,
-                  ),
-                ),
-                Icon(
-                  Icons.arrow_drop_down,
-                  size: 40,
-                )
-              ],
-            ),
-          ),
-          IconButton(
-            icon: Icon(Icons.arrow_circle_down_outlined,
-                color: Provider.of<ThemeProvider>(context).mainFont),
-            onPressed: () async {
-              var response =
-                  await Dio().get("http://121.43.164.122:3390/user/getTallies",
-                      //options: Options(headers: headers),
-                      queryParameters: {
-                    "userName": prefs.getStringList('user')![0],
+    return Column(
+      children: <Widget>[
+        SizedBox(
+          height: 20,
+        ),
+        InkWell(
+          onTap: () {
+            DatePicker.showDatePicker(context,
+                showTitleActions: true,
+                minTime: DateTime(1970, 1, 1),
+                maxTime: DateTime(2098, 12, 31),
+                onChanged: (date) {}, onConfirm: (date) {
+                  setState(() {
+                    flag = true;
+                    date2OnTop = date.toString().substring(5, 7);
+                    date1OnTop = date.toString().substring(0, 4);
                   });
-              print(response);
-            },
-          ),
-          IconButton(
-              icon: Icon(Icons.arrow_circle_up_outlined,
-                  color: Provider.of<ThemeProvider>(context).mainFont),
-              onPressed: () {}),
-          InkWell(
-            onTap: () {
-              DatePicker.showDatePicker(context,
-                  showTitleActions: true,
-                  minTime: DateTime(1970, 1, 1),
-                  maxTime: DateTime(2098, 12, 31),
-                  onChanged: (date) {}, onConfirm: (date) {
-                setState(() {
-                  flag = true;
-                  date2OnTop = date.toString().substring(5, 7);
-                  date1OnTop = date.toString().substring(0, 4);
-                });
-              }, currentTime: DateTime.now(), locale: LocaleType.zh);
-            },
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 20,
+                }, currentTime: DateTime.now(), locale: LocaleType.zh);
+          },
+          child: Row(
+            children: [
+              SizedBox(
+                width: 20,
+              ),
+              Text(
+                '$date1OnTop年$date2OnTop月',
+                style: TextStyle(
+                  fontSize: 35,
+                  color: Provider.of<ThemeProvider>(context).mainFont,
+                  fontWeight: FontWeight.w900,
+                  // shadows: <Shadow>[
+                  //   Shadow(
+                  //     offset: Offset(2.0, 2.0),
+                  //     blurRadius: 1.0,
+                  //     color: Color.fromARGB(120, 10, 10, 100),
+                  //   ),
+                  // ],
                 ),
-                Text(
-                  '$date1OnTop年$date2OnTop月',
-                  style: TextStyle(
-                    fontSize: 35,
-                    // color: Provider.of<ThemeProvider>(context).mainFont,
-                    fontWeight: FontWeight.w900,
+              ),
+              Icon(
+                Icons.arrow_drop_down,
+                size: 40,
+              )
+            ],
+          ),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(10, 3, 10, 10),
+            child: Stack(children: <Widget>[
+              realDetail(),
+              Positioned(
+                right: 10,
+                bottom: 10,
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  child: FloatingActionButton(
+                    foregroundColor:
+                    Provider.of<ThemeProvider>(context).mainFont,
+                    backgroundColor:
+                    Provider.of<ThemeProvider>(context).mainFont,
+                    elevation: 5,
+                    splashColor: Colors.amber[100],
+                    onPressed: () {
+                      _controller.animateTo(
+                        -20,
+                        duration: Duration(milliseconds: 600),
+                        curve: Curves.ease,
+                      );
+                    },
+                    child: Icon(Icons.arrow_drop_up_outlined,
+                        color: Provider.of<ThemeProvider>(context).outer,
+                        size: 30.0),
                   ),
                 ),
-                Icon(
-                  Icons.arrow_drop_down,
-                  size: 40,
-                )
-              ],
-            ),
+              ),
+            ]),
           ),
-          SizedBox(
-            height: 10,
-          ),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(10, 3, 10, 10),
-              child: Stack(children: <Widget>[
-                realDetail(),
-                Positioned(
-                  right: 10,
-                  bottom: 10,
-                  child: Container(
-                    width: 40,
-                    height: 40,
-                    child: FloatingActionButton(
-                      // foregroundColor:
-                      //     Provider.of<ThemeProvider>(context).mainFont,
-                      // backgroundColor:
-                      //     Provider.of<ThemeProvider>(context).mainFont,
-                      elevation: 5,
-                      splashColor: Colors.amber[100],
-                      onPressed: () {
-                        _controller.animateTo(
-                          -20,
-                          duration: Duration(milliseconds: 600),
-                          curve: Curves.ease,
-                        );
-                      },
-                      child: Icon(Icons.arrow_drop_up_outlined,
-                          color: Provider.of<ThemeProvider>(context).outer,
-                          size: 30.0),
-                    ),
-                  ),
-                ),
-              ]),
-            ),
-          ),
-        ],
-      ),
-    ]);
+        ),
+      ],
+    );
   }
 }

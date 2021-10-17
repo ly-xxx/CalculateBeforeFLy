@@ -61,7 +61,7 @@ int getDay(String month, String day){
   int x = prefs.getInt("itemCount") ?? 0;
 
   for (int i = 0; i < x; i++) {
-    _detailList.add(prefs.getStringList(i.toString())??["no data"]);
+    _detailList.add(prefs.getStringList(i.toString())??['0','0',"no data"]);
   }
 
   List<List<String>> result = [];

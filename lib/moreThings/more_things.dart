@@ -36,7 +36,13 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     _monthExpenditure = prefs.getInt('monthExpenditure') ?? 0;
     _gdsz = prefs.getInt('gdsz') ?? 0;
     _typeOfGdsz = prefs.getBool('typeOfGdsz') ?? true;
-    _keepCounts=prefs.getInt("itemCount") ?? 0;
+    int x=prefs.getInt("itemCount") ?? 0;
+    for(int i=0;i<x;i++){
+      if((prefs.getStringList(i.toString()) ?? ["0", "0", "no data"][1])!='0'){
+        _keepCounts++;
+      }
+    }
+
     super.initState();
   }
 
