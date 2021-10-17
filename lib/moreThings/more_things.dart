@@ -329,8 +329,9 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
         height: 100,
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        child: Row(children: [
           ///圆形头像框
+          SizedBox(width: 20),
           Container(
             decoration: BoxDecoration(
               color: Color(0x0C000000),
@@ -340,13 +341,15 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                 color: Color(0xFFA1A1A1),
               ),
             ),
-            child: Icon(Icons.person,
-            size: 35,
-            color: Colors.black54,),
+            child: Icon(
+              Icons.person,
+              size: 35,
+              color: Colors.black54,
+            ),
             height: 200,
             width: 50,
           ),
-
+          SizedBox(width: 20),
           ///用户名
           Text(
             prefs.getStringList('user')![1],
@@ -355,7 +358,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                 fontSize: 25,
                 color: Colors.black38),
           ),
-
+          Spacer(),
           ///退出登录
           IconButton(
             onPressed: () {
@@ -366,6 +369,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
             iconSize: 40,
             color: Colors.black,
           ),
+          SizedBox(width: 20),
         ]),
       ),
       Row(
@@ -423,7 +427,9 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                       child: fixedPage(),
                     ),
                   ]),
-              SizedBox(height: 20,),
+              SizedBox(
+                height: 20,
+              ),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 Container(
                   width: 130,
@@ -434,14 +440,6 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                       width: 1,
                       color: Colors.white24,
                     ),
-                    // color: Provider.of<ThemeProvider>(context).background,
-                    // boxShadow: [
-                    //   BoxShadow(
-                    //     color: Colors.black12,
-                    //     offset: Offset(0.0, 0.0), //阴影x轴偏移量
-                    //     blurRadius: 4, //阴影模糊程度
-                    //   )
-                    // ],
                   ),
                   child: AddPage(),
                 ),

@@ -784,7 +784,7 @@ Color fontColor=  Color(0xFF2F2E41);
                   Text(_todayExpenditure > 0 ? '今日支出' : '今日收入',
                       style: TextStyle(
                           fontSize: 15,
-                          color: Provider.of<ThemeProvider>(context).assistFont,
+                          color: Provider.of<ThemeProvider>(context).mainFont,
                           fontWeight: FontWeight.w900)),
                 ],
               ),
@@ -804,7 +804,7 @@ Color fontColor=  Color(0xFF2F2E41);
                   Text(_monthExpenditure > 0 ? '本月支出' : '本月收入',
                       style: TextStyle(
                           fontSize: 15,
-                          color: Provider.of<ThemeProvider>(context).assistFont,
+                          color: Provider.of<ThemeProvider>(context).mainFont,
                           fontWeight: FontWeight.w900)),
                 ],
               ),

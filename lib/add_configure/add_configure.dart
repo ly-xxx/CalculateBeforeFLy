@@ -27,6 +27,7 @@ class _AddConfigureState extends State<AddConfigure> {
   String dateElse = "加载错误！"; //展示的天时分秒
   SharedPreferences prefs = GlobalData.getPref()!;
   int _itemCount = 0;
+  int _itemCount2 = 0;
 
   String addingWhatShow = '载入失败';
   bool flag = false;
@@ -39,6 +40,7 @@ class _AddConfigureState extends State<AddConfigure> {
   @override
   void initState() {
     _itemCount = prefs.getInt('itemCount') ?? 0;
+    _itemCount2 = prefs.getInt('itemCount2') ?? 0;
     super.initState();
   }
 
@@ -140,7 +142,8 @@ class _AddConfigureState extends State<AddConfigure> {
                       },
                       child: Container(
                         decoration: BoxDecoration(
-                            color: Provider.of<ThemeProvider>(context).outerSide,
+                            color:
+                                Provider.of<ThemeProvider>(context).outerSide,
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10.0))),
                         child: Align(
@@ -216,8 +219,7 @@ class _AddConfigureState extends State<AddConfigure> {
                         spreadRadius: 1.0 //阴影扩散程度
                         )
                   ],
-                  color: Provider.of<ThemeProvider>(context)
-                      .confirmMid,
+                  color: Provider.of<ThemeProvider>(context).confirmMid,
                   borderRadius: BorderRadius.all(Radius.circular(10.0))),
               width: width - 80,
               child: Padding(
@@ -244,11 +246,10 @@ class _AddConfigureState extends State<AddConfigure> {
                         child: Text(
                           '$tallyMoney',
                           textScaleFactor: 5.0,
-                          style: TextStyle
-                            (
+                          style: TextStyle(
                               // color: Provider.of<ThemeProvider>(context)
                               //     .mainFont
-                          ),
+                              ),
                         ),
                       ),
                       Offstage(
@@ -268,7 +269,7 @@ class _AddConfigureState extends State<AddConfigure> {
                                     hintStyle: TextStyle(
                                         // color: Provider.of<ThemeProvider>(context)
                                         //     .assistFont
-                                    ),
+                                        ),
                                     border: OutlineInputBorder(
                                       borderRadius:
                                           BorderRadius.all(Radius.circular(10)),
@@ -289,7 +290,7 @@ class _AddConfigureState extends State<AddConfigure> {
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     primary: Color(0xFF2F2E41),
-                                    //elevation: 5.0,
+                                    elevation: 1.0,
                                   ),
                                   onPressed: () {
                                     setState(() {
@@ -320,9 +321,9 @@ class _AddConfigureState extends State<AddConfigure> {
                       children: [
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Provider.of<ThemeProvider>(context)
-                                .confirmMid,
-                            //elevation: 5.0,
+                            primary:
+                                Provider.of<ThemeProvider>(context).confirmMid,
+                            elevation: 1.0,
                           ),
                           onPressed: () {
                             setState(() {
@@ -332,15 +333,14 @@ class _AddConfigureState extends State<AddConfigure> {
                           },
                           child: Icon(
                             Icons.arrow_downward_sharp,
-                            color: Provider.of<ThemeProvider>(context)
-                                .mainFont,
+                            color: Provider.of<ThemeProvider>(context).mainFont,
                           ),
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            //elevation: 5.0,
-                            primary: Provider.of<ThemeProvider>(context)
-                                .confirmMid,
+                            elevation: 1.0,
+                            primary:
+                                Provider.of<ThemeProvider>(context).confirmMid,
                           ),
                           onPressed: () {
                             setState(() {
@@ -356,9 +356,9 @@ class _AddConfigureState extends State<AddConfigure> {
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Provider.of<ThemeProvider>(context)
-                                .confirmMid,
-                            //elevation: 5.0,
+                            primary:
+                                Provider.of<ThemeProvider>(context).confirmMid,
+                            elevation: 1.0,
                           ),
                           onPressed: () {
                             setState(() {
@@ -374,9 +374,9 @@ class _AddConfigureState extends State<AddConfigure> {
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            primary: Provider.of<ThemeProvider>(context)
-                                .confirmMid,
-                            //elevation: 5.0,
+                            primary:
+                                Provider.of<ThemeProvider>(context).confirmMid,
+                            elevation: 1.0,
                           ),
                           onPressed: () {
                             flag = true;
@@ -408,8 +408,7 @@ class _AddConfigureState extends State<AddConfigure> {
             },
             child: Container(
               decoration: BoxDecoration(
-                color: Provider.of<ThemeProvider>(context)
-                    .confirmMid,
+                color: Provider.of<ThemeProvider>(context).confirmMid,
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
               ),
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -425,8 +424,7 @@ class _AddConfigureState extends State<AddConfigure> {
                     '$addingWhatShow',
                     textScaleFactor: 2.0,
                     style: TextStyle(
-                        color:Colors.black,
-                        fontWeight: FontWeight.w900),
+                        color: Colors.black, fontWeight: FontWeight.w900),
                   ),
                 ),
                 Offstage(
@@ -440,7 +438,7 @@ class _AddConfigureState extends State<AddConfigure> {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              //elevation: 5.0,
+                              elevation: 1.0,
                             ),
                             onPressed: () {
                               setState(() {
@@ -450,8 +448,8 @@ class _AddConfigureState extends State<AddConfigure> {
                             },
                             child: Icon(
                               Icons.arrow_back_ios_rounded,
-                              color: Provider.of<ThemeProvider>(context)
-                                  .mainFont,
+                              color:
+                                  Provider.of<ThemeProvider>(context).mainFont,
                             ),
                           ),
                           Text(
@@ -464,7 +462,7 @@ class _AddConfigureState extends State<AddConfigure> {
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              //elevation: 5.0,
+                              elevation: 1.0,
                             ),
                             onPressed: () {
                               setState(() {
@@ -474,8 +472,8 @@ class _AddConfigureState extends State<AddConfigure> {
                             },
                             child: Icon(
                               Icons.arrow_forward_ios_rounded,
-                              color: Provider.of<ThemeProvider>(context)
-                                  .mainFont,
+                              color:
+                                  Provider.of<ThemeProvider>(context).mainFont,
                             ),
                           ),
                         ]),
@@ -497,9 +495,8 @@ class _AddConfigureState extends State<AddConfigure> {
                 SizedBox(width: 8),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary:  Provider.of<ThemeProvider>(context).confirmMid
-                    ,
-                    //elevation: 5.0,
+                    primary: Color.fromARGB(255, 212, 164, 164),
+                    elevation: 5.0,
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -519,10 +516,10 @@ class _AddConfigureState extends State<AddConfigure> {
                 Expanded(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Color(0xFF2F2E41) ,
-                      //elevation: 5.0,
+                      primary: Color.fromARGB(255, 162, 219, 170),
+                      elevation: 5.0,
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (tallyMoney == 0) {
                         Fluttertoast.showToast(msg: "数据不合理");
                       } else {
@@ -545,7 +542,29 @@ class _AddConfigureState extends State<AddConfigure> {
                         print('itemCount ${_itemCount + 1} is saved');
                         print('item $item is saved');
                         prefs.setInt('itemCount', _itemCount + 1);
+                        prefs.setInt('itemCount2', _itemCount2 + 1);
                         prefs.setStringList(_itemCount.toString(), item);
+                        String date = dateTime.substring(0, 4) +
+                            '/' +
+                            dateTime.substring(5, 7) +
+                            '/' +
+                            dateTime.substring(8, 10) +
+                            ' ' +
+                            '00:00:00';
+                        print(date);
+                        print(_itemCount);
+                        ////////
+                        var response = await Dio().post(
+                            "http://121.43.164.122:3390/user/addtally",
+                            queryParameters: {
+                              "userName": prefs.getStringList('user')![0],
+                              "tallyDatetime": date,
+                              "tallyDiscription": tallyMoney.toString(),
+                              "tallyId": _itemCount,
+                              "tallyLabels": addingWhat,
+                            });
+                        print(response);
+                        ////////
                         Navigator.popAndPushNamed(
                             context, "/detailMessagePage");
                       }
@@ -553,8 +572,8 @@ class _AddConfigureState extends State<AddConfigure> {
                     child: Container(
                       height: 60,
                       child: Icon(
-                        Icons.check_box,
-                        color:Colors.white,
+                        Icons.check_outlined,
+                        color: Colors.black,
                       ),
                     ),
                   ),
@@ -571,15 +590,13 @@ class _AddConfigureState extends State<AddConfigure> {
               offstage: !_isShow,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  primary: Provider.of<ThemeProvider>(context)
-                      .confirmMid,
-                  //elevation: 5.0,
+                  primary: Provider.of<ThemeProvider>(context).confirmMid,
+                  elevation: 5.0,
                 ),
                 child: Container(
                   padding: EdgeInsets.all(30),
                   decoration: new BoxDecoration(
-                    color: Provider.of<ThemeProvider>(context)
-                        .confirmMid,
+                    color: Provider.of<ThemeProvider>(context).confirmMid,
                     borderRadius:
                         new BorderRadius.all(new Radius.circular(30.0)),
                   ),
@@ -588,10 +605,10 @@ class _AddConfigureState extends State<AddConfigure> {
                   child: Text(
                     '更多选项:',
                     style: TextStyle(
-                        fontWeight: FontWeight.w900,
-                        fontSize: 20,
-                        color: Provider.of<ThemeProvider>(context)
-                            .mainFont,),
+                      fontWeight: FontWeight.w900,
+                      fontSize: 20,
+                      color: Provider.of<ThemeProvider>(context).mainFont,
+                    ),
                   ),
                 ),
                 onPressed: () {
@@ -626,7 +643,7 @@ class _AddConfigureState extends State<AddConfigure> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: Colors.white,
-                      //elevation: 5.0,
+                      elevation: 1.0,
                     ),
                     onPressed: () {
                       setState(() {

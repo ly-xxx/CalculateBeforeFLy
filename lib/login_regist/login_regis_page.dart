@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio/dio.dart';
 import 'package:twt_account/data/toast_provider.dart';
+import 'package:twt_account/login_regist/regis_bean.dart';
 import '../data/global_data.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -132,7 +133,10 @@ class _RegisterPageState extends State<RegisterPage> {
                         "password": _passwordController.text,
                       });
                   print(response);
-                  //Navigator.popAndPushNamed(context, "/registerPage");
+                  if (RegisBean.fromJson(response.data).message! == 'Success') {
+                    ToastProvider.success('注册成功！');
+                    Navigator.popAndPushNamed(context, "/loginInPage");
+                  } else ToastProvider.error('注册失败,请联系开发人员解决');
                 } else ToastProvider.error('两次密码输入不一致！');
               },
               child: Container(

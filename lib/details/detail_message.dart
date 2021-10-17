@@ -1,12 +1,16 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:twt_account/data/global_data.dart';
+import 'package:twt_account/data/toast_provider.dart';
 import 'package:twt_account/moreThings/theme/theme_config.dart';
 import 'dart:ui';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:provider/provider.dart';
 import 'package:twt_account/add_configure/adding_what_list.dart';
+
+import 'delete_bean.dart';
 
 class DetailMessagePage extends StatefulWidget {
   const DetailMessagePage({Key? key}) : super(key: key);
@@ -233,9 +237,14 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                             );
                           });
                     },
-                    onDismissed: (_) {
+                    onDismissed: (_) async {
                       int a = prefs.getInt('todayExpenditure') ?? 0;
                       int b = prefs.getInt('monthExpenditure') ?? 0;
+                      int itemCount2 = prefs.getInt('itemCount2') ?? 0;
+                      int itemCount = prefs.getInt('itemCount') ?? 0;
+                      itemCount2 = itemCount2 - 1;
+                      String usrnm = prefs.getStringList('user')![0];
+                      prefs.setInt('itemCount2', itemCount2);
                       int type = int.parse(_detailList[_detailList.length-index-1][1]);
                       if (type < 5) {
                         a = a + int.parse(_detailList[_detailList.length-index-1][0]);
@@ -244,6 +253,18 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                         a = a - int.parse(_detailList[_detailList.length-index-1][0]);
                         b = b - int.parse(_detailList[_detailList.length-index-1][0]);
                       }
+                      ////////
+                      var response = await Dio().delete(
+                          "http://121.43.164.122:3390/user/deleteTally",
+                          queryParameters: {
+                            "userName": usrnm,
+                            "tallyId": index + itemCount2 - itemCount,
+                          });
+                      print(index);
+                      print(response);
+                      if (DeleteBean.fromJson(response.data).message! == 'Success') {
+                        ToastProvider.success('删除成功！');}
+                      ////////
                       setState(() {
                         prefs.setInt('todayExpenditure', a);
                         prefs.setInt('monthExpenditure', b);
@@ -252,14 +273,14 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                       });
                     },
                     child: Padding(
-                      padding: EdgeInsets.fromLTRB(3, 4, 4, 1),
+                      padding: EdgeInsets.fromLTRB(3, 4, 4, 3),
                       child: Container(
-                          height: 80,
+                        padding: EdgeInsets.fromLTRB(3, 5, 3, 5),
                           alignment: Alignment.centerLeft,
                           decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              begin: Alignment.centerLeft,
-                              end: Alignment.centerRight,
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
                               colors: [
                                 // Provider.of<ThemeProvider>(context).background,
                                 // Provider.of<ThemeProvider>(context).background,
@@ -274,46 +295,48 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
                               onTap: () {
                                 print("you click it");
                               },
-                              child: ListTile(
-                                tileColor:
-                                Provider.of<ThemeProvider>(context).outer,
-                                leading: Icon(
-                                  AddingWhat.addingWhatListIcon[
-                                  int.parse(_detailList[_detailList.length-index-1][1])],
-                                  color: Provider.of<ThemeProvider>(context)
-                                      .mainFont,
-                                ),
-                                title: Text(
-                                  AddingWhat.addingWhatList[
-                                  int.parse(_detailList[_detailList.length-index-1][1])],
-                                  style: TextStyle(
+                              child:
+                                  ListTile(
+                                    tileColor:
+                                    Colors.white,
+                                    leading: Icon(
+                                      AddingWhat.addingWhatListIcon[
+                                      int.parse(_detailList[_detailList.length-index-1][1])],
                                       color: Provider.of<ThemeProvider>(context)
-                                          .mainFont),
-                                ),
-                                subtitle: Text(
-                                  _detailList[_detailList.length-index-1][2],
-                                  style: TextStyle(
-                                      color: Provider.of<ThemeProvider>(context)
-                                          .mainFont),
-                                ),
-                                trailing: int.parse(_detailList[_detailList.length-index-1][1])>0&&int.parse(_detailList[_detailList.length-index-1][1])<5?
-                                Text(
-                                  '+${_detailList[_detailList.length-index-1][0]}',
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w400,
-                                      color: Provider.of<ThemeProvider>(context)
-                                          .mainFont),
-                                ):
-                                Text(
-                                  '-${_detailList[_detailList.length-index-1][0]}',
-                                  style: TextStyle(
-                                      fontSize: 30,
-                                      fontWeight: FontWeight.w400,
-                                      color: Provider.of<ThemeProvider>(context)
-                                          .mainFont),
-                                ),
-                              ))),
+                                          .mainFont,
+                                    ),
+                                    title: Text(
+                                      AddingWhat.addingWhatList[
+                                      int.parse(_detailList[_detailList.length-index-1][1])],
+                                      style: TextStyle(
+                                          color: Provider.of<ThemeProvider>(context)
+                                              .mainFont),
+                                    ),
+                                    subtitle: Text(
+                                      _detailList[_detailList.length-index-1][2],
+                                      style: TextStyle(
+                                          color: Provider.of<ThemeProvider>(context)
+                                              .mainFont),
+                                    ),
+                                    trailing: int.parse(_detailList[_detailList.length-index-1][1])>0&&int.parse(_detailList[_detailList.length-index-1][1])<5?
+                                    Text(
+                                      '+${_detailList[_detailList.length-index-1][0]}',
+                                      style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.w400,
+                                          color: Provider.of<ThemeProvider>(context)
+                                              .mainFont),
+                                    ):
+                                    Text(
+                                      '-${_detailList[_detailList.length-index-1][0]}',
+                                      style: TextStyle(
+                                          fontSize: 30,
+                                          fontWeight: FontWeight.w400,
+                                          color: Provider.of<ThemeProvider>(context)
+                                              .mainFont),
+                                    ),
+                                  ),
+                                  )),
                     ));
             }
         ));
@@ -325,46 +348,55 @@ class _DetailMessagePageState extends State<DetailMessagePage> {
         SizedBox(
           height: 20,
         ),
-        InkWell(
-          onTap: () {
-            DatePicker.showDatePicker(context,
-                showTitleActions: true,
-                minTime: DateTime(1970, 1, 1),
-                maxTime: DateTime(2098, 12, 31),
-                onChanged: (date) {}, onConfirm: (date) {
-                  setState(() {
-                    flag = true;
-                    date2OnTop = date.toString().substring(5, 7);
-                    date1OnTop = date.toString().substring(0, 4);
-                  });
-                }, currentTime: DateTime.now(), locale: LocaleType.zh);
-          },
-          child: Row(
-            children: [
-              SizedBox(
-                width: 20,
+        Row(
+          children: [
+            InkWell(
+              onTap: () {
+                DatePicker.showDatePicker(context,
+                    showTitleActions: true,
+                    minTime: DateTime(1970, 1, 1),
+                    maxTime: DateTime(2098, 12, 31),
+                    onChanged: (date) {}, onConfirm: (date) {
+                      setState(() {
+                        flag = true;
+                        date2OnTop = date.toString().substring(5, 7);
+                        date1OnTop = date.toString().substring(0, 4);
+                      });
+                    }, currentTime: DateTime.now(), locale: LocaleType.zh);
+              },
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Text(
+                    '$date1OnTop年$date2OnTop月',
+                    style: TextStyle(
+                      fontSize: 35,
+                      color: Provider.of<ThemeProvider>(context).mainFont,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                  Icon(
+                    Icons.arrow_drop_down,
+                    size: 40,
+                  )
+                ],
               ),
-              Text(
-                '$date1OnTop年$date2OnTop月',
-                style: TextStyle(
-                  fontSize: 35,
-                  color: Provider.of<ThemeProvider>(context).mainFont,
-                  fontWeight: FontWeight.w900,
-                  // shadows: <Shadow>[
-                  //   Shadow(
-                  //     offset: Offset(2.0, 2.0),
-                  //     blurRadius: 1.0,
-                  //     color: Color.fromARGB(120, 10, 10, 100),
-                  //   ),
-                  // ],
-                ),
-              ),
-              Icon(
-                Icons.arrow_drop_down,
-                size: 40,
-              )
-            ],
-          ),
+            ),
+            IconButton(
+              icon: Icon(Icons.arrow_circle_down_outlined,
+                  color: Provider.of<ThemeProvider>(context).mainFont),
+              onPressed: () async {
+                var response = await Dio()
+                    .get("http://121.43.164.122:3390/user/getTallies",
+                    queryParameters: {
+                      "userName": prefs.getStringList('user')![0],
+                    });
+                print(response);
+              },
+            ),
+          ],
         ),
         SizedBox(
           height: 10,

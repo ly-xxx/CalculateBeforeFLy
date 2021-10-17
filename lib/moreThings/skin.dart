@@ -77,7 +77,7 @@ class _SkinPageState extends State<SkinPage> {
 
   networkProcedure() async {
     var response = await Dio()
-        .post("http://121.43.164.122:3390/user/addSkin", queryParameters: {
+        .post("http://121.43.164.122:3390/user/addskin", queryParameters: {
       "userName": userName,
       "skinNow": _index!,
     });
