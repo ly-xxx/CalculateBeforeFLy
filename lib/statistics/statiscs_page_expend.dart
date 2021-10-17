@@ -135,7 +135,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
             padding: EdgeInsets.only(left: 20),
             alignment: Alignment.centerLeft,
             child: const Text(
-              '收入趋势图',
+              '支出趋势图',
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 20.0,
@@ -170,7 +170,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
             padding: EdgeInsets.only(left: 20),
             alignment: Alignment.centerLeft,
             child: const Text(
-              '收入类别图',
+              '支出类别图',
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w900, //字体大小
