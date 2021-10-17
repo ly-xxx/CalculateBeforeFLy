@@ -30,20 +30,20 @@ class _LoginInPageState extends State<LoginInPage> {
         children: <Widget>[
           SizedBox(height: 30),
           Container(
-            padding: EdgeInsets.fromLTRB(0, 0, 20, 0),
+            padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
             alignment: Alignment.centerRight,
             height: 50,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
-                elevation: 3.0,
+               // elevation: 3.0,
               ),
               child: Text(
                 "跳过",
                 style: TextStyle(
                     fontSize: 18,
                     color: Colors.black,
-                    fontWeight: FontWeight.w900),
+                    fontWeight: FontWeight.w500),
               ),
               onPressed: () async {
                 SharedPreferences prefs = GlobalData.getPref()!;
@@ -65,7 +65,7 @@ class _LoginInPageState extends State<LoginInPage> {
                   ),
                   boxShadow: [
                     BoxShadow(
-                        color: Colors.blueAccent,
+                        color: Colors.white,
                         offset: Offset(0.0, 0.0), //阴影x轴偏移量
                         blurRadius: 2000, //阴影模糊程度
                         spreadRadius: 25 //阴影扩散程度
@@ -80,14 +80,15 @@ class _LoginInPageState extends State<LoginInPage> {
                 width: 120,
               ),
               SizedBox(
-                height: 120,
+                height: 70,
               ),
               Container(
                 decoration: new BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10.0)),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black26,
+                     // color: Colors.black26,
+                      color: Colors.white,
                       offset: Offset(0.0, 3.0), //阴影x轴偏移量
                       blurRadius: 2, //阴影模糊程度
                       spreadRadius: 1, //阴影扩散程度
@@ -122,7 +123,7 @@ class _LoginInPageState extends State<LoginInPage> {
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     primary: Color.fromARGB(255, 245, 255, 241),
-                    elevation: 5.0,
+                   // elevation: 5.0,
                   ),
                   onPressed: () async {
                     var response = await Dio()
@@ -160,19 +161,20 @@ class _LoginInPageState extends State<LoginInPage> {
                     width: 100,
                     child: Center(
                       child: Text(
-                        "登录!",
+                        "登录！",
                         style: TextStyle(
                             fontSize: 18,
                             color: Colors.black,
-                            fontWeight: FontWeight.w900),
+                            fontWeight: FontWeight.w500),
                       ),
                     ),
                   )),
               SizedBox(height: 20),
               ElevatedButton(
                   style: ElevatedButton.styleFrom(
+                   // primary: Color.fromARGB(255, 231, 224, 218),
                     primary: Color.fromARGB(255, 231, 224, 218),
-                    elevation: 5.0,
+                    //elevation: 5.0,
                   ),
                   onPressed: () {
                     Navigator.popAndPushNamed(context, "/registerPage");
@@ -185,7 +187,7 @@ class _LoginInPageState extends State<LoginInPage> {
                         style: TextStyle(
                             fontSize: 18,
                             color: Colors.black,
-                            fontWeight: FontWeight.w900),
+                            fontWeight: FontWeight.w500),
                       ),
                     ),
                   )),
@@ -205,7 +207,7 @@ class _LoginInPageState extends State<LoginInPage> {
                     style: TextStyle(
                         fontSize: 14,
                         color: Colors.black54,
-                        fontWeight: FontWeight.w900),
+                        fontWeight: FontWeight.w500),
                   )
                 ],
               )

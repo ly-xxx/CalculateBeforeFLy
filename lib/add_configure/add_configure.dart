@@ -149,7 +149,7 @@ class _AddConfigureState extends State<AddConfigure> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
                               Icon(
-                                Icons.attach_money,
+                                Icons.stacked_bar_chart,
                                 size: 30,
                                 // color: Provider.of<ThemeProvider>(context)
                                 //     .mainFont,
@@ -210,8 +210,7 @@ class _AddConfigureState extends State<AddConfigure> {
               decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
-                        // color: Provider.of<ThemeProvider>(context)
-                        //     .mainFont,
+                        color: Colors.white,
                         offset: Offset(0.0, 1.0), //阴影xy轴偏移量
                         blurRadius: 1.0, //阴影模糊程度
                         spreadRadius: 1.0 //阴影扩散程度
@@ -290,7 +289,7 @@ class _AddConfigureState extends State<AddConfigure> {
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                     primary: Color(0xFF2F2E41),
-                                    elevation: 5.0,
+                                    //elevation: 5.0,
                                   ),
                                   onPressed: () {
                                     setState(() {
@@ -323,7 +322,7 @@ class _AddConfigureState extends State<AddConfigure> {
                           style: ElevatedButton.styleFrom(
                             primary: Provider.of<ThemeProvider>(context)
                                 .confirmMid,
-                            elevation: 5.0,
+                            //elevation: 5.0,
                           ),
                           onPressed: () {
                             setState(() {
@@ -339,7 +338,9 @@ class _AddConfigureState extends State<AddConfigure> {
                         ),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            elevation: 5.0,
+                            //elevation: 5.0,
+                            primary: Provider.of<ThemeProvider>(context)
+                                .confirmMid,
                           ),
                           onPressed: () {
                             setState(() {
@@ -357,7 +358,7 @@ class _AddConfigureState extends State<AddConfigure> {
                           style: ElevatedButton.styleFrom(
                             primary: Provider.of<ThemeProvider>(context)
                                 .confirmMid,
-                            elevation: 5.0,
+                            //elevation: 5.0,
                           ),
                           onPressed: () {
                             setState(() {
@@ -375,7 +376,7 @@ class _AddConfigureState extends State<AddConfigure> {
                           style: ElevatedButton.styleFrom(
                             primary: Provider.of<ThemeProvider>(context)
                                 .confirmMid,
-                            elevation: 5.0,
+                            //elevation: 5.0,
                           ),
                           onPressed: () {
                             flag = true;
@@ -408,7 +409,7 @@ class _AddConfigureState extends State<AddConfigure> {
             child: Container(
               decoration: BoxDecoration(
                 color: Provider.of<ThemeProvider>(context)
-                    .outer,
+                    .confirmMid,
                 borderRadius: BorderRadius.all(Radius.circular(15.0)),
               ),
               padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -424,8 +425,8 @@ class _AddConfigureState extends State<AddConfigure> {
                     '$addingWhatShow',
                     textScaleFactor: 2.0,
                     style: TextStyle(
-                        color: Provider.of<ThemeProvider>(context)
-                            .assistFont, fontWeight: FontWeight.w900),
+                        color:Colors.black,
+                        fontWeight: FontWeight.w900),
                   ),
                 ),
                 Offstage(
@@ -439,7 +440,7 @@ class _AddConfigureState extends State<AddConfigure> {
                         children: [
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              elevation: 5.0,
+                              //elevation: 5.0,
                             ),
                             onPressed: () {
                               setState(() {
@@ -463,7 +464,7 @@ class _AddConfigureState extends State<AddConfigure> {
                           ),
                           ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              elevation: 5.0,
+                              //elevation: 5.0,
                             ),
                             onPressed: () {
                               setState(() {
@@ -496,8 +497,9 @@ class _AddConfigureState extends State<AddConfigure> {
                 SizedBox(width: 8),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 212, 164, 164),
-                    elevation: 5.0,
+                    primary:  Provider.of<ThemeProvider>(context).confirmMid
+                    ,
+                    //elevation: 5.0,
                   ),
                   onPressed: () {
                     Navigator.of(context).pop();
@@ -517,8 +519,8 @@ class _AddConfigureState extends State<AddConfigure> {
                 Expanded(
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 162, 219, 170),
-                      elevation: 5.0,
+                      primary: Color(0xFF2F2E41) ,
+                      //elevation: 5.0,
                     ),
                     onPressed: () {
                       if (tallyMoney == 0) {
@@ -551,8 +553,8 @@ class _AddConfigureState extends State<AddConfigure> {
                     child: Container(
                       height: 60,
                       child: Icon(
-                        Icons.check_outlined,
-                        color:Colors.black,
+                        Icons.check_box,
+                        color:Colors.white,
                       ),
                     ),
                   ),
@@ -570,14 +572,14 @@ class _AddConfigureState extends State<AddConfigure> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   primary: Provider.of<ThemeProvider>(context)
-                      .outer,
-                  elevation: 5.0,
+                      .confirmMid,
+                  //elevation: 5.0,
                 ),
                 child: Container(
                   padding: EdgeInsets.all(30),
                   decoration: new BoxDecoration(
                     color: Provider.of<ThemeProvider>(context)
-                        .outer,
+                        .confirmMid,
                     borderRadius:
                         new BorderRadius.all(new Radius.circular(30.0)),
                   ),
@@ -624,7 +626,7 @@ class _AddConfigureState extends State<AddConfigure> {
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       primary: Colors.white,
-                      elevation: 5.0,
+                      //elevation: 5.0,
                     ),
                     onPressed: () {
                       setState(() {

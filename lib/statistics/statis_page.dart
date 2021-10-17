@@ -50,7 +50,7 @@ class _StatisPageState extends State<StatisPage> {
           child: Container(
             height: 50,
             decoration: BoxDecoration(
-                color: Provider.of<ThemeProvider>(context).outer,
+                color: Colors.white,
                 borderRadius:
                     BorderRadius.only(bottomRight: Radius.circular(10.0))),
             child: Row(

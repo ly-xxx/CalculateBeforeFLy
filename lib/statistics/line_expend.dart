@@ -17,12 +17,12 @@ List<List<String>> _detailList = [];
 
 Widget getLine_e() {
   List<Linesales> dataLine = [
-    Linesales(d1, getDay(d1.month.toString(), d1.day.toString()),Color(0xFF2F2E41)), //日期，当日总收支
-    Linesales(d2, getDay(d2.month.toString(), d2.day.toString()),Color(0xFF2F2E41)),
-    Linesales(d3, getDay(d3.month.toString(), d3.day.toString()),Color(0xFF2F2E41)),
-    Linesales(d4, getDay(d4.month.toString(), d4.day.toString()),Color(0xFF2F2E41)),
-    Linesales(d5, getDay(d5.month.toString(), d5.day.toString()),Color(0xFF2F2E41)),
-    Linesales(now, getDay(now.month.toString(), now.day.toString()),Color(0xFF2F2E41)),
+    Linesales(d1, getDay(d1.month.toString(), d1.day.toString()),Color(0xFF7E7BA4)), //日期，当日总收支
+    Linesales(d2, getDay(d2.month.toString(), d2.day.toString()),Color(0xFF7E7BA4)),
+    Linesales(d3, getDay(d3.month.toString(), d3.day.toString()),Color(0xFF7E7BA4)),
+    Linesales(d4, getDay(d4.month.toString(), d4.day.toString()),Color(0xFF7E7BA4)),
+    Linesales(d5, getDay(d5.month.toString(), d5.day.toString()),Color(0xFF7E7BA4)),
+    Linesales(now, getDay(now.month.toString(), now.day.toString()),Color(0xFF7E7BA4)),
   ];
 
   var seriesLine = [

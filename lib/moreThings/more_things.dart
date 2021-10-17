@@ -16,7 +16,7 @@ class MoreThingsPage extends StatefulWidget {
 
 class _MoreThingsPageState extends State<MoreThingsPage> {
   int _keepCounts = 0;
-  int _keepDays = 0;
+  int _keepDays = 1;
   int _todayExpenditure = 0;
   int _monthExpenditure = 0;
   int _gdsz = 0; //固定收支
@@ -36,6 +36,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     _monthExpenditure = prefs.getInt('monthExpenditure') ?? 0;
     _gdsz = prefs.getInt('gdsz') ?? 0;
     _typeOfGdsz = prefs.getBool('typeOfGdsz') ?? true;
+    _keepCounts=prefs.getInt("itemCount") ?? 0;
     super.initState();
   }
 
@@ -117,7 +118,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     return Column(
       children: <Widget>[
         SizedBox(
-          height: 30,
+          height: 80,
         ),
         Card(
           color: Colors.white,
@@ -138,7 +139,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
           child: getCardTop(),
         ),
         SizedBox(
-          height: 50,
+          height: 40,
         ),
         Container(
           padding: EdgeInsets.fromLTRB(20, 20, 20, 10),
@@ -150,7 +151,7 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                 offstage: !_offstage,
                 child: Container(
                   child: Padding(
-                    padding: EdgeInsets.all(4.0),
+                    padding: EdgeInsets.all(5.0),
                     child: Column(
                       children: [
                         Row(
@@ -390,10 +391,10 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Container(
-                      width: 120,
-                      height: 120,
+                      width: 130,
+                      height: 130,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                        borderRadius: BorderRadius.all(Radius.circular(70.0)),
                         border: new Border.all(
                           width: 1,
                           color: Colors.white24,
@@ -403,8 +404,8 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                       child: skinPage(),
                     ),
                     Container(
-                      width: 120,
-                      height: 120,
+                      width: 130,
+                      height: 130,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(5.0)),
                         border: new Border.all(
@@ -419,6 +420,26 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
               SizedBox(height: 20,),
               Row(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
                 Container(
+                  width: 130,
+                  height: 130,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                    border: new Border.all(
+                      width: 1,
+                      color: Colors.white24,
+                    ),
+                    // color: Provider.of<ThemeProvider>(context).background,
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: Colors.black12,
+                    //     offset: Offset(0.0, 0.0), //阴影x轴偏移量
+                    //     blurRadius: 4, //阴影模糊程度
+                    //   )
+                    // ],
+                  ),
+                  child: AddPage(),
+                ),
+                Container(
                   width: 120,
                   height: 120,
                   decoration: BoxDecoration(
@@ -429,28 +450,9 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
                     ),
                     //color: Provider.of<ThemeProvider>(context).background,
                   ),
-                  child: cntPage(),
+
                 ),
-                Container(
-                  width: 120,
-                  height: 120,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                    border: new Border.all(
-                      width: 1,
-                      color: Colors.white24,
-                    ),
-                    // color: Provider.of<ThemeProvider>(context).background,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black12,
-                        offset: Offset(0.0, 0.0), //阴影x轴偏移量
-                        blurRadius: 4, //阴影模糊程度
-                      )
-                    ],
-                  ),
-                  child: AddPage(),
-                ),
+
               ])
             ]));
   }
@@ -509,6 +511,11 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: Colors.white,
+        shape:RoundedRectangleBorder(
+
+          borderRadius:BorderRadius.circular(20),
+
+        ),
       ),
       onPressed: () {
         Navigator.pushNamed(context, "/skinPage");
@@ -540,7 +547,11 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: Colors.white,
-        ),
+          shape:RoundedRectangleBorder(
+
+            borderRadius:BorderRadius.circular(20),
+
+          ),),
         onPressed: () {
           setState(() {
             _offstage = !_offstage;
@@ -572,6 +583,10 @@ class _MoreThingsPageState extends State<MoreThingsPage> {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: Colors.white,
+          shape:RoundedRectangleBorder(
+            borderRadius:BorderRadius.circular(20),
+
+          ),
         ),
         onPressed: () {
           showDialog(

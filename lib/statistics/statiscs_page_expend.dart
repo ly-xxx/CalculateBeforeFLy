@@ -18,88 +18,81 @@ class StatisExpendPage extends StatefulWidget {
 SharedPreferences prefs = GlobalData.getPref()!;
 DateTime now = new DateTime.now();
 double _monthExpend = (getMonth(now.month.toString(), 5) +
-    getMonth(now.month.toString(), 6) +
-    getMonth(now.month.toString(), 7) +
-    getMonth(now.month.toString(), 8)) ??
+        getMonth(now.month.toString(), 6) +
+        getMonth(now.month.toString(), 7) +
+        getMonth(now.month.toString(), 8)) ??
     0;
 int counts = getExpendCounts(now.month.toString());
 
 class _StatisExpendPageState extends State<StatisExpendPage> {
-
   double width = 0.0;
   double height = 0.0;
   String date1OnTop = "加载错误！";
   String date2OnTop = "加载错误！";
   bool flag = false;
 
-
   Widget top(context) {
-    return Column(
-      children: <Widget>[
-        Container(
-          height: 50,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.popAndPushNamed(context, "/detailMessagePage");
-                  },
-                  child: Icon(
-                    Icons.menu_open,
-                    size: 20,
-                  color: Provider.of<ThemeProvider>(context).mainFont,
-                  ),
+    return Row(children: <Widget>[
+      SizedBox(
+        width: 50,
+        height: 50,
+        child: IconButton(
+          icon: Icon(Icons.library_books),
+          onPressed: () {
+            Navigator.pushNamed(context, "/detailMessagePage");
+          },
+        ),
+      ),
+      Expanded(
+        child: InkWell(
+          onTap: () {
+            Navigator.pushNamed(context, "/moreThingsPage");
+          },
+          child: Container(
+            height: 50,
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius:
+                    BorderRadius.only(bottomRight: Radius.circular(10.0))),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                    child: Icon(
+                  Icons.person,
+                  size: 40,
+                  color: Colors.black,
+                )),
+                SizedBox(
+                  width: 30,
                 ),
-              ),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.white,
-                    elevation: 5.0,
-                  ),
-                  onPressed: () {
-                    Navigator.popAndPushNamed(context, "/moreThingsPage");
-                  },
-                  child: Container(
-                    width: width - 84,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                            child: Icon(
-                              Icons.person,
-                              size: 25,
-                              color: Provider.of<ThemeProvider>(context).mainFont,
-                            )),
-                        SizedBox(
-                          width: 30,
-                        ),
-                        Text(
-                          "我的",
-                          style: TextStyle(
-                              fontSize: 20,
-                            color: Provider.of<ThemeProvider>(context).mainFont,
-                              fontWeight: FontWeight.w900),
-                        ),
-                      ],
-                    ),
-                  )),
-            ],
+                Text(
+                  "我的",
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w900),
+                ),
+              ],
+            ),
           ),
         ),
-      ],
-    );
+      )
+    ]);
   }
 
-
-
   Widget right(context) {
-    return Container(
-      width: 300,
-      child: Column(
+    return  Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
+          Text(
+            '$date1OnTop年$date2OnTop月',
+            style: TextStyle(
+              fontSize: 35,
+              // color: Provider.of<ThemeProvider>(context).mainFont,
+              fontWeight: FontWeight.w900,
+            ),
+          ),
           Row(children: [
             Expanded(
               child: SizedBox(),
@@ -110,7 +103,9 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
                   padding: EdgeInsets.zero,
                   //  elevation: 5.0,
                 ),
-                onPressed: () { Navigator.popAndPushNamed(context, "/statisPage");},
+                onPressed: () {
+                  Navigator.popAndPushNamed(context, "/statisPage");
+                },
                 child: Text(
                   '收入',
                   style: TextStyle(
@@ -124,8 +119,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
                   padding: EdgeInsets.zero,
                   elevation: 5.0,
                 ),
-                onPressed: () {
-                },
+                onPressed: () {},
                 child: Text(
                   '支出',
                   style: TextStyle(
@@ -133,16 +127,13 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
                       color: Colors.white,
                       fontWeight: FontWeight.w500),
                 )),
-
           ]),
           SizedBox(
-            height: 100,
-            width: 400,
             child: card(),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(10, 0, 0, 0),
-            alignment: Alignment(-1, -1),
+            padding: EdgeInsets.only(left: 20),
+            alignment: Alignment.centerLeft,
             child: const Text(
               '收入趋势图',
               textAlign: TextAlign.left,
@@ -167,19 +158,17 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
               ),
             ),
 
-            child: Container(
+            child: SizedBox(
               width: 400,
               height: 170,
-              alignment: Alignment.center,
               child: getLine_e(),
             ),
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
-            alignment: Alignment(-1, -1),
+            padding: EdgeInsets.only(left: 20),
+            alignment: Alignment.centerLeft,
             child: const Text(
               '收入类别图',
-              textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 20.0,
                 fontWeight: FontWeight.w900, //字体大小
@@ -194,7 +183,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
             margin: EdgeInsets.fromLTRB(10, 0, 0, 30), // 外边距
 
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: BorderRadius.circular(10),
               side: const BorderSide(
                 color: Colors.white,
                 width: 3,
@@ -209,9 +198,9 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
             ),
           ),
         ],
-      ),
     );
   }
+
   Card card() {
     var card = Card(
         color: Colors.white,
@@ -255,10 +244,14 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
 
   Widget getPie_e() {
     List<Piesales> dataPie = [
-      Piesales(1, getMonth(now.month.toString(), 5),Provider.of<ThemeProvider>(context).pieColor[0],"学习"),
-      Piesales(2, getMonth(now.month.toString(), 6), Provider.of<ThemeProvider>(context).pieColor[1],"娱乐"),
-      Piesales(3, getMonth(now.month.toString(), 7), Provider.of<ThemeProvider>(context).pieColor[2],"交通"),
-      Piesales(4, getMonth(now.month.toString(), 8), Provider.of<ThemeProvider>(context).pieColor[3],"工资"),
+      Piesales(1, getMonth(now.month.toString(), 5),
+          Provider.of<ThemeProvider>(context).pieColor[0], "学习"),
+      Piesales(2, getMonth(now.month.toString(), 6),
+          Provider.of<ThemeProvider>(context).pieColor[1], "娱乐"),
+      Piesales(3, getMonth(now.month.toString(), 7),
+          Provider.of<ThemeProvider>(context).pieColor[2], "交通"),
+      Piesales(4, getMonth(now.month.toString(), 8),
+          Provider.of<ThemeProvider>(context).pieColor[3], "工资"),
     ];
 
     var seriesPie = [
@@ -277,6 +270,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
     );
     return Pie;
   }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -288,99 +282,94 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
     }
     return Scaffold(
       backgroundColor: Provider.of<ThemeProvider>(context).outerSide,
-      body: Column(children: [
-        top(context),
-
-
-        SizedBox(
-          width: 20,
-        ),
-        Text(
-          '$date1OnTop年$date2OnTop月',
-          style: TextStyle(
-            fontSize: 35,
-            // color: Provider.of<ThemeProvider>(context).mainFont,
-            fontWeight: FontWeight.w900,
+      body:SafeArea(
+        child: Column(children: [
+          top(context),
+          SizedBox(
+            width: 20,
           ),
-        ),
-        Expanded(
-          child: Row(
-            children: <Widget>[
-              Container(
-                width: 50,
-                child: InkWell(
-                  onTap: () {
-                    Navigator.popAndPushNamed(context, "/myPage");
-                  },
-                  child: Container(
-                    width: 50,
-                    decoration: BoxDecoration(
-                        color:Colors.white,
-                        borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(10.0))),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 20,
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Icon(
-                            Icons.home,
-                            size: 30,
-                            color: Provider.of<ThemeProvider>(context).mainFont,
+          Expanded(
+            child: Row(
+              children: <Widget>[
+                Container(
+                  width: 50,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.popAndPushNamed(context, "/myPage");
+                    },
+                    child: Container(
+                      width: 50,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.only(
+                              bottomRight: Radius.circular(10.0))),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 20,
                           ),
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Text(
-                          "首\n页",
-                          style: TextStyle(
-                              fontSize: 20,
-                              color: Provider.of<ThemeProvider>(context).mainFont,
-                              fontWeight: FontWeight.w900),
-                        ),
-                      ],
+                          Align(
+                            alignment: Alignment.center,
+                            child: Icon(
+                              Icons.home,
+                              size: 30,
+                              color:
+                              Provider.of<ThemeProvider>(context).mainFont,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            "首\n页",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Provider.of<ThemeProvider>(context)
+                                    .mainFont,
+                                fontWeight: FontWeight.w900),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: right(context),
-              )
-            ],
+                Expanded(
+                  child: right(context),
+                )
+              ],
+            ),
           ),
-        ),
-      ]),
-
+        ]),
+      ),
     );
   }
 }
 
-
 Card card() {
   var card = Card(
       color: Colors.white,
-      shadowColor: Colors.grey.shade800, // 阴影颜色
+      shadowColor: Colors.grey.shade800,
+      // 阴影颜色
       //elevation: 10, // 阴影高度
-      borderOnForeground: false, // 是否在 child 前绘制 border，默认为 true
-      margin: EdgeInsets.fromLTRB(10, 0, 0, 10), // 外边距
+      borderOnForeground: false,
+      // 是否在 child 前绘制 border，默认为 true
+      margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+      // 外边距
 
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
         side: const BorderSide(
           color: Colors.white,
           width: 3,
         ),
       ),
       child: Container(
-          margin: EdgeInsets.fromLTRB(30, 0, 0, 0),
           alignment: Alignment(-1, -1),
+          padding: EdgeInsets.all(10),
           child: Column(children: <Widget>[
             Text(
-              '本月支出合计',
+              '本月支出$counts笔，合计',
               textAlign: TextAlign.left,
               style: TextStyle(
                 fontSize: 15.0,
@@ -391,12 +380,13 @@ Card card() {
               height: 10,
             ),
             Text(
-              "$_monthExpend",
+              "¥$_monthExpend",
+              textAlign: TextAlign.left,
               style: TextStyle(
-                fontWeight: FontWeight.w300,
-                fontSize: 55,
+                fontSize: 30.0,
+                fontWeight: FontWeight.w600, //字体大小
               ),
-            )
+            ),
           ])));
   return card;
 }
