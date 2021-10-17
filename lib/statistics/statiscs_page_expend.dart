@@ -145,13 +145,15 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
           ),
           Card(
             color: Colors.white,
-            shadowColor: Colors.grey.shade800, // 阴影颜色
+            shadowColor: Colors.grey.shade800,
+            // 阴影颜色
             // elevation: 10, // 阴影高度
-            borderOnForeground: false, // 是否在 child 前绘制 border，默认为 true
-            margin: EdgeInsets.fromLTRB(10, 0, 0, 30), // 外边距
-
+            borderOnForeground: false,
+            // 是否在 child 前绘制 border，默认为 true
+            margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+            // 外边距
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(40),
+              borderRadius: BorderRadius.circular(10),
               side: const BorderSide(
                 color: Colors.white,
                 width: 3,
@@ -177,10 +179,13 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
           ),
           Card(
             color: Colors.white,
-            shadowColor: Colors.grey.shade800, // 阴影颜色
+            shadowColor: Colors.grey.shade800,
+            // 阴影颜色
             //elevation: 10, // 阴影高度
-            borderOnForeground: false, // 是否在 child 前绘制 border，默认为 true
-            margin: EdgeInsets.fromLTRB(10, 0, 0, 30), // 外边距
+            borderOnForeground: false,
+            // 是否在 child 前绘制 border，默认为 true
+            margin: EdgeInsets.fromLTRB(10, 0, 0, 30),
+            // 外边距
 
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
@@ -204,13 +209,16 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
   Card card() {
     var card = Card(
         color: Colors.white,
-        shadowColor: Colors.grey.shade800, // 阴影颜色
+        shadowColor: Colors.grey.shade800,
+        // 阴影颜色
         //elevation: 10, // 阴影高度
-        borderOnForeground: false, // 是否在 child 前绘制 border，默认为 true
-        margin: EdgeInsets.fromLTRB(10, 0, 0, 10), // 外边距
+        borderOnForeground: false,
+        // 是否在 child 前绘制 border，默认为 true
+        margin: EdgeInsets.fromLTRB(15, 0, 15, 0),
+        // 外边距
 
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(10),
           side: const BorderSide(
             color: Colors.white,
             width: 3,
@@ -218,6 +226,7 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
         ),
         child: Container(
             alignment: Alignment(-1, -1),
+            padding: EdgeInsets.all(10),
             child: Column(children: <Widget>[
               Text(
                 '本月支出$counts笔，合计',
@@ -241,7 +250,6 @@ class _StatisExpendPageState extends State<StatisExpendPage> {
             ])));
     return card;
   }
-
   Widget getPie_e() {
     List<Piesales> dataPie = [
       Piesales(1, getMonth(now.month.toString(), 5),
